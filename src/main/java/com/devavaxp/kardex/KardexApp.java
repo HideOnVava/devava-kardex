@@ -78,7 +78,7 @@ public final class KardexApp extends Application {
     private final StackPane raiz = new StackPane();
     private final VBox menu = new VBox(8);
     private final BorderPane sesion = new BorderPane();
-    private final Label titulo = new Label(), resumenPrincipal = new Label(), resumenPatio = new Label();
+    private final Label titulo = new Label();
     private final Label promedio = new Label(), creditos = new Label(), carga = new Label(), cargaNombre = new Label();
     private final Label aviso = new Label();
     private final MenuButton semestre = new MenuButton();
@@ -158,39 +158,42 @@ public final class KardexApp extends Application {
     // Menú: Principal o Patio de juegos
     // ------------------------------------------------------------------
 
+    /** Como el menú de un videojuego: el título arriba y las opciones en texto, a la izquierda. */
     private VBox menu() {
         ImageView logo = new ImageView(icono());
+        logo.setFitWidth(44);
+        logo.setFitHeight(44);
         Label nombre = new Label(NOMBRE);
         nombre.getStyleClass().add("menu-titulo");
-        Label carrera = new Label("Ingeniería en Sistemas Computacionales · Tecnológico de La Laguna");
-        carrera.getStyleClass().add("menu-sub");
-        HBox tarjetas = new HBox(20,
-                tarjeta("historia", "Principal", "Tu avance real: calificaciones,\npromedio y horarios.", resumenPrincipal),
-                tarjeta("patio", "Patio de juegos", "Pruebas libres y tu ruta para titularte.\nNo cambia Principal.", resumenPatio));
-        tarjetas.setAlignment(Pos.TOP_CENTER);
-        tarjetas.setFillHeight(false);
-        VBox.setMargin(tarjetas, new Insets(28, 0, 0, 0));
-        menu.getChildren().setAll(logo, nombre, carrera, tarjetas);
+        HBox cabeza = new HBox(14, logo, nombre);
+        cabeza.setAlignment(Pos.CENTER_LEFT);
+        VBox opciones = new VBox(4,
+                opcion("Principal", "", () -> entrar("historia")),
+                opcion("Patio de juegos", "patio", () -> entrar("patio")),
+                opcion("Salir", "salir", Platform::exit));
+        VBox.setMargin(opciones, new Insets(36, 0, 0, 0));
+        menu.getChildren().setAll(cabeza, opciones);
         menu.getStyleClass().add("menu-inicio");
-        menu.setAlignment(Pos.CENTER);
+        menu.setAlignment(Pos.CENTER_LEFT);
         return menu;
     }
 
-    /** Una sección del menú, como botón: se abre con clic, Enter o Espacio. */
-    private Button tarjeta(String cual, String nombre, String descripcion, Label resumen) {
-        Label t = new Label(nombre);
-        t.getStyleClass().add("tarjeta-titulo");
-        Label d = new Label(descripcion);
-        d.getStyleClass().add("tarjeta-texto");
-        resumen.getStyleClass().add("tarjeta-dato");
-        VBox contenido = new VBox(6, t, d, resumen); // sin ajuste de línea: dentro de un botón infla la altura
-        Button b = new Button(null, contenido);
-        b.getStyleClass().add("tarjeta-sesion");
-        if (cual.equals("patio")) b.getStyleClass().add("patio");
-        b.setPrefWidth(340);
-        b.setMaxHeight(Region.USE_PREF_SIZE);
+    /**
+     * Una opción del menú. El mouse encima la selecciona (como en un juego), igual que las
+     * flechas; Enter, Espacio o clic la abren. La seleccionada lleva "›" y color.
+     */
+    private Button opcion(String texto, String estilo, Runnable accion) {
+        Label marca = new Label("›");
+        marca.getStyleClass().add("opcion-marca");
+        Button b = new Button(texto, marca);
+        b.getStyleClass().add("opcion");
+        if (!estilo.isEmpty()) b.getStyleClass().add(estilo);
         b.setMnemonicParsing(false);
-        b.setOnAction(e -> entrar(cual));
+        b.setOnMouseEntered(e -> b.requestFocus());
+        b.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) b.fire();
+        });
+        b.setOnAction(e -> accion.run());
         return b;
     }
 
@@ -209,12 +212,8 @@ public final class KardexApp extends Application {
         cerrarPanel();
         sesion.setVisible(false);
         menu.setVisible(true);
-        Kardex h = historia.kardex();
-        resumenPrincipal.setText((Double.isNaN(h.promedio()) ? "Sin promedio" : "Promedio " + promedioTexto(h))
-                + " · " + h.creditosAprobados() + " / " + Kardex.CREDITOS_TOTALES + " créditos\nSemestre " + h.datos.semestre + "°");
-        Ruta.Resultado r = Ruta.evaluar(patio.kardex());
-        resumenPatio.setText(r.semestres().isEmpty() ? "Sin ruta todavía"
-                : r.faltan() > 0 ? "Ruta sin terminar" : "Tu ruta termina en el " + r.termina() + "°");
+        // La primera opción queda seleccionada: Enter entra directo.
+        Platform.runLater(() -> menu.lookup(".opcion").requestFocus());
     }
 
     private static String promedioTexto(Kardex k) {
