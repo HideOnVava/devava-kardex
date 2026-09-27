@@ -262,24 +262,34 @@
 
 /* ---------- Menú: Principal o Patio de juegos ---------- */
 
+/* Todo en em: la letra base del menú crece con la altura de la ventana (KardexApp.menu). */
 .menu-inicio {
     -fx-background-color: -bg;
-    -fx-padding: 0 0 60 120;
+    -fx-padding: 0 0 3em 7em;
+}
+
+.menu-cabeza {
+    -fx-spacing: 0.9em;
 }
 
 .menu-titulo {
-    -fx-font-size: 40px;
+    -fx-font-size: 4.6em;
     -fx-font-weight: bold;
+}
+
+.menu-opciones {
+    -fx-spacing: 0.35em;
+    -fx-padding: 2.4em 0 0 0;
 }
 
 /* Opciones del menú: texto grande; la seleccionada (mouse encima o flechas) lleva "›" y color. */
 .button.opcion {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-padding: 4 0;
-    -fx-font-size: 26px;
+    -fx-padding: 0.05em 0;
+    -fx-font-size: 2.9em;
     -fx-text-fill: -text-faint;
-    -fx-graphic-text-gap: 10;
+    -fx-graphic-text-gap: 0.3em;
 }
 
 .button.opcion:focused {
@@ -296,8 +306,8 @@
 }
 
 .opcion-marca {
-    -fx-font-size: 26px;
-    -fx-min-width: 18;
+    -fx-font-size: 1em;
+    -fx-min-width: 0.6em;
     -fx-opacity: 0;
 }
 

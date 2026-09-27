@@ -3,9 +3,10 @@ package com.devavaxp.kardex;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -118,7 +119,7 @@ public final class KardexApp extends Application {
         Scene scene = new Scene(crearUI(h, p, almacen), 1280, 800);
         scene.getStylesheets().add(css());
         stage.setTitle(NOMBRE);
-        stage.getIcons().add(icono());
+        stage.getIcons().add(icono(64));
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
@@ -158,23 +159,32 @@ public final class KardexApp extends Application {
     // Menú: Principal o Patio de juegos
     // ------------------------------------------------------------------
 
-    /** Como el menú de un videojuego: el título arriba y las opciones en texto, a la izquierda. */
+    /**
+     * Como el menú de un videojuego: el título arriba y las opciones en texto, a la izquierda.
+     * Todo crece con la ventana: la letra base es una fracción de la altura y el CSS usa em.
+     */
     private VBox menu() {
-        ImageView logo = new ImageView(icono());
-        logo.setFitWidth(44);
-        logo.setFitHeight(44);
+        ImageView logo = new ImageView(icono(256));
+        logo.setSmooth(true);
         Label nombre = new Label(NOMBRE);
         nombre.getStyleClass().add("menu-titulo");
-        HBox cabeza = new HBox(14, logo, nombre);
+        HBox cabeza = new HBox(logo, nombre);
+        cabeza.getStyleClass().add("menu-cabeza");
         cabeza.setAlignment(Pos.CENTER_LEFT);
-        VBox opciones = new VBox(4,
+        VBox opciones = new VBox(
                 opcion("Principal", "", () -> entrar("historia")),
                 opcion("Patio de juegos", "patio", () -> entrar("patio")),
                 opcion("Salir", "salir", Platform::exit));
-        VBox.setMargin(opciones, new Insets(36, 0, 0, 0));
+        opciones.getStyleClass().add("menu-opciones");
         menu.getChildren().setAll(cabeza, opciones);
         menu.getStyleClass().add("menu-inicio");
         menu.setAlignment(Pos.CENTER_LEFT);
+
+        DoubleBinding base = Bindings.createDoubleBinding(() -> Math.max(12, menu.getHeight() / 52), menu.heightProperty());
+        menu.styleProperty().bind(Bindings.createStringBinding(
+                () -> String.format(Locale.ROOT, "-fx-font-size: %.1fpx;", base.get()), base));
+        logo.fitWidthProperty().bind(base.multiply(4.6));
+        logo.fitHeightProperty().bind(base.multiply(4.6));
         return menu;
     }
 
@@ -638,9 +648,10 @@ public final class KardexApp extends Application {
     }
 
     /** Ícono de la ventana: tres materias unidas por flechas sobre el morado de devava. */
-    private static Image icono() {
-        Canvas c = new Canvas(64, 64);
+    private static Image icono(int tamano) {
+        Canvas c = new Canvas(tamano, tamano);
         GraphicsContext g = c.getGraphicsContext2D();
+        g.scale(tamano / 64.0, tamano / 64.0); // se dibuja en 64 unidades, al tamaño final: nítido
         g.setFill(Color.web("#4F46E5"));
         g.fillRoundRect(0, 0, 64, 64, 28, 28);
         g.setStroke(Color.web("#C7D2FE"));
