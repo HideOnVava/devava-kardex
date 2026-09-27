@@ -1,0 +1,519 @@
+/* =====================================================================
+   Devava Kardex — misma paleta y controles que Devava Reader
+   ===================================================================== */
+
+.root {
+    -fx-font-family: "System";
+    -fx-font-size: 13px;
+    -fx-background-color: -bg;
+
+    -bg: #F5F5F7;
+    -surface: #FFFFFF;
+    -surface-hover: #F0F0F3;
+    -border: #E4E4E9;
+    -text: #1C1C21;
+    -text-muted: #6E6E78;
+    -text-faint: #9A9AA5;
+    -accent: #4F46E5;
+    -accent-hover: #4338CA;
+    -accent-soft: #EEF0FF;
+    -success: #15803D;
+    -success-soft: #DCFCE7;
+    -danger: #DC2626;
+    -danger-soft: #FEE2E2;
+    -line: #B4B4C0;
+
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.label {
+    -fx-text-fill: -text;
+}
+
+/* ---------- Botones, menús y campos (de Devava Reader) ---------- */
+
+.button, .menu-button {
+    -fx-background-color: -surface;
+    -fx-background-radius: 8;
+    -fx-border-color: -border;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-text-fill: -text;
+    -fx-padding: 7 14;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.button:hover, .menu-button:hover {
+    -fx-background-color: -surface-hover;
+}
+
+.button:pressed, .menu-button:pressed, .menu-button:showing {
+    -fx-background-color: -border;
+}
+
+.button.danger {
+    -fx-background-color: -danger;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button.danger:hover {
+    -fx-background-color: #B91C1C;
+}
+
+.button.flat, .menu-button.flat {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.button.flat:hover, .menu-button.flat:hover {
+    -fx-background-color: -surface-hover;
+}
+
+.button.flat:pressed, .menu-button.flat:showing {
+    -fx-background-color: -border;
+}
+
+.menu-button > .arrow-button {
+    -fx-padding: 0;
+}
+
+.menu-button > .arrow-button > .arrow {
+    -fx-padding: 0;
+    -fx-shape: null;
+    -fx-background-color: transparent;
+}
+
+.menu-button.more-menu {
+    -fx-font-size: 18px;
+    -fx-padding: 3 10 5 10;
+}
+
+.text-field {
+    -fx-background-color: -surface;
+    -fx-background-radius: 8;
+    -fx-border-color: -border;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 6 10;
+    -fx-text-fill: -text;
+    -fx-prompt-text-fill: -text-faint;
+    -fx-highlight-fill: -accent-soft;
+    -fx-highlight-text-fill: -text;
+}
+
+.text-field:focused {
+    -fx-border-color: -accent;
+}
+
+.text-field:invalida {
+    -fx-border-color: -danger;
+}
+
+.context-menu {
+    -fx-background-color: -surface;
+    -fx-background-radius: 10;
+    -fx-border-color: -border;
+    -fx-border-radius: 10;
+    -fx-padding: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 16, 0, 0, 4);
+}
+
+.menu-item {
+    -fx-background-radius: 6;
+    -fx-padding: 7 14;
+}
+
+.menu-item .label {
+    -fx-text-fill: -text;
+}
+
+.menu-item:focused, .menu-item:hover {
+    -fx-background-color: -accent-soft;
+}
+
+.menu-item.danger .label {
+    -fx-text-fill: -danger;
+}
+
+.separator .line {
+    -fx-border-color: -border transparent transparent transparent;
+}
+
+.tooltip {
+    -fx-background-color: #2A2A32;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-padding: 6 10;
+    -fx-font-size: 12px;
+}
+
+.progress-bar {
+    -fx-padding: 0;
+}
+
+.progress-bar > .track {
+    -fx-background-color: -border;
+    -fx-background-radius: 99;
+    -fx-background-insets: 0;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: -accent;
+    -fx-background-radius: 99;
+    -fx-background-insets: 0;
+    -fx-padding: 3;
+}
+
+.progress-bar.complete > .bar {
+    -fx-background-color: -success;
+}
+
+.segmented .toggle-button {
+    -fx-background-color: -surface;
+    -fx-border-color: -border;
+    -fx-border-width: 1;
+    -fx-text-fill: -text;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.segmented .toggle-button.first {
+    -fx-background-radius: 8 0 0 8;
+    -fx-border-radius: 8 0 0 8;
+}
+
+.segmented .toggle-button.last {
+    -fx-background-radius: 0 8 8 0;
+    -fx-border-radius: 0 8 8 0;
+}
+
+.segmented .toggle-button:hover {
+    -fx-background-color: -surface-hover;
+}
+
+.segmented .toggle-button:selected {
+    -fx-background-color: -accent;
+    -fx-border-color: -accent;
+    -fx-text-fill: white;
+}
+
+.dialog {
+    -fx-background-color: -surface;
+}
+
+.dialog .header-panel {
+    -fx-background-color: -surface;
+}
+
+.dialog .header-panel .label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text;
+}
+
+.dialog .content.label {
+    -fx-text-fill: -text-muted;
+    -fx-font-size: 13px;
+}
+
+.dialog .button-bar .container {
+    -fx-background-color: -surface;
+}
+
+.dialog .button-bar .button {
+    -fx-min-width: 90;
+}
+
+/* ---------- Barra superior ---------- */
+
+.barra {
+    -fx-background-color: -surface;
+    -fx-border-color: transparent transparent -border transparent;
+    -fx-padding: 10 16;
+}
+
+.dato-nombre {
+    -fx-font-size: 10.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-faint;
+}
+
+.dato-valor {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text;
+}
+
+.marca {
+    -fx-background-color: -text-muted;
+    -fx-background-radius: 1;
+}
+
+.aviso-barra {
+    -fx-text-fill: -text-muted;
+    -fx-font-size: 12px;
+}
+
+/* ---------- Retícula ---------- */
+
+.semestre {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-faint;
+}
+
+.materia {
+    -fx-background-color: -surface;
+    -fx-background-radius: 10;
+    -fx-border-color: -border;
+    -fx-border-radius: 10;
+    -fx-border-width: 1.2;
+    -fx-padding: 7 9 6 9;
+    -fx-cursor: hand;
+}
+
+.materia:hover {
+    -fx-border-color: -accent;
+}
+
+.materia .nombre {
+    -fx-font-size: 11.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text;
+}
+
+.materia .detalle {
+    -fx-font-size: 10px;
+    -fx-text-fill: -text-muted;
+}
+
+.materia.aprobada {
+    -fx-background-color: -success-soft;
+    -fx-border-color: #A7E8BD;
+}
+
+.materia.aprobada .dato {
+    -fx-text-fill: -success;
+    -fx-font-weight: bold;
+}
+
+.materia.cursando {
+    -fx-background-color: -accent-soft;
+    -fx-border-color: -accent;
+}
+
+.materia.reprobada {
+    -fx-background-color: -danger-soft;
+    -fx-border-color: #FCA5A5;
+}
+
+.materia.reprobada .dato, .materia.cursando .dato {
+    -fx-font-weight: bold;
+}
+
+.materia.reprobada .dato {
+    -fx-text-fill: -danger;
+}
+
+.materia.bloqueada {
+    -fx-background-color: -bg;
+}
+
+.materia.bloqueada .nombre, .materia.bloqueada .detalle {
+    -fx-text-fill: -text-faint;
+}
+
+.materia.optativa {
+    -fx-border-style: segments(5, 4);
+}
+
+.materia.muestra {
+    -fx-padding: 0;
+    -fx-min-width: 14;
+    -fx-min-height: 14;
+    -fx-max-width: 14;
+    -fx-max-height: 14;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+}
+
+.leyenda {
+    -fx-font-size: 11px;
+    -fx-text-fill: -text-muted;
+}
+
+.flecha {
+    -fx-stroke: -line;
+    -fx-stroke-width: 1.4;
+    -fx-fill: transparent;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.punta {
+    -fx-fill: -line;
+}
+
+.flecha.activa {
+    -fx-stroke: -accent;
+    -fx-stroke-width: 2.2;
+}
+
+.punta.activa {
+    -fx-fill: -accent;
+}
+
+/* ---------- Panel de la materia ---------- */
+
+.panel {
+    -fx-background-color: -surface;
+    -fx-background-radius: 12;
+    -fx-border-color: -border;
+    -fx-border-radius: 12;
+    -fx-padding: 14 16 16 16;
+    -fx-spacing: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.16), 20, 0, 0, 6);
+}
+
+.panel-titulo {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.panel-sub {
+    -fx-font-size: 12px;
+    -fx-text-fill: -text-muted;
+}
+
+.panel-nota {
+    -fx-font-size: 12px;
+    -fx-text-fill: -text-muted;
+}
+
+.panel-alerta {
+    -fx-font-size: 12px;
+    -fx-text-fill: -danger;
+}
+
+.button.cerrar {
+    -fx-padding: 2 8;
+    -fx-text-fill: -text-muted;
+}
+
+.panel .segmented .toggle-button {
+    -fx-padding: 6 4;
+    -fx-font-size: 12.5px;
+}
+
+.grupo {
+    -fx-background-radius: 8;
+    -fx-padding: 7 10;
+    -fx-cursor: hand;
+}
+
+.grupo:hover {
+    -fx-background-color: -surface-hover;
+}
+
+.grupo.elegido {
+    -fx-background-color: -accent-soft;
+}
+
+.grupo-titulo {
+    -fx-font-size: 12.5px;
+    -fx-font-weight: bold;
+}
+
+.grupo-detalle {
+    -fx-font-size: 11.5px;
+    -fx-text-fill: -text-muted;
+}
+
+.grupo.choca .grupo-titulo, .grupo.choca .grupo-detalle {
+    -fx-text-fill: -text-faint;
+}
+
+/* ---------- Horario ---------- */
+
+.horario-cabeza {
+    -fx-padding: 14 16 4 16;
+}
+
+.menu-button.selector {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 10;
+}
+
+.semana {
+    -fx-padding: 0;
+}
+
+.horario {
+    -fx-padding: 0 16 12 8;
+}
+
+.dia {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-muted;
+}
+
+.hora {
+    -fx-font-size: 11px;
+    -fx-text-fill: -text-faint;
+}
+
+.linea {
+    -fx-stroke: -border;
+}
+
+.vacio {
+    -fx-text-fill: -text-faint;
+    -fx-font-size: 14px;
+}
+
+.bloque {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-width: 0 0 0 3;
+    -fx-padding: 5 8;
+    -fx-cursor: hand;
+}
+
+.bloque .nombre {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.bloque .detalle {
+    -fx-font-size: 11px;
+}
+
+/* Un color por materia; sin rojo ni verde, que en la retícula significan reprobada y aprobada. */
+.bloque.c0 { -fx-background-color: #EEF0FF; -fx-border-color: #6366F1; }
+.bloque.c1 { -fx-background-color: #E0F2FE; -fx-border-color: #0EA5E9; }
+.bloque.c2 { -fx-background-color: #FEF3C7; -fx-border-color: #F59E0B; }
+.bloque.c3 { -fx-background-color: #F3E8FF; -fx-border-color: #A855F7; }
+.bloque.c4 { -fx-background-color: #CCFBF1; -fx-border-color: #14B8A6; }
+.bloque.c5 { -fx-background-color: #FFEDD5; -fx-border-color: #F97316; }
+.bloque.c6 { -fx-background-color: #FCE7F3; -fx-border-color: #EC4899; }
+.bloque.c7 { -fx-background-color: #F1F5F9; -fx-border-color: #64748B; }
+
+.sin-grupo {
+    -fx-padding: 10 0 0 52;
+    -fx-alignment: center-left;
+}
+
+.chip {
+    -fx-background-radius: 99;
+    -fx-border-radius: 99;
+    -fx-padding: 4 12;
+    -fx-font-size: 12px;
+}

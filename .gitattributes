@@ -1,0 +1,6 @@
+# Shell scripts must keep LF line endings even when checked out on Windows.
+*.sh text eol=lf
+*.ps1 text
+*.java text
+*.md text
+mvnw text eol=lf
