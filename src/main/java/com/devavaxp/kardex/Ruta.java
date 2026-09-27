@@ -101,6 +101,11 @@ final class Ruta {
         return aviso;
     }
 
+    /** El semestre más pronto en que se puede terminar desde el avance actual (no toca la ruta). */
+    static int masPronto(Kardex k) {
+        return terminaEn(k, acomodar(k, pendientes(k), 36));
+    }
+
     /** Semestre por semestre, toma lo que ya se puede cursar por prioridad hasta llenar la carga. */
     private static Map<String, Integer> acomodar(Kardex k, List<Kardex.Materia> pendientes, int tope) {
         Map<String, Integer> plan = new HashMap<>();

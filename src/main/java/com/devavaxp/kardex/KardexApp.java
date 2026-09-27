@@ -329,7 +329,7 @@ public final class KardexApp extends Application {
         MenuItem rapida = new MenuItem("Lo antes posible");
         rapida.setOnAction(e -> armarRuta(0));
         items.add(rapida);
-        for (int s = Ruta.inicio(k); s <= Ruta.LIMITE; s++) {
+        for (int s = Ruta.masPronto(k); s <= Ruta.LIMITE; s++) { // antes de eso es imposible
             int objetivo = s;
             MenuItem item = new MenuItem("Terminar en el " + s + "°");
             item.setOnAction(e -> armarRuta(objetivo));

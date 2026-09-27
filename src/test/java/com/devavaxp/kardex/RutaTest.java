@@ -25,8 +25,10 @@ class RutaTest {
     @Test
     void laRutaMasRapidaCumpleTodasLasReglas() throws IOException {
         Kardex k = almacen().cargar();
+        int pronto = Ruta.masPronto(k);
         assertNull(Ruta.armar(k, 0));
         Ruta.Resultado r = Ruta.evaluar(k);
+        assertEquals(pronto, r.termina());
         assertTrue(r.errores().isEmpty(), r.errores().toString());
         assertEquals(0, r.faltan());
         assertTrue(r.semestres().stream().allMatch(s -> s.error() == null && s.creditos() <= 36));
