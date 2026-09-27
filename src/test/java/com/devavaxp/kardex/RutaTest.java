@@ -6,6 +6,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -31,6 +32,22 @@ class RutaTest {
         assertTrue(r.semestres().stream().allMatch(s -> s.error() == null && s.creditos() <= 36));
         assertTrue(r.termina() <= Ruta.LIMITE, "termina en " + r.termina());
         assertEquals(54, k.datos.ruta.size()); // todas menos una de las dos optativas
+    }
+
+    @Test
+    void alIngresarVanLasSeisDePrimerSemestre() throws IOException {
+        Kardex k = almacen().cargar();
+        Ruta.armar(k, 12);
+        Ruta.Semestre primero = Ruta.evaluar(k).semestres().get(0);
+        assertEquals(1, primero.numero());
+        assertEquals(Set.of("A11", "B11", "C11", "D11", "E11", "F11"),
+                primero.materias().stream().map(Kardex.Materia::clave).collect(Collectors.toSet()));
+
+        k.planear(k.materia("F12"), 1);   // otra materia en primero
+        k.planear(k.materia("C11"), 2);   // una de primero, después
+        Ruta.Resultado r = Ruta.evaluar(k);
+        assertTrue(r.errores().get("F12").contains("primer semestre"));
+        assertTrue(r.errores().get("C11").contains("primer semestre"));
     }
 
     @Test

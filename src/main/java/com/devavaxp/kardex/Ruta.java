@@ -53,6 +53,8 @@ final class Ruta {
                 if (!m.seAcredita()) suma += m.creditos(); // servicio social y complementarias no son carga
                 List<String> razones = new ArrayList<>();
                 if (s < inicio) razones.add("La ruta empieza en el " + inicio + "°.");
+                if (s == 1 && !dePrimero(m)) razones.add("En primer semestre solo se llevan las materias de primer semestre.");
+                if (s != 1 && inicio == 1 && dePrimero(m)) razones.add("Se lleva sí o sí en primer semestre.");
                 for (String r : m.requisitos())
                     if (!lista(k, plan, r, s)) razones.add("Antes necesitas " + k.materia(r).nombre() + ".");
                 int necesarios = Kardex.creditosPara(m.porcentaje());
@@ -109,20 +111,25 @@ final class Ruta {
             boolean soloEspeciales = reprobadas.values().stream().filter(v -> v >= 2).count() >= 2;
             int maximo = Math.min(tope, Kardex.cargaMaxima(reprobadas)), carga = 0;
             List<Kardex.Materia> tomadas = new ArrayList<>();
-            for (Kardex.Materia m : faltan) {
-                if (!m.requisitos().stream().allMatch(r -> lista(k, plan, r, semestre))) continue;
-                if (antes < Kardex.creditosPara(m.porcentaje())) continue;
-                if (!m.seAcredita()) { // lo que se cursa: carga, especiales y el límite con Residencia
-                    if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2) continue;
-                    if (carga + m.creditos() > maximo) continue;
-                    List<Kardex.Materia> juntas = new ArrayList<>(tomadas);
-                    juntas.add(m);
-                    if (Kardex.excedeResidencia(juntas)) continue;
-                    carga += m.creditos();
+            if (s == 1) {
+                // Al ingresar se llevan sí o sí las materias de primer semestre, y solo esas.
+                tomadas.addAll(faltan.stream().filter(Ruta::dePrimero).toList());
+            } else {
+                for (Kardex.Materia m : faltan) {
+                    if (!m.requisitos().stream().allMatch(r -> lista(k, plan, r, semestre))) continue;
+                    if (antes < Kardex.creditosPara(m.porcentaje())) continue;
+                    if (!m.seAcredita()) { // lo que se cursa: carga, especiales y el límite con Residencia
+                        if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2) continue;
+                        if (carga + m.creditos() > maximo) continue;
+                        List<Kardex.Materia> juntas = new ArrayList<>(tomadas);
+                        juntas.add(m);
+                        if (Kardex.excedeResidencia(juntas)) continue;
+                        carga += m.creditos();
+                    }
+                    tomadas.add(m);
                 }
-                tomadas.add(m);
+                if (tomadas.isEmpty()) break; // nada más se puede acomodar
             }
-            if (tomadas.isEmpty()) break; // nada más se puede acomodar
             tomadas.forEach(m -> plan.put(m.clave(), semestre));
             faltan.removeAll(tomadas);
         }
@@ -173,6 +180,11 @@ final class Ruta {
             if (k.materia(c) != null && !k.datos.aprobadas.containsKey(c) && !k.horario().containsKey(c)) plan.put(c, s);
         });
         return plan;
+    }
+
+    /** Las materias que todo alumno lleva al ingresar (las de primer semestre que se cursan). */
+    private static boolean dePrimero(Kardex.Materia m) {
+        return m.semestre() == 1 && !m.seAcredita();
     }
 
     private static boolean cubierta(Kardex k, String clave) {
