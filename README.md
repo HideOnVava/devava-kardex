@@ -10,6 +10,7 @@ Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha po
 - **Ruta hasta titularte (patio).** Eliges en qué semestre cursarías cada materia que falta, o
   *Armar ruta* la acomoda sola: lo antes posible o con la carga más ligera que todavía termina
   en el 10°, 11° o 12°. Al ingresar, el 1er semestre lleva sí o sí las 6 materias de 1er semestre.
+  Servicio social y complementarias quedan fuera de la ruta: se hacen cuando uno quiera.
   Cada semestre muestra sus créditos y lo que rompa una regla sale en rojo.
 - **Retícula completa con sus flechas de seriación.** Cada materia muestra si está aprobada
   (con su calificación), en curso, reprobada, disponible o bloqueada. Al pasar el mouse sobre

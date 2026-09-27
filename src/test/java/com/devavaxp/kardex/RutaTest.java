@@ -33,7 +33,7 @@ class RutaTest {
         assertEquals(0, r.faltan());
         assertTrue(r.semestres().stream().allMatch(s -> s.error() == null && s.creditos() <= 36));
         assertTrue(r.termina() <= Ruta.LIMITE, "termina en " + r.termina());
-        assertEquals(54, k.datos.ruta.size()); // todas menos una de las dos optativas
+        assertEquals(52, k.datos.ruta.size()); // todas menos una optativa, servicio social y complementarias
     }
 
     @Test
@@ -102,19 +102,22 @@ class RutaTest {
     }
 
     @Test
-    void servicioSocialYComplementariasNoSeCursanNiSonCarga() throws IOException {
+    void servicioSocialYComplementariasNoSeCursanNiVanEnLaRuta() throws IOException {
         Kardex k = almacen().cargar();
         assertTrue(k.cursar(k.materia("COMP"), null).contains("no se cursa"));
         assertTrue(k.horario().isEmpty());
 
+        k.planear(k.materia("S1S"), 3); // aunque estén en una ruta guardada, no cuentan
         Ruta.armar(k, 0);
+        assertFalse(k.datos.ruta.containsKey("S1S"));
+        assertFalse(k.datos.ruta.containsKey("COMP"));
         Ruta.Resultado r = Ruta.evaluar(k);
-        for (Ruta.Semestre s : r.semestres()) {
-            int carga = s.materias().stream().filter(m -> !m.seAcredita()).mapToInt(Kardex.Materia::creditos).sum();
-            assertEquals(carga, s.creditos(), "semestre " + s.numero());
-        }
-        int servicio = k.datos.ruta.get("S1S"), residencia = k.datos.ruta.get("R19");
-        assertTrue(servicio < residencia);
+        assertEquals(0, r.faltan());
+        assertTrue(r.errores().isEmpty(), r.errores().toString()); // residencia no las espera
+        assertTrue(k.datos.ruta.containsKey("R19"));
+
+        // En Principal, residencia sí las pide aprobadas.
+        assertTrue(k.bloqueo(k.materia("R19")).contains("Servicio Social"));
     }
 
     @Test

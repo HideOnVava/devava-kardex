@@ -93,7 +93,8 @@ final class MateriaPanel extends VBox {
         if (error != null) getChildren().add(texto(error, "panel-alerta"));
         error = null;
 
-        if (patio && !aprobada && estado != Kardex.Estado.CURSANDO) getChildren().add(semestrePlaneado());
+        // Servicio social y complementarias no van en la ruta: se hacen cuando uno quiera.
+        if (patio && !aprobada && estado != Kardex.Estado.CURSANDO && !m.seAcredita()) getChildren().add(semestrePlaneado());
 
         if (!aprobada && !m.seAcredita()) {
             List<Kardex.Grupo> grupos = kardex.grupos(m);
@@ -193,7 +194,7 @@ final class MateriaPanel extends VBox {
             kardex.planear(m, v.isEmpty() ? null : Integer.valueOf(v));
             cambio();
         }, opciones.toArray(String[][]::new)));
-        Label t = new Label(m.seAcredita() ? "LA TERMINARÍAS EN" : "LA CURSARÍAS EN");
+        Label t = new Label("LA CURSARÍAS EN");
         t.getStyleClass().add("dato-nombre");
         VBox caja = new VBox(6, t, semestres);
         String problema = Ruta.evaluar(kardex).errores().get(m.clave());

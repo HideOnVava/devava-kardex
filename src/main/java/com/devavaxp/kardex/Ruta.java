@@ -10,7 +10,8 @@ import java.util.TreeMap;
 /**
  * Patio de juegos: en qué semestre cursarías cada materia que falta y en cuál terminarías,
  * con las reglas del TecNM (seriación, porcentaje de créditos, carga máxima). Supone que
- * apruebas lo que cursas ahora y lo que planeas.
+ * apruebas lo que cursas ahora y lo que planeas. Servicio social y complementarias quedan
+ * fuera: se hacen cuando uno quiera.
  */
 final class Ruta {
 
@@ -56,7 +57,7 @@ final class Ruta {
                 if (s == 1 && !dePrimero(m)) razones.add("En primer semestre solo se llevan las materias de primer semestre.");
                 if (s != 1 && inicio == 1 && dePrimero(m)) razones.add("Se lleva sí o sí en primer semestre.");
                 for (String r : m.requisitos())
-                    if (!lista(k, plan, r, s)) razones.add("Antes necesitas " + k.materia(r).nombre() + ".");
+                    if (!requisitoListo(k, plan, r, s)) razones.add("Antes necesitas " + k.materia(r).nombre() + ".");
                 int necesarios = Kardex.creditosPara(m.porcentaje());
                 if (antes < necesarios)
                     razones.add("Al empezar el " + s + "° llevarías " + antes + " créditos; necesita " + necesarios + ".");
@@ -121,7 +122,7 @@ final class Ruta {
                 tomadas.addAll(faltan.stream().filter(Ruta::dePrimero).toList());
             } else {
                 for (Kardex.Materia m : faltan) {
-                    if (!m.requisitos().stream().allMatch(r -> lista(k, plan, r, semestre))) continue;
+                    if (!m.requisitos().stream().allMatch(r -> requisitoListo(k, plan, r, semestre))) continue;
                     if (antes < Kardex.creditosPara(m.porcentaje())) continue;
                     if (!m.seAcredita()) { // lo que se cursa: carga, especiales y el límite con Residencia
                         if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2) continue;
@@ -142,13 +143,13 @@ final class Ruta {
     }
 
     /**
-     * Lo que falta por cursar: obligatorias y una optativa (la que ya esté en la ruta o la del
-     * semestre más temprano) si aún no hay ninguna. Primero las reprobadas, luego las que abren
-     * cadenas más largas de seriación.
+     * Lo que falta por cursar: obligatorias (sin servicio social ni complementarias) y una
+     * optativa (la que ya esté en la ruta o la del semestre más temprano) si aún no hay ninguna.
+     * Primero las reprobadas, luego las que abren cadenas más largas de seriación.
      */
     private static List<Kardex.Materia> pendientes(Kardex k) {
         List<Kardex.Materia> p = new ArrayList<>(k.plan.stream()
-                .filter(m -> !m.optativa() && !cubierta(k, m.clave())).toList());
+                .filter(m -> !m.optativa() && !m.seAcredita() && !cubierta(k, m.clave())).toList());
         boolean conOptativa = k.plan.stream().anyMatch(m -> m.optativa() && cubierta(k, m.clave()));
         if (!conOptativa) {
             k.plan.stream().filter(Kardex.Materia::optativa)
@@ -182,7 +183,8 @@ final class Ruta {
     private static Map<String, Integer> vigente(Kardex k) {
         Map<String, Integer> plan = new HashMap<>();
         k.datos.ruta.forEach((c, s) -> {
-            if (k.materia(c) != null && !k.datos.aprobadas.containsKey(c) && !k.horario().containsKey(c)) plan.put(c, s);
+            Kardex.Materia m = k.materia(c);
+            if (m != null && !m.seAcredita() && !k.datos.aprobadas.containsKey(c) && !k.horario().containsKey(c)) plan.put(c, s);
         });
         return plan;
     }
@@ -203,6 +205,15 @@ final class Ruta {
         return p != null && p < s;
     }
 
+    /**
+     * Como requisito, servicio social y complementarias se dan por hechos: van fuera de la ruta
+     * (se hacen cuando uno quiera). Sus créditos solo cuentan si ya están aprobados.
+     */
+    private static boolean requisitoListo(Kardex k, Map<String, Integer> plan, String clave, int s) {
+        Kardex.Materia m = k.materia(clave);
+        return (m != null && m.seAcredita()) || lista(k, plan, clave, s);
+    }
+
     private static int creditosAntes(Kardex k, Map<String, Integer> plan, int s) {
         return k.plan.stream().filter(m -> lista(k, plan, m.clave(), s)).mapToInt(Kardex.Materia::creditos).sum();
     }
@@ -221,7 +232,7 @@ final class Ruta {
     }
 
     private static int faltan(Kardex k, Map<String, Integer> plan) {
-        int n = (int) k.plan.stream().filter(m -> !m.optativa())
+        int n = (int) k.plan.stream().filter(m -> !m.optativa() && !m.seAcredita())
                 .filter(m -> !cubierta(k, m.clave()) && !plan.containsKey(m.clave())).count();
         boolean optativa = k.plan.stream().filter(Kardex.Materia::optativa)
                 .anyMatch(m -> cubierta(k, m.clave()) || plan.containsKey(m.clave()));
