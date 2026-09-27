@@ -18,10 +18,16 @@ final class Kardex {
 
     static final int CREDITOS_TOTALES = 260;
     static final List<String> DIAS = List.of("lunes", "martes", "miercoles", "jueves", "viernes");
+    // ponytail: "residencia sola o con 2 materias" según el alumno, sin confirmar en el reglamento del ITL; ajustar aquí.
+    static final int MATERIAS_CON_RESIDENCIA = 2;
 
-    /** Una materia del plan. {@code fila} y {@code ancho} solo sirven para dibujar la retícula. */
-    record Materia(String clave, String nombre, int semestre, int fila, int ancho, int creditos,
-                   int porcentaje, List<String> requisitos, boolean optativa, boolean sinCalificacion) {
+    /**
+     * Una materia del plan. {@code fila} y {@code ancho} solo sirven para dibujar la retícula.
+     * {@code seAcredita}: servicio social y complementarias, que no se cursan ni llevan
+     * calificación; solo se marcan aprobadas al terminarlas.
+     */
+    record Materia(String clave, String nombre, int semestre, int fila, int ancho, int creditos, int porcentaje,
+                   List<String> requisitos, boolean optativa, boolean seAcredita, boolean residencia) {
         Materia {
             ancho = Math.max(1, ancho);
             requisitos = requisitos == null ? List.of() : List.copyOf(requisitos);
@@ -59,9 +65,9 @@ final class Kardex {
         if (datos.semestre < 1) datos.semestre = 1;
         if (datos.horarios.isEmpty()) datos.horarios.put(datos.activo, new LinkedHashMap<>());
         if (!datos.horarios.containsKey(datos.activo)) datos.activo = datos.horarios.keySet().iterator().next();
-        // Un horario solo tiene materias del plan que aún no están aprobadas.
-        datos.horarios.values().forEach(h ->
-                h.keySet().removeIf(c -> !porClave.containsKey(c) || datos.aprobadas.containsKey(c)));
+        // Un horario solo tiene materias del plan que se cursan y aún no están aprobadas.
+        datos.horarios.values().forEach(h -> h.keySet().removeIf(c ->
+                !porClave.containsKey(c) || porClave.get(c).seAcredita() || datos.aprobadas.containsKey(c)));
     }
 
     Materia materia(String clave) {
@@ -127,7 +133,7 @@ final class Kardex {
     double promedio() {
         return datos.aprobadas.entrySet().stream()
                 .filter(e -> e.getValue() != null && e.getValue() > 0)
-                .filter(e -> porClave.containsKey(e.getKey()) && !porClave.get(e.getKey()).sinCalificacion())
+                .filter(e -> porClave.containsKey(e.getKey()) && !porClave.get(e.getKey()).seAcredita())
                 .mapToInt(Map.Entry::getValue).average().orElse(Double.NaN);
     }
 
@@ -147,6 +153,13 @@ final class Kardex {
         if (especiales >= 2) return 10;
         if (especiales == 1) return 20;
         return reprobadas.containsValue(1) ? 30 : 36;
+    }
+
+    /** ¿Van juntas Residencia y más materias de las permitidas? (servicio social y complementarias no cuentan) */
+    static boolean excedeResidencia(List<Materia> semestre) {
+        boolean conResidencia = semestre.stream().anyMatch(Materia::residencia);
+        long otras = semestre.stream().filter(m -> !m.residencia() && !m.seAcredita()).count();
+        return conResidencia && otras > MATERIAS_CON_RESIDENCIA;
     }
 
     private long especiales() {
@@ -223,6 +236,7 @@ final class Kardex {
     /** Pone la materia en el horario activo, con grupo o sin él ({@code letra} null). Devuelve el error o null. */
     String cursar(Materia m, String letra) {
         String c = m.clave();
+        if (m.seAcredita()) return m.nombre() + " no se cursa: márcala aprobada cuando la termines.";
         boolean nueva = !horario().containsKey(c);
         if (nueva) {
             if (datos.aprobadas.containsKey(c)) return "Ya la aprobaste.";
@@ -230,6 +244,10 @@ final class Kardex {
             if (razon != null) return razon;
             if (carga() + m.creditos() > cargaMaxima())
                 return "Con esta materia pasarías tu carga máxima de " + cargaMaxima() + " créditos.";
+            List<Materia> juntas = new ArrayList<>(horario().keySet().stream().map(porClave::get).filter(Objects::nonNull).toList());
+            juntas.add(m);
+            if (excedeResidencia(juntas))
+                return "Con Residencia solo puedes llevar hasta " + MATERIAS_CON_RESIDENCIA + " materias más.";
         }
         if (letra == null) {
             if (nueva) horario().put(c, "");
@@ -256,7 +274,7 @@ final class Kardex {
     }
 
     void aprobar(Materia m, int calificacion) {
-        datos.aprobadas.put(m.clave(), m.sinCalificacion() ? 0 : calificacion);
+        datos.aprobadas.put(m.clave(), m.seAcredita() ? 0 : calificacion);
         datos.reprobadas.remove(m.clave());
         datos.ruta.remove(m.clave());
         datos.horarios.values().forEach(h -> h.remove(m.clave()));

@@ -127,7 +127,7 @@ final class ReticulaView extends Region {
         if (s != null) {
             Label insignia = new Label(s + "°");
             insignia.getStyleClass().addAll("insignia", ruta.errores().containsKey(m.clave()) ? "error"
-                    : "p" + Math.min(s - kardex.datos.semestre, 6));
+                    : Ruta.color(kardex, s));
             insignia.setAlignment(Pos.CENTER);
             insignia.setMouseTransparent(true);
             colocar(insignia, x + w - 34, y - 9, 40, 20);

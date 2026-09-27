@@ -71,9 +71,10 @@ final class MateriaPanel extends VBox {
         sub.getStyleClass().add("panel-sub");
         getChildren().addAll(new VBox(2, cabeza, sub));
 
-        List<String[]> opciones = new ArrayList<>(List.of(
-                new String[]{"pendiente", "Pendiente"}, new String[]{"cursando", "Cursando"}, new String[]{"aprobada", "Aprobada"}));
-        if (!m.sinCalificacion()) opciones.add(new String[]{"reprobada", "Reprobada"});
+        List<String[]> opciones = m.seAcredita()
+                ? List.of(new String[]{"pendiente", "Pendiente"}, new String[]{"aprobada", "Aprobada"})
+                : List.of(new String[]{"pendiente", "Pendiente"}, new String[]{"cursando", "Cursando"},
+                        new String[]{"aprobada", "Aprobada"}, new String[]{"reprobada", "Reprobada"});
         String actual = aprobada ? "aprobada" : switch (estado) {
             case CURSANDO -> "cursando";
             case REPROBADA -> "reprobada";
@@ -81,7 +82,7 @@ final class MateriaPanel extends VBox {
         };
         getChildren().add(llenar(KardexApp.segmentado(actual, this::cambiarEstado, opciones.toArray(String[][]::new))));
 
-        if (aprobada && !m.sinCalificacion()) getChildren().add(calificacion());
+        if (aprobada && !m.seAcredita()) getChildren().add(calificacion());
 
         String nota = nota(estado);
         // En el patio, si la ruta ya la acomoda bien, que hoy esté bloqueada es lo esperado: va en gris.
@@ -94,7 +95,7 @@ final class MateriaPanel extends VBox {
 
         if (patio && !aprobada && estado != Kardex.Estado.CURSANDO) getChildren().add(semestrePlaneado());
 
-        if (!aprobada) {
+        if (!aprobada && !m.seAcredita()) {
             List<Kardex.Grupo> grupos = kardex.grupos(m);
             if (!grupos.isEmpty()) {
                 Label t = new Label("GRUPOS");
@@ -103,7 +104,7 @@ final class MateriaPanel extends VBox {
                 Kardex.Grupo elegido = kardex.grupoActual(m);
                 for (Kardex.Grupo g : grupos) lista.getChildren().add(fila(g, g.equals(elegido)));
                 getChildren().add(new VBox(6, t, lista));
-            } else if (!m.sinCalificacion()) {
+            } else {
                 getChildren().add(texto("No hay grupos de esta materia en la oferta actual.", "panel-nota"));
             }
         }
@@ -125,7 +126,7 @@ final class MateriaPanel extends VBox {
             case "pendiente" -> kardex.pendiente(m);
             case "cursando" -> error = kardex.cursar(m, null);
             case "aprobada" -> {
-                if (patio || m.sinCalificacion()) kardex.aprobar(m, kardex.calificacion(m));
+                if (patio || m.seAcredita()) kardex.aprobar(m, kardex.calificacion(m));
                 else aprobando = true; // en la historia se aprueba al escribir la calificación
                 enfocar = true;
             }
@@ -181,7 +182,7 @@ final class MateriaPanel extends VBox {
 
     /** Patio: en qué semestre futuro la cursarías, y qué regla rompe si no se puede. */
     private Node semestrePlaneado() {
-        int desde = kardex.datos.semestre + 1, hasta = Math.max(Ruta.LIMITE, desde + 2);
+        int desde = Ruta.inicio(kardex), hasta = Math.max(Ruta.LIMITE, desde + 2);
         Integer planeado = kardex.datos.ruta.get(m.clave());
         List<String[]> opciones = new ArrayList<>();
         opciones.add(new String[]{"", "—"});
@@ -192,7 +193,7 @@ final class MateriaPanel extends VBox {
             kardex.planear(m, v.isEmpty() ? null : Integer.valueOf(v));
             cambio();
         }, opciones.toArray(String[][]::new)));
-        Label t = new Label("LA CURSARÍAS EN");
+        Label t = new Label(m.seAcredita() ? "LA TERMINARÍAS EN" : "LA CURSARÍAS EN");
         t.getStyleClass().add("dato-nombre");
         VBox caja = new VBox(6, t, semestres);
         String problema = Ruta.evaluar(kardex).errores().get(m.clave());
@@ -203,6 +204,10 @@ final class MateriaPanel extends VBox {
     private String nota(Kardex.Estado estado) {
         int veces = kardex.vecesReprobada(m);
         if (estado == Kardex.Estado.BLOQUEADA) return kardex.bloqueo(m);
+        if (m.seAcredita() && estado != Kardex.Estado.APROBADA)
+            return "No se cursa ni cuenta en tu carga: márcala aprobada cuando la termines.";
+        if (m.residencia() && estado != Kardex.Estado.APROBADA)
+            return "Se lleva sola o con hasta " + Kardex.MATERIAS_CON_RESIDENCIA + " materias más.";
         if (estado == Kardex.Estado.REPROBADA || estado == Kardex.Estado.CURSANDO) {
             if (veces >= 2) return "Reprobada " + veces + " veces: va en curso especial.";
             if (veces == 1) return "Reprobada una vez: va en curso de repetición.";

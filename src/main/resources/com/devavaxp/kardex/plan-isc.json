@@ -5,7 +5,7 @@
   {"clave": "D11", "nombre": "Matemáticas Discretas", "semestre": 1, "fila": 4, "creditos": 5},
   {"clave": "E11", "nombre": "Taller de Administración", "semestre": 1, "fila": 5, "creditos": 4},
   {"clave": "F11", "nombre": "Fundamentos de Investigación", "semestre": 1, "fila": 6, "creditos": 4},
-  {"clave": "COMP", "nombre": "Actividades Complementarias", "semestre": 1, "fila": 7, "creditos": 5, "ancho": 4, "sinCalificacion": true},
+  {"clave": "COMP", "nombre": "Actividades Complementarias", "semestre": 1, "fila": 7, "creditos": 5, "ancho": 4, "seAcredita": true},
   {"clave": "A12", "nombre": "Cálculo Integral", "semestre": 2, "fila": 1, "creditos": 5, "requisitos": ["A11"]},
   {"clave": "B12", "nombre": "Programación Orientada a Objetos", "semestre": 2, "fila": 2, "creditos": 5, "requisitos": ["B11"]},
   {"clave": "C12", "nombre": "Desarrollo Sustentable", "semestre": 2, "fila": 3, "creditos": 5},
@@ -44,7 +44,7 @@
   {"clave": "11D", "nombre": "Desarrollo Web Full Stack 1", "semestre": 7, "fila": 4, "creditos": 5, "porcentaje": 60},
   {"clave": "E17", "nombre": "Conmutación y Enrutamiento en Redes de Datos", "semestre": 7, "fila": 5, "creditos": 5, "requisitos": ["E16"]},
   {"clave": "21D", "nombre": "Desarrollo de Aplicaciones en Android", "semestre": 7, "fila": 6, "creditos": 5, "porcentaje": 60},
-  {"clave": "S1S", "nombre": "Servicio Social", "semestre": 7, "fila": 7, "creditos": 10, "porcentaje": 70, "sinCalificacion": true},
+  {"clave": "S1S", "nombre": "Servicio Social", "semestre": 7, "fila": 7, "creditos": 10, "porcentaje": 70, "seAcredita": true},
   {"clave": "31D", "nombre": "Desarrollo de Aplicaciones en iOS", "semestre": 8, "fila": 1, "creditos": 5, "porcentaje": 60},
   {"clave": "B18", "nombre": "Inteligencia Artificial", "semestre": 8, "fila": 2, "creditos": 4, "requisitos": ["A18"]},
   {"clave": "C16", "nombre": "Administración de Bases de Datos", "semestre": 8, "fila": 3, "creditos": 5, "porcentaje": 60},
@@ -53,5 +53,5 @@
   {"clave": "51D", "nombre": "Análisis de Datos y Machine Learning", "semestre": 8, "fila": 6, "creditos": 5, "porcentaje": 60, "optativa": true},
   {"clave": "F18", "nombre": "Sistemas Programables", "semestre": 8, "fila": 7, "creditos": 4, "porcentaje": 60},
   {"clave": "61D", "nombre": "Desarrollo Web Full Stack 2", "semestre": 9, "fila": 6, "creditos": 5, "porcentaje": 60, "optativa": true},
-  {"clave": "R19", "nombre": "Residencia Profesional", "semestre": 9, "fila": 7, "creditos": 10, "requisitos": ["S1S", "COMP"], "porcentaje": 80}
+  {"clave": "R19", "nombre": "Residencia Profesional", "semestre": 9, "fila": 7, "creditos": 10, "requisitos": ["S1S", "COMP"], "porcentaje": 80, "residencia": true}
 ]

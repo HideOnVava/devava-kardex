@@ -5,6 +5,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -72,10 +73,56 @@ class RutaTest {
         k.reprobar(k.materia("C12"));
         k.datos.semestre = 2;
         Ruta.armar(k, 0);
-        assertEquals(3, k.datos.ruta.get("C12"));
+        assertEquals(2, k.datos.ruta.get("C12")); // no cursa nada ahora: la ruta arranca en este semestre
+        k.cursar(k.materia("B11"), null);
+        Ruta.armar(k, 0);
+        assertEquals(3, k.datos.ruta.get("C12")); // ya cursa algo: arranca en el siguiente
         Ruta.Resultado r = Ruta.evaluar(k);
         assertEquals(30, r.semestres().get(0).cargaMaxima()); // con una materia en repetición
         assertTrue(r.errores().isEmpty(), r.errores().toString());
+    }
+
+    @Test
+    void servicioSocialYComplementariasNoSeCursanNiSonCarga() throws IOException {
+        Kardex k = almacen().cargar();
+        assertTrue(k.cursar(k.materia("COMP"), null).contains("no se cursa"));
+        assertTrue(k.horario().isEmpty());
+
+        Ruta.armar(k, 0);
+        Ruta.Resultado r = Ruta.evaluar(k);
+        for (Ruta.Semestre s : r.semestres()) {
+            int carga = s.materias().stream().filter(m -> !m.seAcredita()).mapToInt(Kardex.Materia::creditos).sum();
+            assertEquals(carga, s.creditos(), "semestre " + s.numero());
+        }
+        int servicio = k.datos.ruta.get("S1S"), residencia = k.datos.ruta.get("R19");
+        assertTrue(servicio < residencia);
+    }
+
+    @Test
+    void residenciaSolaOConHastaDosMaterias() throws IOException {
+        Kardex k = almacen().cargar();
+        Ruta.armar(k, 0);
+        Ruta.Resultado r = Ruta.evaluar(k);
+        Ruta.Semestre conResidencia = r.semestres().stream()
+                .filter(s -> s.materias().stream().anyMatch(Kardex.Materia::residencia)).findFirst().orElseThrow();
+        long otras = conResidencia.materias().stream().filter(m -> !m.residencia() && !m.seAcredita()).count();
+        assertTrue(otras <= Kardex.MATERIAS_CON_RESIDENCIA, "otras = " + otras);
+
+        // A mano: Residencia con tres materias más se marca en rojo.
+        int s = conResidencia.numero();
+        k.datos.ruta.replaceAll((c, n) -> n == s ? s - 1 : n);
+        k.planear(k.materia("R19"), s);
+        for (String c : new String[]{"C16", "F18", "41D"}) k.planear(k.materia(c), s);
+        Ruta.Semestre ese = Ruta.evaluar(k).semestres().stream().filter(x -> x.numero() == s).findFirst().orElseThrow();
+        assertTrue(ese.error() != null && ese.error().contains("Residencia"), String.valueOf(ese.error()));
+
+        // En la historia tampoco deja cursarla con tres materias.
+        Kardex h = new Almacen(tmp.resolve("otra"), tmp.resolve("no-hay-beta")).cargar();
+        h.plan.stream().filter(m -> !Set.of("R19", "C16", "F18", "41D").contains(m.clave())).forEach(m -> h.aprobar(m, 90));
+        assertNull(h.cursar(h.materia("C16"), null));
+        assertNull(h.cursar(h.materia("F18"), null));
+        assertNull(h.cursar(h.materia("R19"), null));
+        assertTrue(h.cursar(h.materia("41D"), null).contains("Residencia"));
     }
 
     @Test

@@ -25,8 +25,18 @@ final class Ruta {
     private Ruta() {
     }
 
+    /** Primer semestre de la ruta: el siguiente, o el actual si ahora no cursas nada. */
+    static int inicio(Kardex k) {
+        return k.horario().isEmpty() ? k.datos.semestre : k.datos.semestre + 1;
+    }
+
+    /** Clase de estilo del semestre (p1…p6, en ciclo), la misma en la barra y en la retícula. */
+    static String color(Kardex k, int semestre) {
+        return "p" + (Math.floorMod(semestre - inicio(k), 6) + 1);
+    }
+
     static Resultado evaluar(Kardex k) {
-        int actual = k.datos.semestre;
+        int actual = k.datos.semestre, inicio = inicio(k);
         Map<String, Integer> plan = vigente(k);
         TreeMap<Integer, List<Kardex.Materia>> porSemestre = new TreeMap<>();
         plan.forEach((c, s) -> porSemestre.computeIfAbsent(s, x -> new ArrayList<>()).add(k.materia(c)));
@@ -40,20 +50,22 @@ final class Ruta {
             boolean soloEspeciales = reprobadas.values().stream().filter(v -> v >= 2).count() >= 2;
             int suma = 0;
             for (Kardex.Materia m : e.getValue()) {
-                suma += m.creditos();
+                if (!m.seAcredita()) suma += m.creditos(); // servicio social y complementarias no son carga
                 List<String> razones = new ArrayList<>();
-                if (s <= actual) razones.add("La ruta empieza en el " + (actual + 1) + "°.");
+                if (s < inicio) razones.add("La ruta empieza en el " + inicio + "°.");
                 for (String r : m.requisitos())
                     if (!lista(k, plan, r, s)) razones.add("Antes necesitas " + k.materia(r).nombre() + ".");
                 int necesarios = Kardex.creditosPara(m.porcentaje());
                 if (antes < necesarios)
                     razones.add("Al empezar el " + s + "° llevarías " + antes + " créditos; necesita " + necesarios + ".");
-                if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2)
+                if (soloEspeciales && !m.seAcredita() && reprobadas.getOrDefault(m.clave(), 0) < 2)
                     razones.add("Con dos materias en curso especial ese semestre solo llevas esas dos.");
                 if (!razones.isEmpty()) errores.put(m.clave(), String.join(" ", razones));
             }
             List<String> problemas = new ArrayList<>();
             if (suma > maximo) problemas.add("Suma " + suma + " créditos y tu máximo es " + maximo + ".");
+            if (Kardex.excedeResidencia(e.getValue()))
+                problemas.add("Con Residencia van hasta " + Kardex.MATERIAS_CON_RESIDENCIA + " materias más.");
             if (s > LIMITE) problemas.add("Pasa del límite de " + LIMITE + " semestres.");
             semestres.add(new Semestre(s, suma, maximo, e.getValue(), problemas.isEmpty() ? null : String.join(" ", problemas)));
         }
@@ -91,18 +103,24 @@ final class Ruta {
     private static Map<String, Integer> acomodar(Kardex k, List<Kardex.Materia> pendientes, int tope) {
         Map<String, Integer> plan = new HashMap<>();
         List<Kardex.Materia> faltan = new ArrayList<>(pendientes);
-        for (int s = k.datos.semestre + 1; !faltan.isEmpty(); s++) {
+        for (int s = inicio(k); !faltan.isEmpty(); s++) {
             int semestre = s, antes = creditosAntes(k, plan, s);
             Map<String, Integer> reprobadas = reprobadasPendientes(k, plan, s);
             boolean soloEspeciales = reprobadas.values().stream().filter(v -> v >= 2).count() >= 2;
             int maximo = Math.min(tope, Kardex.cargaMaxima(reprobadas)), carga = 0;
             List<Kardex.Materia> tomadas = new ArrayList<>();
             for (Kardex.Materia m : faltan) {
-                if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2) continue;
                 if (!m.requisitos().stream().allMatch(r -> lista(k, plan, r, semestre))) continue;
-                if (antes < Kardex.creditosPara(m.porcentaje()) || carga + m.creditos() > maximo) continue;
+                if (antes < Kardex.creditosPara(m.porcentaje())) continue;
+                if (!m.seAcredita()) { // lo que se cursa: carga, especiales y el límite con Residencia
+                    if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2) continue;
+                    if (carga + m.creditos() > maximo) continue;
+                    List<Kardex.Materia> juntas = new ArrayList<>(tomadas);
+                    juntas.add(m);
+                    if (Kardex.excedeResidencia(juntas)) continue;
+                    carga += m.creditos();
+                }
                 tomadas.add(m);
-                carga += m.creditos();
             }
             if (tomadas.isEmpty()) break; // nada más se puede acomodar
             tomadas.forEach(m -> plan.put(m.clave(), semestre));

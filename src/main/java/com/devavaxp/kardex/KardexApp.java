@@ -32,6 +32,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -81,7 +82,7 @@ public final class KardexApp extends Application {
 
     /** Barra del patio: la ruta semestre por semestre y en cuál terminarías. */
     private final HBox tira = new HBox(24);
-    private final HBox rutaSemestres = new HBox(6);
+    private final FlowPane rutaSemestres = new FlowPane(6, 4);
     private final Label rutaResumen = new Label(), rutaAviso = new Label();
     private final MenuButton armar = new MenuButton("Armar ruta  ▾");
 
@@ -216,18 +217,23 @@ public final class KardexApp extends Application {
     private HBox tira() {
         Label titulo = new Label("PATIO DE JUEGOS");
         titulo.getStyleClass().add("patio-titulo");
-        Label sub = new Label("Pruebas libres: nada de aquí cambia tu historia.");
+        Label sub = new Label("Pruebas libres: no cambian tu historia.");
         sub.getStyleClass().add("patio-sub");
+        VBox nombre = new VBox(1, titulo, sub);
         rutaResumen.getStyleClass().add("ruta-resumen");
         rutaAviso.getStyleClass().add("panel-alerta");
-        HBox ruta = new HBox(12, rutaSemestres, rutaResumen, rutaAviso);
-        ruta.setAlignment(Pos.CENTER_LEFT);
+        rutaAviso.setWrapText(true);
+        rutaAviso.setMaxWidth(300);
+        VBox resumen = new VBox(2, rutaResumen, rutaAviso);
+        resumen.setAlignment(Pos.CENTER_LEFT);
+        // Los semestres se acomodan en otra línea si no caben; lo demás nunca se recorta.
         rutaSemestres.setAlignment(Pos.CENTER_LEFT);
+        rutaSemestres.setMinWidth(0);
+        HBox.setHgrow(rutaSemestres, Priority.ALWAYS);
         Button copiar = new Button("Copiar mi historia");
         copiar.setOnAction(e -> copiarHistoria());
-        Region hueco = new Region();
-        HBox.setHgrow(hueco, Priority.ALWAYS);
-        tira.getChildren().setAll(new VBox(1, titulo, sub), ruta, hueco, armar, copiar);
+        for (Region r : List.of(nombre, resumen, armar, copiar)) r.setMinWidth(Region.USE_PREF_SIZE);
+        tira.getChildren().setAll(nombre, rutaSemestres, resumen, armar, copiar);
         tira.getStyleClass().add("tira-patio");
         tira.setAlignment(Pos.CENTER_LEFT);
         return tira;
@@ -308,7 +314,7 @@ public final class KardexApp extends Application {
         for (Ruta.Semestre s : r.semestres()) {
             Label l = new Label(s.numero() + "° · " + s.creditos() + " cr");
             boolean mal = s.error() != null || s.materias().stream().anyMatch(m -> r.errores().containsKey(m.clave()));
-            l.getStyleClass().addAll("ruta-semestre", mal ? "error" : "p" + Math.min(s.numero() - k.datos.semestre, 6));
+            l.getStyleClass().addAll("ruta-semestre", mal ? "error" : Ruta.color(k, s.numero()));
             String materias = s.materias().stream().map(Kardex.Materia::nombre).collect(Collectors.joining("\n"));
             Tooltip t = new Tooltip(materias + (s.error() != null ? "\n\n" + s.error() : mal ? "\n\nHay materias que rompen alguna regla (en rojo)." : ""));
             t.setShowDelay(Duration.millis(300));
@@ -323,7 +329,7 @@ public final class KardexApp extends Application {
         MenuItem rapida = new MenuItem("Lo antes posible");
         rapida.setOnAction(e -> armarRuta(0));
         items.add(rapida);
-        for (int s = k.datos.semestre + 1; s <= Ruta.LIMITE; s++) {
+        for (int s = Ruta.inicio(k); s <= Ruta.LIMITE; s++) {
             int objetivo = s;
             MenuItem item = new MenuItem("Terminar en el " + s + "°");
             item.setOnAction(e -> armarRuta(objetivo));

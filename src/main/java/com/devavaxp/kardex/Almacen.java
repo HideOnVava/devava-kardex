@@ -151,7 +151,7 @@ final class Almacen {
 
     private void importarBeta(List<Kardex.Materia> plan) throws IOException {
         Set<String> claves = plan.stream().map(Kardex.Materia::clave).collect(Collectors.toSet());
-        Set<String> sinCalificacion = plan.stream().filter(Kardex.Materia::sinCalificacion)
+        Set<String> seAcreditan = plan.stream().filter(Kardex.Materia::seAcredita)
                 .map(Kardex.Materia::clave).collect(Collectors.toSet());
         Kardex.Datos datos = new Kardex.Datos();
         Map<String, List<Kardex.Grupo>> oferta = new TreeMap<>();
@@ -164,7 +164,7 @@ final class Almacen {
             if (!claves.contains(clave)) continue;
             int veces = entero(m, "vecesReprobada");
             switch (texto(m, "estado")) {
-                case "APROBADA" -> datos.aprobadas.put(clave, sinCalificacion.contains(clave) ? 0 : entero(m, "calificacion"));
+                case "APROBADA" -> datos.aprobadas.put(clave, seAcreditan.contains(clave) ? 0 : entero(m, "calificacion"));
                 case "REPROBADA" -> datos.reprobadas.put(clave, Math.max(1, veces));
                 case "CURSANDO" -> {
                     cursando.add(clave);
