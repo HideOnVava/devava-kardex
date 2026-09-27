@@ -3,9 +3,10 @@
 Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha por
 **devava XP Studios** para Ingeniería en Sistemas Computacionales del ITL (Tecnológico de La Laguna).
 
-- **Dos modos.** *Historia* es tu avance real: una materia solo queda aprobada al escribir su
-  calificación (70 a 100). *Patio de juegos* es una copia para probar lo que quieras sin tocar
-  tu historia: apruebas al instante, armas horarios de prueba y planeas tu **ruta**.
+- **Dos secciones, desde el menú de inicio.** *Principal* es tu avance real: una materia solo
+  queda aprobada al escribir su calificación (70 a 100). *Patio de juegos* es una copia para
+  probar lo que quieras sin tocar Principal: apruebas al instante, armas horarios de prueba y
+  planeas tu **ruta**. Para pasar de una a otra se vuelve al menú.
 - **Ruta hasta titularte (patio).** Eliges en qué semestre cursarías cada materia que falta, o
   *Armar ruta* la acomoda sola: lo antes posible o con la carga más ligera que todavía termina
   en el 10°, 11° o 12°. Al ingresar, el 1er semestre lleva sí o sí las 6 materias de 1er semestre.
@@ -25,14 +26,23 @@ Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha po
   consulta pública de horarios.
 - **Exportar** la retícula o el horario como PNG.
 
+## Descargar
+
+En [Releases](https://github.com/HideOnVava/devava-kardex/releases/latest), para Windows 10 u 11
+de 64 bits (no necesitas Java):
+
+- `…-windows-x64-setup.exe`: el instalador. Si Windows avisa *"Windows protegió tu PC"*, haz
+  clic en **Más información → Ejecutar de todas formas** (los archivos no están firmados).
+- `…-windows-x64-portable.zip`: sin instalar; descomprime y abre `Devava Kardex.exe`.
+
 ## Uso
 
 Haz clic en una materia para marcarla como *Pendiente*, *Cursando*, *Aprobada* (con
 calificación) o *Reprobada*, o para elegir un grupo. En *Horario* ves la semana del horario
 activo y desde el selector creas, renombras o eliminas horarios. Arriba a la derecha indicas en
-qué semestre vas: la ruta del patio empieza en el siguiente.
+qué semestre vas: la ruta del patio empieza en el siguiente (o en ese mismo, si no cursas nada).
 
-En el patio, *Copiar mi historia* vuelve a empezar desde tu avance real.
+En el patio, *Copiar de Principal* vuelve a empezar desde tu avance real.
 
 ## Tus datos
 
@@ -40,7 +50,7 @@ Se guardan en `Documentos/Devava Kardex` (menú ⋯ → *Abrir carpeta de datos*
 
 | Archivo | Qué guarda |
 | --- | --- |
-| `kardex.json` | Tu historia: materias aprobadas y reprobadas, semestre y horarios. |
+| `kardex.json` | Principal: materias aprobadas y reprobadas, semestre y horarios. |
 | `patio.json` | El patio de juegos, con su ruta. |
 | `oferta.json` | Los grupos descargados del ITL. |
 
@@ -63,6 +73,16 @@ Requiere JDK 21.
 ```bash
 ./mvnw test
 ```
+
+### Publicar una versión
+
+1. Sube la versión en `pom.xml` y agrega su sección `## [x.y.z]` en `CHANGELOG.md`.
+2. Empuja la etiqueta: `git tag vx.y.z && git push origin vx.y.z`. El workflow *Release* corre
+   las pruebas, arma el instalador y el zip portable, y publica el release con sus notas.
+
+Para armarlo en tu PC: `.\packaging\release.ps1` (el instalador necesita el
+[WiX Toolset 3](https://github.com/wixtoolset/wix3/releases); sin él, `-SkipInstaller` arma
+solo el zip).
 
 ## Licencia
 

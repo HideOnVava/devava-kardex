@@ -1,0 +1,61 @@
+# Construye Devava Kardex para Windows y lo publica como release de GitHub.
+#
+# Se dispara al empujar una etiqueta de versión como v0.2.0 (debe coincidir con pom.xml y tener
+# su sección en CHANGELOG.md). Correrlo a mano desde Actions es un ensayo: construye todo y deja
+# los archivos como artifact, sin crear el release.
+name: Release
+
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    name: Windows x64
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: La etiqueta coincide con la versión de pom.xml
+        if: github.ref_type == 'tag'
+        shell: bash
+        run: |
+          version=$(sed -n 's/^    <version>\(.*\)<\/version>$/\1/p' pom.xml | head -1)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "La etiqueta $GITHUB_REF_NAME no coincide con la versión $version de pom.xml."; exit 1
+          fi
+
+      - name: Pruebas
+        run: .\mvnw.cmd -B verify
+
+      - name: Archivos del release
+        run: .\packaging\release.ps1
+
+      - name: Guardar los archivos
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-windows-x64
+          path: dist/release
+
+      - name: Publicar el release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/release/Devava-Kardex-* dist/release/SHA256SUMS.txt \
+            --title "Devava Kardex ${GITHUB_REF_NAME#v}" \
+            --notes-file dist/release/RELEASE_NOTES.md \
+            --verify-tag
