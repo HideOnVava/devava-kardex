@@ -22,8 +22,10 @@ import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 /** La retícula completa con flechas de seriación, escalada para caber en la ventana. */
@@ -32,7 +34,10 @@ final class ReticulaView extends Region {
     private static final double RADIO = 6, PUNTA = 7;
 
     private final Kardex kardex;
+    private final boolean patio;
     private final BiConsumer<Kardex.Materia, Node> alElegir;
+    private final Map<String, Integer> planeadas = new HashMap<>();
+    private Ruta.Resultado ruta;
     private final Pane lienzo = new Pane();
     private final Scale escala = new Scale(1, 1, 0, 0);
     private final List<Flechas.Flecha> flechas;
@@ -40,8 +45,9 @@ final class ReticulaView extends Region {
     private final int semestres, filas;
     private final double ancho, alto;
 
-    ReticulaView(Kardex kardex, BiConsumer<Kardex.Materia, Node> alElegir) {
+    ReticulaView(Kardex kardex, boolean patio, BiConsumer<Kardex.Materia, Node> alElegir) {
         this.kardex = kardex;
+        this.patio = patio;
         this.alElegir = alElegir;
         flechas = Flechas.trazar(kardex.plan);
         semestres = kardex.plan.stream().mapToInt(m -> m.semestre() + m.ancho() - 1).max().orElse(1);
@@ -66,6 +72,9 @@ final class ReticulaView extends Region {
     void refrescar() {
         lienzo.getChildren().clear();
         trazos.clear();
+        planeadas.clear();
+        ruta = patio ? Ruta.evaluar(kardex) : null;
+        if (ruta != null) ruta.semestres().forEach(s -> s.materias().forEach(m -> planeadas.put(m.clave(), s.numero())));
         for (int s = 1; s <= semestres; s++) {
             Label l = new Label("Semestre " + s);
             l.getStyleClass().add("semestre");
@@ -110,7 +119,19 @@ final class ReticulaView extends Region {
         t.setOnMouseEntered(e -> resaltar(m.clave(), true));
         t.setOnMouseExited(e -> resaltar(m.clave(), false));
         t.setOnMouseClicked(e -> alElegir.accept(m, t));
-        colocar(t, Flechas.x(m.semestre()), Flechas.y(m.fila()), Flechas.ancho(m.ancho()), Flechas.H);
+        double x = Flechas.x(m.semestre()), y = Flechas.y(m.fila()), w = Flechas.ancho(m.ancho());
+        colocar(t, x, y, w, Flechas.H);
+
+        // Patio: en la esquina, el semestre en que la cursarías (en rojo si rompe alguna regla).
+        Integer s = planeadas.get(m.clave());
+        if (s != null) {
+            Label insignia = new Label(s + "°");
+            insignia.getStyleClass().addAll("insignia", ruta.errores().containsKey(m.clave()) ? "error"
+                    : "p" + Math.min(s - kardex.datos.semestre, 6));
+            insignia.setAlignment(Pos.CENTER);
+            insignia.setMouseTransparent(true);
+            colocar(insignia, x + w - 34, y - 9, 40, 20);
+        }
     }
 
     /** Esquina inferior derecha de la tarjeta: calificación, repetición/especial o créditos. */
@@ -136,7 +157,10 @@ final class ReticulaView extends Region {
             case DISPONIBLE -> "Puedes cursarla";
             case BLOQUEADA -> kardex.bloqueo(m);
         };
-        return m.nombre() + (m.optativa() ? " (optativa)" : "") + "\n" + detalle;
+        Integer s = planeadas.get(m.clave());
+        String plan = s == null ? "" : "\nLa cursarías en el " + s + "°."
+                + (ruta.errores().containsKey(m.clave()) ? " " + ruta.errores().get(m.clave()) : "");
+        return m.nombre() + (m.optativa() ? " (optativa)" : "") + "\n" + detalle + plan;
     }
 
     private void leyenda() {

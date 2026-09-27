@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,6 +42,7 @@ final class Almacen {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Type PLAN = new TypeToken<List<Kardex.Materia>>() {}.getType();
     private static final Type OFERTA = new TypeToken<Map<String, List<Kardex.Grupo>>>() {}.getType();
+    static final String HISTORIA = "kardex.json", PATIO = "patio.json";
 
     final Path carpeta;
     /** Carpeta de la beta (KardexByVava), de donde se importa el avance la primera vez. */
@@ -57,24 +60,14 @@ final class Almacen {
         this.beta = beta;
     }
 
+    /** La historia: el avance real del alumno. */
     Kardex cargar() throws IOException {
         Files.createDirectories(carpeta);
         List<Kardex.Materia> plan = recurso("plan-isc.json", PLAN);
-        Path kardex = carpeta.resolve("kardex.json");
-        if (!Files.exists(kardex) && Files.exists(beta.resolve("reticula.json"))) {
-            importarBeta(plan);
-        }
-        Kardex.Datos datos = null;
-        if (Files.exists(kardex)) {
-            try {
-                datos = GSON.fromJson(Files.readString(kardex), Kardex.Datos.class);
-            } catch (JsonParseException e) {
-                Path copia = carpeta.resolve("kardex-danado-" + System.currentTimeMillis() + ".json");
-                Files.move(kardex, copia);
-                aviso = "Tu archivo de avance estaba dañado. Lo guardé como " + copia.getFileName()
-                        + " y empecé uno nuevo.";
-            }
-        }
+        boolean hayBeta = Files.exists(beta.resolve("reticula.json"));
+        if (!Files.exists(carpeta.resolve(HISTORIA)) && hayBeta) importarBeta(plan);
+        Kardex.Datos datos = leer(HISTORIA);
+        if (datos != null && datos.semestre < 1 && hayBeta) datos.semestre = semestreBeta();
         Path oferta = carpeta.resolve("oferta.json");
         Map<String, List<Kardex.Grupo>> grupos = Files.exists(oferta)
                 ? GSON.fromJson(Files.readString(oferta), OFERTA)
@@ -82,8 +75,40 @@ final class Almacen {
         return new Kardex(plan, datos != null ? datos : new Kardex.Datos(), grupos);
     }
 
-    void guardar(Kardex kardex) throws IOException {
-        escribir(carpeta.resolve("kardex.json"), kardex.datos);
+    /** El patio de juegos; la primera vez es una copia de la historia. */
+    Kardex cargarPatio(Kardex historia) throws IOException {
+        Kardex.Datos datos = leer(PATIO);
+        return new Kardex(historia.plan, datos != null ? datos : historia.copia(), historia.oferta());
+    }
+
+    void guardar(String archivo, Kardex kardex) throws IOException {
+        escribir(carpeta.resolve(archivo), kardex.datos);
+    }
+
+    /** Null si el archivo no existe; si está dañado lo aparta y avisa, para no perderlo al guardar. */
+    private Kardex.Datos leer(String archivo) throws IOException {
+        Path p = carpeta.resolve(archivo);
+        if (!Files.exists(p)) return null;
+        try {
+            return GSON.fromJson(Files.readString(p), Kardex.Datos.class);
+        } catch (JsonParseException e) {
+            Path copia = carpeta.resolve(archivo.replace(".json", "") + "-danado-" + System.currentTimeMillis() + ".json");
+            Files.move(p, copia);
+            aviso = "El archivo " + archivo + " estaba dañado. Lo guardé como " + copia.getFileName() + " y empecé uno nuevo.";
+            return null;
+        }
+    }
+
+    /** La beta guardaba el semestre actual en las preferencias de Java (en Windows, el registro). */
+    private static int semestreBeta() {
+        try {
+            Preferences raiz = Preferences.userRoot();
+            if (raiz.nodeExists("com/example/kardexbyvava"))
+                return Math.max(1, raiz.node("com/example/kardexbyvava").getInt("semestre_guardado", 1));
+        } catch (BackingStoreException | SecurityException ignorada) {
+            // Sin acceso a las preferencias: se queda en 1.
+        }
+        return 1;
     }
 
     void guardarOferta(Map<String, List<Kardex.Grupo>> oferta) throws IOException {
@@ -196,9 +221,10 @@ final class Almacen {
         if (!datos.horarios.containsKey(datos.activo)) datos.activo = datos.horarios.keySet().iterator().next();
         // Lo que la beta marcaba como "cursando" se sigue cursando, aunque no tuviera grupo.
         cursando.forEach(c -> datos.horarios.get(datos.activo).putIfAbsent(c, ""));
+        datos.semestre = semestreBeta();
 
         escribir(carpeta.resolve("oferta.json"), oferta);
-        escribir(carpeta.resolve("kardex.json"), datos);
+        escribir(carpeta.resolve(HISTORIA), datos);
         aviso = "Importé tu avance de la versión anterior. La carpeta vieja (" + beta + ") quedó intacta como respaldo.";
     }
 

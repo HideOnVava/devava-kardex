@@ -166,7 +166,7 @@ class KardexTest {
 
         // La segunda vez ya no importa: lee lo guardado.
         k.aprobar(k.materia("D11"), 80);
-        almacen.guardar(k);
+        almacen.guardar(Almacen.HISTORIA, k);
         Almacen otra = new Almacen(tmp.resolve("datos"), beta);
         assertEquals(80, otra.cargar().calificacion(k.materia("D11")));
         assertNull(otra.aviso);

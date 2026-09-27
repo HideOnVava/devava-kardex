@@ -36,12 +36,14 @@ final class Kardex {
 
     enum Estado { APROBADA, CURSANDO, REPROBADA, DISPONIBLE, BLOQUEADA }
 
-    /** Lo que se guarda en kardex.json. */
+    /** Lo que se guarda en kardex.json (la historia) o en patio.json (el patio de juegos). */
     static final class Datos {
         Map<String, Integer> aprobadas = new TreeMap<>();   // clave → calificación (0 = sin calificación)
         Map<String, Integer> reprobadas = new TreeMap<>();  // clave → veces reprobada (solo materias no aprobadas)
         Map<String, Map<String, String>> horarios = new LinkedHashMap<>(); // nombre → clave → letra ("" = sin grupo)
         String activo = "Horario 1";
+        int semestre;                                       // el que cursas ahora (0 = sin definir)
+        Map<String, Integer> ruta = new TreeMap<>();        // patio: clave → semestre en que la cursarías
     }
 
     final List<Materia> plan;
@@ -54,6 +56,7 @@ final class Kardex {
         this.datos = datos;
         this.oferta = oferta;
         plan.forEach(m -> porClave.put(m.clave(), m));
+        if (datos.semestre < 1) datos.semestre = 1;
         if (datos.horarios.isEmpty()) datos.horarios.put(datos.activo, new LinkedHashMap<>());
         if (!datos.horarios.containsKey(datos.activo)) datos.activo = datos.horarios.keySet().iterator().next();
         // Un horario solo tiene materias del plan que aún no están aprobadas.
@@ -134,12 +137,16 @@ final class Kardex {
                 .mapToInt(Materia::creditos).sum();
     }
 
-    /** 36 créditos; 30 con alguna materia en repetición; 20 con una en especial; 10 con dos. */
     int cargaMaxima() {
-        long especiales = especiales();
+        return cargaMaxima(datos.reprobadas);
+    }
+
+    /** 36 créditos; 30 con alguna materia en repetición; 20 con una en especial; 10 con dos. */
+    static int cargaMaxima(Map<String, Integer> reprobadas) {
+        long especiales = reprobadas.values().stream().filter(v -> v >= 2).count();
         if (especiales >= 2) return 10;
         if (especiales == 1) return 20;
-        return datos.reprobadas.containsValue(1) ? 30 : 36;
+        return reprobadas.containsValue(1) ? 30 : 36;
     }
 
     private long especiales() {
@@ -226,6 +233,7 @@ final class Kardex {
         }
         if (letra == null) {
             if (nueva) horario().put(c, "");
+            datos.ruta.remove(c);
             return null;
         }
         Grupo g = grupo(m, letra);
@@ -233,7 +241,14 @@ final class Kardex {
         String cruce = choque(m, g);
         if (cruce != null) return "Se cruza con " + cruce + ".";
         horario().put(c, letra);
+        datos.ruta.remove(c);
         return null;
+    }
+
+    /** Patio: semestre futuro en que se cursaría la materia (null la saca de la ruta). */
+    void planear(Materia m, Integer semestre) {
+        if (semestre == null) datos.ruta.remove(m.clave());
+        else datos.ruta.put(m.clave(), semestre);
     }
 
     void quitar(Materia m) {
@@ -243,6 +258,7 @@ final class Kardex {
     void aprobar(Materia m, int calificacion) {
         datos.aprobadas.put(m.clave(), m.sinCalificacion() ? 0 : calificacion);
         datos.reprobadas.remove(m.clave());
+        datos.ruta.remove(m.clave());
         datos.horarios.values().forEach(h -> h.remove(m.clave()));
     }
 
@@ -262,9 +278,32 @@ final class Kardex {
     void reiniciar() {
         datos.aprobadas.clear();
         datos.reprobadas.clear();
+        datos.ruta.clear();
         datos.horarios.clear();
         datos.activo = "Horario 1";
         datos.horarios.put(datos.activo, new LinkedHashMap<>());
+        datos.semestre = 1;
+    }
+
+    /** Copia independiente de los datos: el patio arranca desde la historia sin tocarla. */
+    Datos copia() {
+        Datos d = new Datos();
+        d.aprobadas = new TreeMap<>(datos.aprobadas);
+        d.reprobadas = new TreeMap<>(datos.reprobadas);
+        datos.horarios.forEach((n, h) -> d.horarios.put(n, new LinkedHashMap<>(h)));
+        d.activo = datos.activo;
+        d.semestre = datos.semestre;
+        return d;
+    }
+
+    /** Reemplaza todo el avance por otro (el patio al copiar la historia). */
+    void reemplazar(Datos otros) {
+        datos.aprobadas = otros.aprobadas;
+        datos.reprobadas = otros.reprobadas;
+        datos.horarios = otros.horarios;
+        datos.activo = otros.activo;
+        datos.semestre = otros.semestre;
+        datos.ruta = otros.ruta;
     }
 
     // ------------------------------------------------------------------

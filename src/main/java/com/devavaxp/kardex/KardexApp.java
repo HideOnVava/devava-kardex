@@ -13,6 +13,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -46,6 +47,7 @@ import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -54,20 +56,34 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-/** Devava Kardex: la retícula con tu avance y tu horario, en una ventana. */
+/**
+ * Devava Kardex: la retícula con tu avance y tu horario, en una ventana. La historia es tu
+ * avance real; el patio de juegos, una copia para probar lo que quieras y planear la ruta.
+ */
 public final class KardexApp extends Application {
 
     static final String NOMBRE = "Devava Kardex";
 
+    /** Retícula y horario sobre un kardex: la historia o el patio de juegos. */
+    private record Modo(Kardex kardex, String archivo, boolean patio, ReticulaView reticula, HorarioView horario, StackPane vista) {}
+
     private Almacen almacen;
-    private Kardex kardex;
-    private ReticulaView reticula;
-    private HorarioView horario;
-    private HBox vistas;
+    private Modo historia, patio, modo;
+    private String vista = "reticula";
+    private HBox modos, vistas;
+    private final StackPane raiz = new StackPane();
     private final Label promedio = new Label(), creditos = new Label(), carga = new Label(), cargaNombre = new Label();
     private final Label aviso = new Label();
+    private final MenuButton semestre = new MenuButton();
     private final ProgressBar avance = new ProgressBar(0);
     private final PauseTransition borrarAviso = new PauseTransition(Duration.seconds(6));
+    private final MenuItem reiniciar = new MenuItem();
+
+    /** Barra del patio: la ruta semestre por semestre y en cuál terminarías. */
+    private final HBox tira = new HBox(24);
+    private final HBox rutaSemestres = new HBox(6);
+    private final Label rutaResumen = new Label(), rutaAviso = new Label();
+    private final MenuButton armar = new MenuButton("Armar ruta  ▾");
 
     /** Capa encima de todo donde flota el panel de la materia elegida. */
     private final Pane capa = new Pane() {
@@ -83,15 +99,16 @@ public final class KardexApp extends Application {
     @Override
     public void start(Stage stage) {
         almacen = new Almacen();
-        Kardex cargado;
+        Kardex h, p;
         try {
-            cargado = almacen.cargar();
+            h = almacen.cargar();
+            p = almacen.cargarPatio(h);
         } catch (IOException | RuntimeException e) {
             error(null, "No pude abrir tus datos", e.getMessage() + "\n\nCarpeta: " + almacen.carpeta);
             Platform.exit();
             return;
         }
-        Scene scene = new Scene(crearUI(cargado, almacen), 1280, 800);
+        Scene scene = new Scene(crearUI(h, p, almacen), 1280, 800);
         scene.getStylesheets().add(css());
         stage.setTitle(NOMBRE);
         stage.getIcons().add(icono());
@@ -107,17 +124,17 @@ public final class KardexApp extends Application {
         return KardexApp.class.getResource("styles.css").toExternalForm();
     }
 
-    Parent crearUI(Kardex kardex, Almacen almacen) {
-        this.kardex = kardex;
+    Parent crearUI(Kardex h, Kardex p, Almacen almacen) {
         this.almacen = almacen;
-        reticula = new ReticulaView(kardex, this::abrir);
-        horario = new HorarioView(kardex, this::cambio, this::abrir);
-        horario.setVisible(false);
+        historia = modo(h, Almacen.HISTORIA, false);
+        patio = modo(p, Almacen.PATIO, true);
+        modo = historia;
+        patio.vista().setVisible(false);
 
-        BorderPane contenido = new BorderPane(new StackPane(reticula, horario));
-        contenido.setTop(barra());
+        BorderPane contenido = new BorderPane(new StackPane(historia.vista(), patio.vista()));
+        contenido.setTop(new VBox(barra(), tira()));
         capa.setPickOnBounds(false);
-        StackPane raiz = new StackPane(contenido, capa);
+        raiz.getChildren().setAll(contenido, capa);
         raiz.getStyleClass().add("pantalla");
         // Un clic fuera del panel lo cierra (y sigue su camino: si fue en otra materia, la abre).
         raiz.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
@@ -131,8 +148,18 @@ public final class KardexApp extends Application {
         return raiz;
     }
 
+    private Modo modo(Kardex k, String archivo, boolean esPatio) {
+        ReticulaView r = new ReticulaView(k, esPatio, this::abrir);
+        HorarioView h = new HorarioView(k, this::cambio, this::abrir);
+        h.setVisible(false);
+        return new Modo(k, archivo, esPatio, r, h, new StackPane(r, h));
+    }
+
     private HBox barra() {
-        vistas = segmentado("reticula", v -> mostrar(v), new String[][]{{"reticula", "Retícula"}, {"horario", "Horario"}});
+        modos = segmentado("historia", this::cambiarModo,
+                new String[][]{{"historia", "Historia"}, {"patio", "Patio de juegos"}});
+        modos.getStyleClass().setAll("pestanas");
+        vistas = segmentado("reticula", this::mostrar, new String[][]{{"reticula", "Retícula"}, {"horario", "Horario"}});
 
         // Barra de créditos con una marca en el 60 % (materias de especialidad).
         avance.getStyleClass().add("thin-bar");
@@ -153,13 +180,23 @@ public final class KardexApp extends Application {
                         + "70 %: " + Kardex.creditosPara(70) + " créditos (servicio social)\n"
                         + "80 %: " + Kardex.creditosPara(80) + " créditos (residencia)"));
 
+        for (int s = 1; s <= Ruta.LIMITE; s++) {
+            int n = s;
+            MenuItem item = new MenuItem(s + "°");
+            item.setOnAction(e -> {
+                modo.kardex().datos.semestre = n;
+                cambio();
+            });
+            semestre.getItems().add(item);
+        }
+        semestre.getStyleClass().addAll("flat", "semestre");
+
         MenuItem sync = new MenuItem("Actualizar grupos del ITL");
         sync.setOnAction(e -> actualizarGrupos(sync));
         MenuItem exportar = new MenuItem("Exportar imagen…");
         exportar.setOnAction(e -> exportar());
         MenuItem carpeta = new MenuItem("Abrir carpeta de datos");
         carpeta.setOnAction(e -> getHostServices().showDocument(almacen.carpeta.toUri().toString()));
-        MenuItem reiniciar = new MenuItem("Reiniciar avance…");
         reiniciar.getStyleClass().add("danger");
         reiniciar.setOnAction(e -> reiniciar());
         MenuButton menu = new MenuButton("⋯", null, sync, exportar, carpeta, new SeparatorMenuItem(), reiniciar);
@@ -169,11 +206,31 @@ public final class KardexApp extends Application {
         HBox.setHgrow(izq, Priority.ALWAYS);
         HBox.setHgrow(der, Priority.ALWAYS);
         aviso.getStyleClass().add("aviso-barra");
-        HBox barra = new HBox(32, vistas, izq, dato("PROMEDIO", promedio), dato("CRÉDITOS", filaCreditos),
-                dato(cargaNombre, carga), der, aviso, menu);
+        HBox barra = new HBox(28, modos, vistas, izq, dato("PROMEDIO", promedio), dato("CRÉDITOS", filaCreditos),
+                dato(cargaNombre, carga), dato("SEMESTRE", semestre), der, aviso, menu);
         barra.getStyleClass().add("barra");
         barra.setAlignment(Pos.CENTER_LEFT);
         return barra;
+    }
+
+    private HBox tira() {
+        Label titulo = new Label("PATIO DE JUEGOS");
+        titulo.getStyleClass().add("patio-titulo");
+        Label sub = new Label("Pruebas libres: nada de aquí cambia tu historia.");
+        sub.getStyleClass().add("patio-sub");
+        rutaResumen.getStyleClass().add("ruta-resumen");
+        rutaAviso.getStyleClass().add("panel-alerta");
+        HBox ruta = new HBox(12, rutaSemestres, rutaResumen, rutaAviso);
+        ruta.setAlignment(Pos.CENTER_LEFT);
+        rutaSemestres.setAlignment(Pos.CENTER_LEFT);
+        Button copiar = new Button("Copiar mi historia");
+        copiar.setOnAction(e -> copiarHistoria());
+        Region hueco = new Region();
+        HBox.setHgrow(hueco, Priority.ALWAYS);
+        tira.getChildren().setAll(new VBox(1, titulo, sub), ruta, hueco, armar, copiar);
+        tira.getStyleClass().add("tira-patio");
+        tira.setAlignment(Pos.CENTER_LEFT);
+        return tira;
     }
 
     private static VBox dato(String nombre, Node valor) {
@@ -190,8 +247,9 @@ public final class KardexApp extends Application {
 
     /** Guarda y vuelve a pintar. Todo cambio del usuario pasa por aquí. */
     void cambio() {
+        rutaAviso.setText("");
         try {
-            almacen.guardar(kardex);
+            almacen.guardar(modo.archivo(), modo.kardex());
         } catch (IOException e) {
             error(ventana(), "No pude guardar", e.getMessage());
         }
@@ -199,24 +257,101 @@ public final class KardexApp extends Application {
     }
 
     void refrescar() {
-        reticula.refrescar();
-        horario.refrescar();
-        double p = kardex.promedio();
+        Kardex k = modo.kardex();
+        modo.reticula().refrescar();
+        modo.horario().refrescar();
+        double p = k.promedio();
         promedio.setText(Double.isNaN(p) ? "—" : String.format(Locale.ROOT, "%.2f", p));
-        int cr = kardex.creditosAprobados();
+        int cr = k.creditosAprobados();
         creditos.setText(cr + " / " + Kardex.CREDITOS_TOTALES);
         avance.setProgress(Math.min(1, cr / (double) Kardex.CREDITOS_TOTALES));
         avance.getStyleClass().remove("complete");
         if (cr >= Kardex.CREDITOS_TOTALES) avance.getStyleClass().add("complete");
-        cargaNombre.setText("CARGA · " + kardex.activo());
-        carga.setText(kardex.carga() + " / " + kardex.cargaMaxima());
+        cargaNombre.setText("CARGA · " + k.activo());
+        carga.setText(k.carga() + " / " + k.cargaMaxima());
+        semestre.setText(k.datos.semestre + "°  ▾");
+        reiniciar.setText(modo.patio() ? "Vaciar el patio…" : "Reiniciar avance…");
+        raiz.getStyleClass().remove("en-patio");
+        if (modo.patio()) raiz.getStyleClass().add("en-patio");
+        tira.setVisible(modo.patio());
+        tira.setManaged(modo.patio());
+        if (modo.patio()) refrescarRuta();
     }
 
-    void mostrar(String vista) {
+    void cambiarModo(String cual) {
         cerrarPanel();
-        reticula.setVisible(vista.equals("reticula"));
-        horario.setVisible(vista.equals("horario"));
+        modo = cual.equals("patio") ? patio : historia;
+        historia.vista().setVisible(modo == historia);
+        patio.vista().setVisible(modo == patio);
+        seleccionar(modos, cual);
+        refrescar();
+    }
+
+    void mostrar(String cual) {
+        cerrarPanel();
+        vista = cual;
+        for (Modo m : List.of(historia, patio)) {
+            m.reticula().setVisible(vista.equals("reticula"));
+            m.horario().setVisible(vista.equals("horario"));
+        }
         seleccionar(vistas, vista);
+    }
+
+    // ------------------------------------------------------------------
+    // Patio: ruta
+    // ------------------------------------------------------------------
+
+    private void refrescarRuta() {
+        Kardex k = patio.kardex();
+        Ruta.Resultado r = Ruta.evaluar(k);
+        rutaSemestres.getChildren().clear();
+        for (Ruta.Semestre s : r.semestres()) {
+            Label l = new Label(s.numero() + "° · " + s.creditos() + " cr");
+            boolean mal = s.error() != null || s.materias().stream().anyMatch(m -> r.errores().containsKey(m.clave()));
+            l.getStyleClass().addAll("ruta-semestre", mal ? "error" : "p" + Math.min(s.numero() - k.datos.semestre, 6));
+            String materias = s.materias().stream().map(Kardex.Materia::nombre).collect(Collectors.joining("\n"));
+            Tooltip t = new Tooltip(materias + (s.error() != null ? "\n\n" + s.error() : mal ? "\n\nHay materias que rompen alguna regla (en rojo)." : ""));
+            t.setShowDelay(Duration.millis(300));
+            Tooltip.install(l, t);
+            rutaSemestres.getChildren().add(l);
+        }
+        rutaResumen.setText(r.semestres().isEmpty() ? "Sin ruta: usa «Armar ruta» o elige en qué semestre cursarías cada materia."
+                : r.faltan() > 0 ? "Faltan " + r.faltan() + (r.faltan() == 1 ? " materia" : " materias") + " por acomodar"
+                : "Terminas en el " + r.termina() + "°" + (r.termina() > Ruta.LIMITE ? ", pasa del límite de " + Ruta.LIMITE : ""));
+
+        List<MenuItem> items = new ArrayList<>();
+        MenuItem rapida = new MenuItem("Lo antes posible");
+        rapida.setOnAction(e -> armarRuta(0));
+        items.add(rapida);
+        for (int s = k.datos.semestre + 1; s <= Ruta.LIMITE; s++) {
+            int objetivo = s;
+            MenuItem item = new MenuItem("Terminar en el " + s + "°");
+            item.setOnAction(e -> armarRuta(objetivo));
+            items.add(item);
+        }
+        MenuItem borrar = new MenuItem("Borrar la ruta");
+        borrar.setOnAction(e -> {
+            k.datos.ruta.clear();
+            cambio();
+        });
+        items.add(new SeparatorMenuItem());
+        items.add(borrar);
+        armar.getItems().setAll(items);
+    }
+
+    private void armarRuta(int objetivo) {
+        cerrarPanel();
+        String problema = Ruta.armar(patio.kardex(), objetivo);
+        cambio();
+        rutaAviso.setText(problema == null ? "" : problema);
+    }
+
+    private void copiarHistoria() {
+        if (!confirmar(ventana(), "Copiar mi historia",
+                "El patio se reemplaza por una copia de tu historia actual y se borra la ruta.", "Copiar", false)) return;
+        cerrarPanel();
+        patio.kardex().reemplazar(historia.kardex().copia());
+        cambio();
     }
 
     // ------------------------------------------------------------------
@@ -225,15 +360,15 @@ public final class KardexApp extends Application {
 
     void abrir(Kardex.Materia m, Node desde) {
         cerrarPanel();
-        panel = new MateriaPanel(kardex, m, this::cambio, this::cerrarPanel);
+        panel = new MateriaPanel(modo.kardex(), m, modo.patio(), this::cambio, this::cerrarPanel);
         ancla = capa.sceneToLocal(desde.localToScene(desde.getBoundsInLocal()));
         capa.getChildren().setAll(panel);
-        reticula.resaltar(m.clave(), true);
+        modo.reticula().resaltar(m.clave(), true);
     }
 
     void cerrarPanel() {
         if (panel == null) return;
-        reticula.resaltar(panel.materia().clave(), false);
+        modo.reticula().resaltar(panel.materia().clave(), false);
         capa.getChildren().clear();
         panel = null;
     }
@@ -261,7 +396,7 @@ public final class KardexApp extends Application {
     private void actualizarGrupos(MenuItem boton) {
         boton.setDisable(true);
         avisar("Actualizando grupos del ITL…", false);
-        Set<String> claves = kardex.plan.stream().map(Kardex.Materia::clave).collect(Collectors.toSet());
+        Set<String> claves = modo.kardex().plan.stream().map(Kardex.Materia::clave).collect(Collectors.toSet());
         Thread hilo = new Thread(() -> {
             try {
                 Map<String, List<Kardex.Grupo>> oferta = SyncITL.descargar(claves);
@@ -271,7 +406,8 @@ public final class KardexApp extends Application {
                     } catch (IOException e) {
                         error(ventana(), "No pude guardar los grupos", e.getMessage());
                     }
-                    kardex.setOferta(oferta);
+                    historia.kardex().setOferta(oferta);
+                    patio.kardex().setOferta(oferta);
                     refrescar();
                     avisar("Grupos actualizados: " + oferta.values().stream().mapToInt(List::size).sum(), true);
                 });
@@ -295,14 +431,14 @@ public final class KardexApp extends Application {
     }
 
     private void exportar() {
-        boolean enReticula = reticula.isVisible();
+        boolean enReticula = vista.equals("reticula");
         FileChooser fc = new FileChooser();
         fc.setTitle("Exportar imagen");
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagen PNG", "*.png"));
-        fc.setInitialFileName(enReticula ? "Retícula.png" : kardex.activo() + ".png");
+        fc.setInitialFileName(enReticula ? (modo.patio() ? "Ruta.png" : "Retícula.png") : modo.kardex().activo() + ".png");
         File destino = fc.showSaveDialog(ventana());
         if (destino == null) return;
-        WritableImage imagen = enReticula ? reticula.imagen() : horario.imagen();
+        WritableImage imagen = enReticula ? modo.reticula().imagen() : modo.horario().imagen();
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(imagen, null), "png", destino);
             avisar("Imagen guardada", true);
@@ -312,13 +448,14 @@ public final class KardexApp extends Application {
     }
 
     private void reiniciar() {
-        if (confirmar(ventana(), "Reiniciar avance",
-                "Se borran tus calificaciones, materias reprobadas y todos tus horarios. No se puede deshacer.",
-                "Reiniciar", true)) {
-            cerrarPanel();
-            kardex.reiniciar();
-            cambio();
-        }
+        boolean ok = modo.patio()
+                ? confirmar(ventana(), "Vaciar el patio", "El patio queda en blanco, como alumno de primer semestre. Tu historia no cambia.", "Vaciar", true)
+                : confirmar(ventana(), "Reiniciar avance",
+                "Se borran tus calificaciones, materias reprobadas y todos tus horarios. No se puede deshacer.", "Reiniciar", true);
+        if (!ok) return;
+        cerrarPanel();
+        modo.kardex().reiniciar();
+        cambio();
     }
 
     private Window ventana() {

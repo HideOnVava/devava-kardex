@@ -2,6 +2,7 @@ module com.devavaxp.kardex {
     requires javafx.controls;
     requires javafx.swing;     // SwingFXUtils: exportar imagen
     requires java.desktop;     // ImageIO y la carpeta Documentos de Windows (FileSystemView)
+    requires java.prefs;       // el semestre que guardaba la beta
     requires com.google.gson;
     requires org.jsoup;
 

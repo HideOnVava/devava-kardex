@@ -3,6 +3,12 @@
 Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha por
 **devava XP Studios** para Ingeniería en Sistemas Computacionales del ITL (Tecnológico de La Laguna).
 
+- **Dos modos.** *Historia* es tu avance real: una materia solo queda aprobada al escribir su
+  calificación (70 a 100). *Patio de juegos* es una copia para probar lo que quieras sin tocar
+  tu historia: apruebas al instante, armas horarios de prueba y planeas tu **ruta**.
+- **Ruta hasta titularte (patio).** Eliges en qué semestre cursarías cada materia que falta, o
+  *Armar ruta* la acomoda sola: lo antes posible o con la carga más ligera que todavía termina
+  en el 10°, 11° o 12°. Cada semestre muestra sus créditos y lo que rompa una regla sale en rojo.
 - **Retícula completa con sus flechas de seriación.** Cada materia muestra si está aprobada
   (con su calificación), en curso, reprobada, disponible o bloqueada. Al pasar el mouse sobre
   una materia se resaltan las flechas que llegan a ella y las que salen de ella.
@@ -20,7 +26,10 @@ Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha po
 
 Haz clic en una materia para marcarla como *Pendiente*, *Cursando*, *Aprobada* (con
 calificación) o *Reprobada*, o para elegir un grupo. En *Horario* ves la semana del horario
-activo y desde el selector creas, renombras o eliminas horarios.
+activo y desde el selector creas, renombras o eliminas horarios. Arriba a la derecha indicas en
+qué semestre vas: la ruta del patio empieza en el siguiente.
+
+En el patio, *Copiar mi historia* vuelve a empezar desde tu avance real.
 
 ## Tus datos
 
@@ -28,7 +37,8 @@ Se guardan en `Documentos/Devava Kardex` (menú ⋯ → *Abrir carpeta de datos*
 
 | Archivo | Qué guarda |
 | --- | --- |
-| `kardex.json` | Materias aprobadas y reprobadas, y tus horarios. |
+| `kardex.json` | Tu historia: materias aprobadas y reprobadas, semestre y horarios. |
+| `patio.json` | El patio de juegos, con su ruta. |
 | `oferta.json` | Los grupos descargados del ITL. |
 
 La primera vez importa el avance de la beta (*KardexByVava*, en `Documents/KardexITL_Data`);
