@@ -83,6 +83,7 @@ public final class KardexApp extends Application {
     private final Label promedio = new Label(), creditos = new Label(), carga = new Label(), cargaNombre = new Label();
     private final Label aviso = new Label();
     private final MenuButton semestre = new MenuButton();
+    private final Tooltip cargaAyuda = new Tooltip();
     private final ProgressBar avance = new ProgressBar(0);
     private final PauseTransition borrarAviso = new PauseTransition(Duration.seconds(6));
     private final MenuItem reiniciar = new MenuItem();
@@ -292,6 +293,7 @@ public final class KardexApp extends Application {
         HBox.setHgrow(izq, Priority.ALWAYS);
         HBox.setHgrow(der, Priority.ALWAYS);
         aviso.getStyleClass().add("aviso-barra");
+        carga.setTooltip(cargaAyuda);
         HBox barra = new HBox(28, seccion, vistas, izq, dato("PROMEDIO", promedio), dato("CRÉDITOS", filaCreditos),
                 dato(cargaNombre, carga), dato("SEMESTRE", semestre), der, aviso, menu);
         barra.getStyleClass().add("barra");
@@ -358,7 +360,15 @@ public final class KardexApp extends Application {
         avance.getStyleClass().remove("complete");
         if (cr >= Kardex.CREDITOS_TOTALES) avance.getStyleClass().add("complete");
         cargaNombre.setText("CARGA · " + k.activo());
-        carga.setText(k.carga() + " / " + k.cargaMaxima());
+        int c = k.carga(), maximo = k.cargaMaxima();
+        carga.setText(c + " / " + maximo);
+        // Solo un aviso: las materias se agregan de una en una. No aplica al final de la carrera.
+        boolean bajo = c > 0 && c < Kardex.CARGA_MINIMA && maximo >= Kardex.CARGA_MINIMA
+                && Kardex.CREDITOS_TOTALES - cr >= Kardex.CARGA_MINIMA;
+        carga.getStyleClass().remove("bajo");
+        if (bajo) carga.getStyleClass().add("bajo");
+        cargaAyuda.setText("Mínimo " + Kardex.CARGA_MINIMA + " y máximo " + maximo + " créditos"
+                + (bajo ? ": llevas menos del mínimo." : "."));
         semestre.setText(k.datos.semestre + "°  ▾");
         reiniciar.setText(modo.patio() ? "Vaciar el patio…" : "Reiniciar avance…");
         raiz.getStyleClass().remove("en-patio");

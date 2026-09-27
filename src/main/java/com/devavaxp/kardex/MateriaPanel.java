@@ -207,8 +207,6 @@ final class MateriaPanel extends VBox {
         if (estado == Kardex.Estado.BLOQUEADA) return kardex.bloqueo(m);
         if (m.seAcredita() && estado != Kardex.Estado.APROBADA)
             return "No se cursa ni cuenta en tu carga: márcala aprobada cuando la termines.";
-        if (m.residencia() && estado != Kardex.Estado.APROBADA)
-            return "Se lleva sola o con hasta " + Kardex.MATERIAS_CON_RESIDENCIA + " materias más.";
         if (estado == Kardex.Estado.REPROBADA || estado == Kardex.Estado.CURSANDO) {
             if (veces >= 2) return "Reprobada " + veces + " veces: va en curso especial.";
             if (veces == 1) return "Reprobada una vez: va en curso de repetición.";

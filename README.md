@@ -17,10 +17,10 @@ Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha po
   una materia se resaltan las flechas que llegan a ella y las que salen de ella.
 - **Promedio, créditos y carga en tiempo real**, con la meta del 60 % marcada en la barra.
 - **Reglas del TecNM:** seriación, 60 % de créditos para especialidad, 70 % para servicio
-  social, 80 % + servicio social + complementarias para residencia, residencia sola o con hasta
-  2 materias más, carga máxima de 36/30/20/10 créditos según repeticiones y cursos especiales, y
-  ningún cruce de horario. Servicio social y complementarias no se cursan ni son carga: solo se
-  marcan aprobadas al terminarlas.
+  social, 80 % + servicio social + complementarias para residencia, carga de 18 a 36 créditos
+  (máximo 30 con una materia en repetición, 20 con una en especial y, con dos en especial, solo
+  esas dos), y ningún cruce de horario. Residencia cuenta como 10 créditos de tu carga. Servicio
+  social y complementarias no se cursan ni son carga: solo se marcan aprobadas al terminarlas.
 - **Varios horarios** (para comparar opciones). Lo que está en el horario activo es lo que
   cursas.
 - **Grupos del ITL:** menú ⋯ → *Actualizar grupos del ITL* baja la oferta vigente de la

@@ -37,8 +37,11 @@ final class Ruta {
     }
 
     static Resultado evaluar(Kardex k) {
+        return evaluar(k, vigente(k));
+    }
+
+    private static Resultado evaluar(Kardex k, Map<String, Integer> plan) {
         int actual = k.datos.semestre, inicio = inicio(k);
-        Map<String, Integer> plan = vigente(k);
         TreeMap<Integer, List<Kardex.Materia>> porSemestre = new TreeMap<>();
         plan.forEach((c, s) -> porSemestre.computeIfAbsent(s, x -> new ArrayList<>()).add(k.materia(c)));
         Map<String, String> errores = new HashMap<>();
@@ -67,8 +70,12 @@ final class Ruta {
             }
             List<String> problemas = new ArrayList<>();
             if (suma > maximo) problemas.add("Suma " + suma + " créditos y tu máximo es " + maximo + ".");
-            if (Kardex.excedeResidencia(e.getValue()))
-                problemas.add("Con Residencia van hasta " + Kardex.MATERIAS_CON_RESIDENCIA + " materias más.");
+            // La carga mínima no aplica si ya te quedan menos créditos que eso (el final de la carrera)
+            // ni con dos materias en especial (solo llevas esas dos).
+            int restante = porSemestre.tailMap(s).values().stream().flatMap(List::stream)
+                    .filter(m -> !m.seAcredita()).mapToInt(Kardex.Materia::creditos).sum();
+            if (suma < Kardex.CARGA_MINIMA && restante >= Kardex.CARGA_MINIMA && maximo >= Kardex.CARGA_MINIMA)
+                problemas.add("Suma " + suma + " créditos y la carga mínima es " + Kardex.CARGA_MINIMA + ".");
             if (s > LIMITE) problemas.add("Pasa del límite de " + LIMITE + " semestres.");
             semestres.add(new Semestre(s, suma, maximo, e.getValue(), problemas.isEmpty() ? null : String.join(" ", problemas)));
         }
@@ -87,10 +94,11 @@ final class Ruta {
         if (objetivo > 0 && antes > objetivo) {
             aviso = "No alcanza para terminar en el " + objetivo + "°: lo antes posible es el " + antes + "°.";
         } else if (objetivo > 0) {
-            int minimo = pendientes.stream().mapToInt(Kardex.Materia::creditos).max().orElse(1);
-            for (int tope = minimo; tope < 36; tope++) {
+            // La carga más ligera (nunca menos del mínimo) que llega a tiempo sin romper reglas.
+            int desde = Math.max(Kardex.CARGA_MINIMA, pendientes.stream().mapToInt(Kardex.Materia::creditos).max().orElse(1));
+            for (int tope = desde; tope < 36; tope++) {
                 Map<String, Integer> ligera = acomodar(k, pendientes, tope);
-                if (ligera.size() == pendientes.size() && terminaEn(k, ligera) <= objetivo) {
+                if (ligera.size() == pendientes.size() && terminaEn(k, ligera) <= objetivo && sinProblemas(evaluar(k, ligera))) {
                     elegida = ligera;
                     break;
                 }
@@ -100,6 +108,10 @@ final class Ruta {
         k.datos.ruta.clear();
         k.datos.ruta.putAll(elegida);
         return aviso;
+    }
+
+    private static boolean sinProblemas(Resultado r) {
+        return r.errores().isEmpty() && r.semestres().stream().allMatch(s -> s.error() == null);
     }
 
     /** El semestre más pronto en que se puede terminar desde el avance actual (no toca la ruta). */
@@ -124,12 +136,9 @@ final class Ruta {
                 for (Kardex.Materia m : faltan) {
                     if (!m.requisitos().stream().allMatch(r -> requisitoListo(k, plan, r, semestre))) continue;
                     if (antes < Kardex.creditosPara(m.porcentaje())) continue;
-                    if (!m.seAcredita()) { // lo que se cursa: carga, especiales y el límite con Residencia
+                    if (!m.seAcredita()) { // lo que se cursa: carga y especiales
                         if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2) continue;
                         if (carga + m.creditos() > maximo) continue;
-                        List<Kardex.Materia> juntas = new ArrayList<>(tomadas);
-                        juntas.add(m);
-                        if (Kardex.excedeResidencia(juntas)) continue;
                         carga += m.creditos();
                     }
                     tomadas.add(m);

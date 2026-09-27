@@ -255,6 +255,11 @@
     -fx-background-radius: 1;
 }
 
+/* Carga por debajo del mínimo (18 créditos) */
+.dato-valor.bajo {
+    -fx-text-fill: #B45309;
+}
+
 .aviso-barra {
     -fx-text-fill: -text-muted;
     -fx-font-size: 12px;

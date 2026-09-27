@@ -5,6 +5,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -121,30 +122,33 @@ class RutaTest {
     }
 
     @Test
-    void residenciaSolaOConHastaDosMaterias() throws IOException {
+    void cargaMinimaDe18SalvoAlFinal() throws IOException {
         Kardex k = almacen().cargar();
-        Ruta.armar(k, 0);
+        k.plan.stream().filter(m -> m.semestre() == 1 && !m.seAcredita()).forEach(m -> k.aprobar(m, 90));
+        k.datos.semestre = 2;
+        k.planear(k.materia("A12"), 2);                                                  // 5 cr y aún faltan más
+        for (String c : new String[]{"B12", "C12", "D12", "E12"}) k.planear(k.materia(c), 3); // 19 cr
+        k.planear(k.materia("F12"), 4);                                                  // 5 cr, pero es el final
         Ruta.Resultado r = Ruta.evaluar(k);
-        Ruta.Semestre conResidencia = r.semestres().stream()
-                .filter(s -> s.materias().stream().anyMatch(Kardex.Materia::residencia)).findFirst().orElseThrow();
-        long otras = conResidencia.materias().stream().filter(m -> !m.residencia() && !m.seAcredita()).count();
-        assertTrue(otras <= Kardex.MATERIAS_CON_RESIDENCIA, "otras = " + otras);
+        assertTrue(r.semestres().get(0).error().contains("carga mínima"));
+        assertNull(r.semestres().get(1).error());
+        assertNull(r.semestres().get(2).error());
 
-        // A mano: Residencia con tres materias más se marca en rojo.
-        int s = conResidencia.numero();
-        k.datos.ruta.replaceAll((c, n) -> n == s ? s - 1 : n);
-        k.planear(k.materia("R19"), s);
-        for (String c : new String[]{"C16", "F18", "41D"}) k.planear(k.materia(c), s);
-        Ruta.Semestre ese = Ruta.evaluar(k).semestres().stream().filter(x -> x.numero() == s).findFirst().orElseThrow();
-        assertTrue(ese.error() != null && ese.error().contains("Residencia"), String.valueOf(ese.error()));
+        // "Terminar en el 12°" reparte la carga sin bajar del mínimo (salvo el último semestre).
+        Kardex z = new Almacen(tmp.resolve("z"), tmp.resolve("no-hay-beta")).cargar();
+        assertNull(Ruta.armar(z, 12));
+        List<Ruta.Semestre> ss = Ruta.evaluar(z).semestres();
+        assertTrue(ss.stream().allMatch(s -> s.error() == null));
+        for (int i = 0; i < ss.size() - 1; i++) assertTrue(ss.get(i).creditos() >= Kardex.CARGA_MINIMA, ss.get(i).toString());
+    }
 
-        // En la historia tampoco deja cursarla con tres materias.
-        Kardex h = new Almacen(tmp.resolve("otra"), tmp.resolve("no-hay-beta")).cargar();
-        h.plan.stream().filter(m -> !Set.of("R19", "C16", "F18", "41D").contains(m.clave())).forEach(m -> h.aprobar(m, 90));
-        assertNull(h.cursar(h.materia("C16"), null));
-        assertNull(h.cursar(h.materia("F18"), null));
+    @Test
+    void residenciaConLasMateriasQueQuepanEnLaCarga() throws IOException {
+        Kardex h = almacen().cargar();
+        h.plan.stream().filter(m -> !Set.of("R19", "C16", "F18", "41D", "31D").contains(m.clave())).forEach(m -> h.aprobar(m, 90));
         assertNull(h.cursar(h.materia("R19"), null));
-        assertTrue(h.cursar(h.materia("41D"), null).contains("Residencia"));
+        for (String c : new String[]{"C16", "F18", "41D", "31D"}) assertNull(h.cursar(h.materia(c), null)); // 10 + 19 = 29
+        assertEquals(29, h.carga());
     }
 
     @Test

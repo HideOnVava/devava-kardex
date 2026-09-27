@@ -17,9 +17,9 @@ import java.util.regex.Pattern;
 final class Kardex {
 
     static final int CREDITOS_TOTALES = 260;
+    /** Carga mínima por semestre (la máxima depende de repeticiones y especiales: cargaMaxima). */
+    static final int CARGA_MINIMA = 18;
     static final List<String> DIAS = List.of("lunes", "martes", "miercoles", "jueves", "viernes");
-    // ponytail: "residencia sola o con 2 materias" según el alumno, sin confirmar en el reglamento del ITL; ajustar aquí.
-    static final int MATERIAS_CON_RESIDENCIA = 2;
 
     /**
      * Una materia del plan. {@code fila} y {@code ancho} solo sirven para dibujar la retícula.
@@ -27,7 +27,7 @@ final class Kardex {
      * calificación; solo se marcan aprobadas al terminarlas.
      */
     record Materia(String clave, String nombre, int semestre, int fila, int ancho, int creditos, int porcentaje,
-                   List<String> requisitos, boolean optativa, boolean seAcredita, boolean residencia) {
+                   List<String> requisitos, boolean optativa, boolean seAcredita) {
         Materia {
             ancho = Math.max(1, ancho);
             requisitos = requisitos == null ? List.of() : List.copyOf(requisitos);
@@ -155,13 +155,6 @@ final class Kardex {
         return reprobadas.containsValue(1) ? 30 : 36;
     }
 
-    /** ¿Van juntas Residencia y más materias de las permitidas? (servicio social y complementarias no cuentan) */
-    static boolean excedeResidencia(List<Materia> semestre) {
-        boolean conResidencia = semestre.stream().anyMatch(Materia::residencia);
-        long otras = semestre.stream().filter(m -> !m.residencia() && !m.seAcredita()).count();
-        return conResidencia && otras > MATERIAS_CON_RESIDENCIA;
-    }
-
     private long especiales() {
         return datos.reprobadas.values().stream().filter(v -> v >= 2).count();
     }
@@ -244,10 +237,6 @@ final class Kardex {
             if (razon != null) return razon;
             if (carga() + m.creditos() > cargaMaxima())
                 return "Con esta materia pasarías tu carga máxima de " + cargaMaxima() + " créditos.";
-            List<Materia> juntas = new ArrayList<>(horario().keySet().stream().map(porClave::get).filter(Objects::nonNull).toList());
-            juntas.add(m);
-            if (excedeResidencia(juntas))
-                return "Con Residencia solo puedes llevar hasta " + MATERIAS_CON_RESIDENCIA + " materias más.";
         }
         if (letra == null) {
             if (nueva) horario().put(c, "");

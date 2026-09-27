@@ -53,5 +53,5 @@
   {"clave": "51D", "nombre": "Análisis de Datos y Machine Learning", "semestre": 8, "fila": 6, "creditos": 5, "porcentaje": 60, "optativa": true},
   {"clave": "F18", "nombre": "Sistemas Programables", "semestre": 8, "fila": 7, "creditos": 4, "porcentaje": 60},
   {"clave": "61D", "nombre": "Desarrollo Web Full Stack 2", "semestre": 9, "fila": 6, "creditos": 5, "porcentaje": 60, "optativa": true},
-  {"clave": "R19", "nombre": "Residencia Profesional", "semestre": 9, "fila": 7, "creditos": 10, "requisitos": ["S1S", "COMP"], "porcentaje": 80, "residencia": true}
+  {"clave": "R19", "nombre": "Residencia Profesional", "semestre": 9, "fila": 7, "creditos": 10, "requisitos": ["S1S", "COMP"], "porcentaje": 80}
 ]
