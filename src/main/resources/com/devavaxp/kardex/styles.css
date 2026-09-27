@@ -260,30 +260,69 @@
     -fx-font-size: 12px;
 }
 
-/* Historia | Patio de juegos */
-.pestanas .toggle-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0;
-    -fx-border-color: transparent transparent transparent transparent;
-    -fx-border-width: 0 0 2 0;
-    -fx-padding: 6 10 5 10;
-    -fx-text-fill: -text-muted;
-    -fx-font-size: 13.5px;
-    -fx-cursor: hand;
+/* ---------- Menú: Principal o Patio de juegos ---------- */
+
+.menu-inicio {
+    -fx-background-color: -bg;
 }
 
-.pestanas .toggle-button:hover {
-    -fx-text-fill: -text;
-}
-
-.pestanas .toggle-button:selected {
-    -fx-text-fill: -text;
+.menu-titulo {
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-border-color: transparent transparent -accent transparent;
 }
 
-.en-patio .pestanas .toggle-button:selected {
-    -fx-border-color: transparent transparent -patio transparent;
+.menu-sub {
+    -fx-font-size: 13px;
+    -fx-text-fill: -text-muted;
+}
+
+.button.tarjeta-sesion {
+    -fx-background-color: -surface;
+    -fx-background-radius: 14;
+    -fx-border-color: -border;
+    -fx-border-radius: 14;
+    -fx-border-width: 1.5;
+    -fx-padding: 22 24;
+    -fx-alignment: top-left;
+}
+
+.button.tarjeta-sesion:hover, .button.tarjeta-sesion:focused {
+    -fx-background-color: -surface;
+    -fx-border-color: -accent;
+}
+
+.button.tarjeta-sesion.patio:hover, .button.tarjeta-sesion.patio:focused {
+    -fx-border-color: -patio;
+}
+
+.tarjeta-titulo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.tarjeta-sesion.patio .tarjeta-titulo {
+    -fx-text-fill: -patio;
+}
+
+.tarjeta-texto {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: -text-muted;
+}
+
+.tarjeta-dato {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 0 0 0;
+}
+
+/* Nombre de la sección en la barra (junto a "← Menú") */
+.titulo-sesion {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.en-patio .titulo-sesion {
+    -fx-text-fill: -patio;
 }
 
 .menu-button.semestre {
