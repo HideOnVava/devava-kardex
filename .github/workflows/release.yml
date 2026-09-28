@@ -1,6 +1,6 @@
 # Construye Devava Kardex para Windows y lo publica como release de GitHub.
 #
-# Se dispara al empujar una etiqueta de versión como v0.2.0 (debe coincidir con pom.xml y tener
+# Se dispara al empujar una etiqueta de versión como v1.0.0 (debe coincidir con pom.xml y tener
 # su sección en CHANGELOG.md). Correrlo a mano desde Actions es un ensayo: construye todo y deja
 # los archivos como artifact, sin crear el release.
 name: Release

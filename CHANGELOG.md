@@ -2,7 +2,7 @@
 
 Los cambios de cada versión de Devava Kardex.
 
-## [0.2.0] - 2026-09-27
+## [1.0.0] - 2026-09-27
 
 Primera versión de Devava Kardex (antes KardexByVava), reescrita desde cero.
 
