@@ -2,6 +2,12 @@
 
 Los cambios de cada versión de Devava Kardex.
 
+## [1.1.0] - 2026-09-27
+
+- Versiones para macOS (Apple Silicon e Intel) y Linux (.deb, .rpm y .tar.gz). En Linux tu
+  avance se guarda en tu carpeta de Documentos aunque tenga otro nombre (por ejemplo,
+  `Documentos`).
+
 ## [1.0.0] - 2026-09-27
 
 Primera versión de Devava Kardex (antes KardexByVava), reescrita desde cero.

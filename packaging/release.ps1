@@ -4,11 +4,12 @@
       Devava-Kardex-<versión>-windows-x64-setup.exe      instalador (necesita el WiX Toolset 3.x)
       Devava-Kardex-<versión>-windows-x64-portable.zip   la app sin instalar
       SHA256SUMS.txt                                      sumas SHA-256 (formato sha256sum)
-      RELEASE_NOTES.md                                    texto del release de GitHub
+      RELEASE_NOTES.md                                    texto del release (release-notes.ps1)
 
 .DESCRIPTION
     La versión sale de pom.xml y debe tener su sección "## [<versión>]" en CHANGELOG.md.
-    El workflow .github/workflows/release.yml lo corre al empujar la etiqueta v<versión>.
+    El workflow .github/workflows/release.yml lo corre al empujar la etiqueta v<versión>; los
+    archivos de Linux y macOS los arma release.sh.
 
 .EXAMPLE
     .\packaging\release.ps1
@@ -23,7 +24,6 @@ param(
 $ErrorActionPreference = "Stop"
 $projectDir = Split-Path $PSScriptRoot -Parent
 $appName = "Devava Kardex"
-$repo = "HideOnVava/devava-kardex"
 $version = ([xml](Get-Content (Join-Path $projectDir "pom.xml"))).project.version
 if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "La versión '$version' de pom.xml no es de release (x.y.z)." }
 $changelog = Get-Content (Join-Path $projectDir "CHANGELOG.md") -Raw -Encoding UTF8
@@ -65,22 +65,7 @@ if (-not $SkipInstaller) {
 }
 
 # --- Sumas y notas del release -------------------------------------------------------------
-$utf8 = New-Object System.Text.UTF8Encoding $false   # sin BOM, en cualquier PowerShell
-$base = "https://github.com/$repo/releases/download/v$version"
-$archivos = @(
-    @{ Nombre = $setupName; Texto = "**Recomendado.** Instalador: doble clic y listo. No pide permisos de administrador; se desinstala desde *Configuración > Aplicaciones*." },
-    @{ Nombre = $zipName;   Texto = "Sin instalar: descomprime donde quieras y abre ``Devava Kardex.exe``." }
-) | Where-Object { Test-Path (Join-Path $Output $_.Nombre) }
-$filas = $archivos | ForEach-Object { "| [$($_.Nombre)]($base/$($_.Nombre)) | $($_.Texto) |" }
-$sumas = $archivos | ForEach-Object {
-    "{0}  {1}" -f (Get-FileHash (Join-Path $Output $_.Nombre) -Algorithm SHA256).Hash.ToLower(), $_.Nombre
-}
-[System.IO.File]::WriteAllText((Join-Path $Output "SHA256SUMS.txt"), ($sumas -join "`n") + "`n", $utf8)
-
-$notas = Get-Content (Join-Path $PSScriptRoot "release-notes.md") -Raw -Encoding UTF8
-$notas = $notas.Replace("{{VERSION}}", $version).Replace("{{DESCARGAS}}", ($filas -join "`n"))
-$notas = $notas.Replace("{{CAMBIOS}}", $seccion.Groups[1].Value.Trim()).Replace("{{SUMAS}}", ($sumas -join "`n"))
-[System.IO.File]::WriteAllText((Join-Path $Output "RELEASE_NOTES.md"), $notas, $utf8)
+& (Join-Path $PSScriptRoot "release-notes.ps1") -Dir $Output -Version $version
 
 Write-Host ""
 Write-Host "Archivos de $appName $version en $Output`:"

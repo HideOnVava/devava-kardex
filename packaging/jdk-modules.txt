@@ -1,5 +1,5 @@
 # Módulos del JDK que se enlazan en el runtime que va dentro de la app (uno por línea; "#" comenta).
-# Los de JavaFX los agrega build-windows.ps1 y traen sus propias dependencias.
+# Los de JavaFX los agregan build-windows.ps1 y build-unix.sh, y traen sus propias dependencias.
 java.base
 java.desktop
 java.logging

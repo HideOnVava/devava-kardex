@@ -1,8 +1,9 @@
-# Construye Devava Kardex para Windows y lo publica como release de GitHub.
+# Construye Devava Kardex para Windows, Linux y macOS, prueba cada build abriéndolo en un
+# escritorio real (las capturas quedan como artifact) y publica todo como release de GitHub.
 #
-# Se dispara al empujar una etiqueta de versión como v1.0.0 (debe coincidir con pom.xml y tener
-# su sección en CHANGELOG.md). Correrlo a mano desde Actions es un ensayo: construye todo y deja
-# los archivos como artifact, sin crear el release.
+# Se dispara al empujar una etiqueta de versión como v1.1.0 (debe coincidir con pom.xml y tener
+# su sección en CHANGELOG.md). Correrlo a mano desde Actions es un ensayo: construye y prueba
+# todo y deja los archivos como artifact, sin crear el release.
 name: Release
 
 on:
@@ -14,10 +15,20 @@ permissions:
   contents: write
 
 jobs:
-  windows:
-    name: Windows x64
-    runs-on: windows-latest
-    timeout-minutes: 45
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: "Windows x64",         os: windows-latest,  id: windows-x64 }
+          # Ubuntu 22.04 a propósito: el .deb declara sus dependencias con los nombres de paquete
+          # de la máquina que lo construye, y los de 22.04 también los cumplen las versiones nuevas.
+          - { name: "Linux x64",           os: ubuntu-22.04,    id: linux-x64 }
+          - { name: "macOS Apple Silicon", os: macos-15,        id: macos-arm64 }
+          - { name: "macOS Intel",         os: macos-15-intel,  id: macos-x64 }
     steps:
       - uses: actions/checkout@v7
 
@@ -38,15 +49,85 @@ jobs:
           fi
 
       - name: Pruebas
-        run: .\mvnw.cmd -B verify
+        shell: bash
+        run: if [ "$RUNNER_OS" = Windows ]; then ./mvnw.cmd -B verify; else ./mvnw -B verify; fi
+
+      - name: Herramientas de Linux (rpm para el .rpm; un escritorio virtual para la prueba de humo)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm xvfb openbox xdotool wmctrl x11-utils imagemagick
 
       - name: Archivos del release
+        if: runner.os == 'Windows'
         run: .\packaging\release.ps1
+
+      - name: Archivos del release
+        if: runner.os != 'Windows'
+        run: bash packaging/release.sh
+
+      - name: Lo que se construyó
+        shell: bash
+        run: ls -l dist/release && cat dist/release/SHA256SUMS.txt
+
+      - name: Prueba de humo (Windows)
+        if: runner.os == 'Windows'
+        run: .\tools\smoke\smoke-windows.ps1 -Setup (Get-Item dist\release\*-setup.exe).FullName -Out target\smoke\out
+
+      - name: Prueba de humo (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          # El runner no tiene escritorio: se crean las carpetas del menú donde se registra el paquete.
+          sudo mkdir -p /usr/share/applications /usr/share/desktop-directories
+          sudo apt-get install -y ./dist/release/*.deb
+          bash tools/smoke/smoke-linux.sh "/opt/devava-kardex/bin/Devava Kardex" target/smoke/out
+
+      - name: Prueba de humo (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          hdiutil attach -nobrowse -readonly -mountpoint "$RUNNER_TEMP/dmg" dist/release/*.dmg
+          cp -R "$RUNNER_TEMP/dmg/Devava Kardex.app" "$RUNNER_TEMP/Devava Kardex.app"
+          hdiutil detach "$RUNNER_TEMP/dmg"
+          bash tools/smoke/smoke-macos.sh "$RUNNER_TEMP/Devava Kardex.app" target/smoke/out
+
+      - name: Guardar las capturas y el registro de la prueba
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: humo-${{ matrix.id }}
+          path: target/smoke/out
+          if-no-files-found: ignore
 
       - name: Guardar los archivos
         uses: actions/upload-artifact@v7
         with:
-          name: release-windows-x64
+          name: release-${{ matrix.id }}
+          path: dist/release/Devava-Kardex-*
+
+  publish:
+    name: Publicar
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Juntar los archivos de cada sistema
+        uses: actions/download-artifact@v8
+        with:
+          pattern: release-*
+          path: dist/release
+
+      - name: Sumas y notas del release
+        shell: pwsh
+        run: |
+          ./packaging/release-notes.ps1 -Dir dist/release
+          Get-Content dist/release/SHA256SUMS.txt
+
+      - name: Guardar todo como un artifact (ensayo)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-archivos
           path: dist/release
 
       - name: Publicar el release
@@ -55,7 +136,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/release/Devava-Kardex-* dist/release/SHA256SUMS.txt \
+          files=$(find dist/release -type f -name 'Devava-Kardex-*' | sort)
+          gh release create "$GITHUB_REF_NAME" $files dist/release/SHA256SUMS.txt \
             --title "Devava Kardex ${GITHUB_REF_NAME#v}" \
             --notes-file dist/release/RELEASE_NOTES.md \
             --verify-tag

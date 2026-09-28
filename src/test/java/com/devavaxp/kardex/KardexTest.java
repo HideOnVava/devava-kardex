@@ -214,4 +214,15 @@ class KardexTest {
         assertEquals(5, Kardex.clases(oferta.get("B11").get(0)).size());
         assertThrows(IOException.class, () -> SyncITL.leer(Jsoup.parse("<p>Sin horarios</p>"), Set.of("A11")));
     }
+
+    @Test
+    void enLinuxUsaLaCarpetaDeDocumentosDelIdioma() throws IOException {
+        Path home = Files.createDirectories(tmp.resolve("casa"));
+        Path dirs = tmp.resolve("user-dirs.dirs");
+        Files.writeString(dirs, "# comentario\nXDG_DESKTOP_DIR=\"$HOME/Escritorio\"\nXDG_DOCUMENTS_DIR=\"$HOME/Documentos\"\n");
+        assertNull(Almacen.documentosXdg(home, dirs));                     // la carpeta todavía no existe
+        Path documentos = Files.createDirectories(home.resolve("Documentos"));
+        assertEquals(documentos, Almacen.documentosXdg(home, dirs));
+        assertNull(Almacen.documentosXdg(home, tmp.resolve("no-existe")));
+    }
 }

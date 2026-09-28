@@ -149,19 +149,45 @@ final class Almacen {
         }
     }
 
-    /** La carpeta Documentos real: en Windows puede estar redirigida a OneDrive. */
+    /**
+     * La carpeta Documentos real: en Windows puede estar redirigida a OneDrive y en Linux suele
+     * llamarse según el idioma (~/Documentos), como dice ~/.config/user-dirs.dirs.
+     */
     private static Path documentos() {
         Path home = Path.of(System.getProperty("user.home"));
-        if (System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows")) {
+        String so = System.getProperty("os.name", "").toLowerCase(Locale.ROOT);
+        if (so.startsWith("windows")) {
             try {
                 File d = FileSystemView.getFileSystemView().getDefaultDirectory();
                 if (d != null && d.isDirectory()) return d.toPath();
             } catch (RuntimeException | LinkageError ignorada) {
                 // Sin shell de Windows disponible: se usa ~/Documents.
             }
+        } else if (!so.contains("mac")) {
+            String config = System.getenv("XDG_CONFIG_HOME");
+            Path dirs = (config != null && !config.isBlank() ? Path.of(config) : home.resolve(".config")).resolve("user-dirs.dirs");
+            Path xdg = documentosXdg(home, dirs);
+            if (xdg != null) return xdg;
         }
         Path documents = home.resolve("Documents");
         return Files.isDirectory(documents) ? documents : home;
+    }
+
+    /** La carpeta de {@code XDG_DOCUMENTS_DIR="$HOME/Documentos"} en user-dirs.dirs, si existe. */
+    static Path documentosXdg(Path home, Path dirs) {
+        try {
+            for (String linea : Files.readAllLines(dirs, StandardCharsets.UTF_8)) {
+                linea = linea.trim();
+                if (!linea.startsWith("XDG_DOCUMENTS_DIR=")) continue;
+                String valor = linea.substring("XDG_DOCUMENTS_DIR=".length()).replace("\"", "")
+                        .replace("${HOME}", home.toString()).replace("$HOME", home.toString());
+                Path d = Path.of(valor);
+                return Files.isDirectory(d) && !d.equals(home) ? d : null;
+            }
+        } catch (IOException | RuntimeException ignorada) {
+            // Sin el archivo o con algo raro: como si no existiera.
+        }
+        return null;
     }
 
     // ------------------------------------------------------------------

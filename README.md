@@ -30,12 +30,19 @@ Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha po
 
 ## Descargar
 
-En [Releases](https://github.com/HideOnVava/devava-kardex/releases/latest), para Windows 10 u 11
-de 64 bits (no necesitas Java):
+En [Releases](https://github.com/HideOnVava/devava-kardex/releases/latest), para sistemas de 64
+bits (no necesitas Java):
 
-- `…-windows-x64-setup.exe`: el instalador. Si Windows avisa *"Windows protegió tu PC"*, haz
-  clic en **Más información → Ejecutar de todas formas** (los archivos no están firmados).
-- `…-windows-x64-portable.zip`: sin instalar; descomprime y abre `Devava Kardex.exe`.
+- **Windows 10 u 11:** `…-windows-x64-setup.exe`, el instalador, o `…-windows-x64-portable.zip`,
+  sin instalar (descomprime y abre `Devava Kardex.exe`). Si Windows avisa *"Windows protegió tu
+  PC"*, haz clic en **Más información → Ejecutar de todas formas** (los archivos no están
+  firmados).
+- **macOS 12 o posterior:** `…-macos-arm64.dmg` para Mac con Apple Silicon (M1 o posterior) o
+  `…-macos-x64.dmg` para Mac con Intel; arrastra *Devava Kardex* a *Aplicaciones*. La primera
+  vez macOS la bloquea porque no está notarizada: ve a **Configuración del Sistema → Privacidad
+  y seguridad** y haz clic en **Abrir igualmente**.
+- **Linux con GTK 3:** `…-linux-x64.deb` (Ubuntu, Debian, Mint), `…-linux-x64.rpm` (Fedora,
+  openSUSE) o `…-linux-x64.tar.gz`, sin instalar (abre `Devava Kardex/bin/Devava Kardex`).
 
 ## Uso
 
@@ -81,11 +88,12 @@ Requiere JDK 21.
 
 1. Sube la versión en `pom.xml` y agrega su sección `## [x.y.z]` en `CHANGELOG.md`.
 2. Empuja la etiqueta: `git tag vx.y.z && git push origin vx.y.z`. El workflow *Release* corre
-   las pruebas, arma el instalador y el zip portable, y publica el release con sus notas.
+   las pruebas, arma los archivos de Windows, macOS y Linux, abre cada uno para probarlo y
+   publica el release con sus notas.
 
-Para armarlo en tu PC: `.\packaging\release.ps1` (el instalador necesita el
+Para armarlo en tu PC: `.\packaging\release.ps1` en Windows (el instalador necesita el
 [WiX Toolset 3](https://github.com/wixtoolset/wix3/releases); sin él, `-SkipInstaller` arma
-solo el zip).
+solo el zip) o `packaging/release.sh` en macOS y Linux.
 
 ## Licencia
 
