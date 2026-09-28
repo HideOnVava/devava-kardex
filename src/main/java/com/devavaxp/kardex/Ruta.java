@@ -54,7 +54,7 @@ final class Ruta {
             boolean soloEspeciales = reprobadas.values().stream().filter(v -> v >= 2).count() >= 2;
             int suma = 0;
             for (Kardex.Materia m : e.getValue()) {
-                if (!m.seAcredita()) suma += m.creditos(); // servicio social y complementarias no son carga
+                if (!m.seAcredita()) suma += m.carga(); // servicio social y complementarias no son carga
                 List<String> razones = new ArrayList<>();
                 if (s < inicio) razones.add("La ruta empieza en el " + inicio + "°.");
                 if (s == 1 && !dePrimero(m)) razones.add("En primer semestre solo se llevan las materias de primer semestre.");
@@ -73,7 +73,7 @@ final class Ruta {
             // La carga mínima no aplica si ya te quedan menos créditos que eso (el final de la carrera)
             // ni con dos materias en especial (solo llevas esas dos).
             int restante = porSemestre.tailMap(s).values().stream().flatMap(List::stream)
-                    .filter(m -> !m.seAcredita()).mapToInt(Kardex.Materia::creditos).sum();
+                    .filter(m -> !m.seAcredita()).mapToInt(Kardex.Materia::carga).sum();
             if (suma < Kardex.CARGA_MINIMA && restante >= Kardex.CARGA_MINIMA && maximo >= Kardex.CARGA_MINIMA)
                 problemas.add("Suma " + suma + " créditos y la carga mínima es " + Kardex.CARGA_MINIMA + ".");
             if (s > LIMITE) problemas.add("Pasa del límite de " + LIMITE + " semestres.");
@@ -95,7 +95,7 @@ final class Ruta {
             aviso = "No alcanza para terminar en el " + objetivo + "°: lo antes posible es el " + antes + "°.";
         } else if (objetivo > 0) {
             // La carga más ligera (nunca menos del mínimo) que llega a tiempo sin romper reglas.
-            int desde = Math.max(Kardex.CARGA_MINIMA, pendientes.stream().mapToInt(Kardex.Materia::creditos).max().orElse(1));
+            int desde = Math.max(Kardex.CARGA_MINIMA, pendientes.stream().mapToInt(Kardex.Materia::carga).max().orElse(1));
             for (int tope = desde; tope < 36; tope++) {
                 Map<String, Integer> ligera = acomodar(k, pendientes, tope);
                 if (ligera.size() == pendientes.size() && terminaEn(k, ligera) <= objetivo && sinProblemas(evaluar(k, ligera))) {
@@ -138,8 +138,8 @@ final class Ruta {
                     if (antes < Kardex.creditosPara(m.porcentaje())) continue;
                     if (!m.seAcredita()) { // lo que se cursa: carga y especiales
                         if (soloEspeciales && reprobadas.getOrDefault(m.clave(), 0) < 2) continue;
-                        if (carga + m.creditos() > maximo) continue;
-                        carga += m.creditos();
+                        if (carga + m.carga() > maximo) continue;
+                        carga += m.carga();
                     }
                     tomadas.add(m);
                 }

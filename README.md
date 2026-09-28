@@ -19,8 +19,9 @@ Tu kardex, la retícula de la carrera y tu horario en una sola ventana. Hecha po
 - **Reglas del TecNM:** seriación, 60 % de créditos para especialidad, 70 % para servicio
   social, 80 % + servicio social + complementarias para residencia, carga de 18 a 36 créditos
   (máximo 30 con una materia en repetición, 20 con una en especial y, con dos en especial, solo
-  esas dos), y ningún cruce de horario. Residencia cuenta como 10 créditos de tu carga. Servicio
-  social y complementarias no se cursan ni son carga: solo se marcan aprobadas al terminarlas.
+  esas dos), y ningún cruce de horario. Residencia vale 10 créditos pero pesa 20 en tu carga.
+  Servicio social y complementarias no se cursan ni son carga: solo se marcan aprobadas al
+  terminarlas.
 - **Varios horarios** (para comparar opciones). Lo que está en el horario activo es lo que
   cursas.
 - **Grupos del ITL:** menú ⋯ → *Actualizar grupos del ITL* baja la oferta vigente de la
@@ -60,8 +61,9 @@ esa carpeta no se modifica.
 
 El plan de estudios está en
 [`plan-isc.json`](src/main/resources/com/devavaxp/kardex/plan-isc.json): por materia, su
-semestre, créditos, `requisitos`, `porcentaje` de créditos requerido, y `fila` (el renglón donde
-se dibuja, el mismo de la retícula oficial ISIC-2010-224 del ITL).
+semestre, créditos, `requisitos`, `porcentaje` de créditos requerido, `carga` (si pesa distinto
+a sus créditos, como residencia) y `fila` (el renglón donde se dibuja, el mismo de la retícula
+oficial ISIC-2010-224 del ITL).
 
 ## Compilar y ejecutar
 

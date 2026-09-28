@@ -24,13 +24,15 @@ final class Kardex {
     /**
      * Una materia del plan. {@code fila} y {@code ancho} solo sirven para dibujar la retícula.
      * {@code seAcredita}: servicio social y complementarias, que no se cursan ni llevan
-     * calificación; solo se marcan aprobadas al terminarlas.
+     * calificación; solo se marcan aprobadas al terminarlas. {@code carga}: lo que pesa en la
+     * carga del semestre si no son sus créditos (residencia vale 10 pero pesa 20).
      */
     record Materia(String clave, String nombre, int semestre, int fila, int ancho, int creditos, int porcentaje,
-                   List<String> requisitos, boolean optativa, boolean seAcredita) {
+                   List<String> requisitos, boolean optativa, boolean seAcredita, int carga) {
         Materia {
             ancho = Math.max(1, ancho);
             requisitos = requisitos == null ? List.of() : List.copyOf(requisitos);
+            if (carga < 1) carga = creditos;
         }
     }
 
@@ -137,10 +139,10 @@ final class Kardex {
                 .mapToInt(Map.Entry::getValue).average().orElse(Double.NaN);
     }
 
-    /** Créditos del horario activo. */
+    /** Créditos de carga del horario activo. */
     int carga() {
         return horario().keySet().stream().map(porClave::get).filter(Objects::nonNull)
-                .mapToInt(Materia::creditos).sum();
+                .mapToInt(Materia::carga).sum();
     }
 
     int cargaMaxima() {
@@ -235,7 +237,7 @@ final class Kardex {
             if (datos.aprobadas.containsKey(c)) return "Ya la aprobaste.";
             String razon = bloqueo(m);
             if (razon != null) return razon;
-            if (carga() + m.creditos() > cargaMaxima())
+            if (carga() + m.carga() > cargaMaxima())
                 return "Con esta materia pasarías tu carga máxima de " + cargaMaxima() + " créditos.";
         }
         if (letra == null) {

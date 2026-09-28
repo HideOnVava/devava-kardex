@@ -66,7 +66,8 @@ final class MateriaPanel extends VBox {
         x.setOnAction(e -> cerrar.run());
         HBox cabeza = new HBox(8, titulo, x);
         cabeza.setAlignment(Pos.TOP_LEFT);
-        Label sub = new Label(m.clave() + " · " + m.creditos() + " créditos · Semestre " + m.semestre()
+        Label sub = new Label(m.clave() + " · " + m.creditos() + " créditos"
+                + (m.carga() != m.creditos() ? " (" + m.carga() + " de carga)" : "") + " · Semestre " + m.semestre()
                 + (m.optativa() ? " · Optativa" : ""));
         sub.getStyleClass().add("panel-sub");
         getChildren().addAll(new VBox(2, cabeza, sub));

@@ -146,9 +146,10 @@ class RutaTest {
     void residenciaConLasMateriasQueQuepanEnLaCarga() throws IOException {
         Kardex h = almacen().cargar();
         h.plan.stream().filter(m -> !Set.of("R19", "C16", "F18", "41D", "31D").contains(m.clave())).forEach(m -> h.aprobar(m, 90));
-        assertNull(h.cursar(h.materia("R19"), null));
-        for (String c : new String[]{"C16", "F18", "41D", "31D"}) assertNull(h.cursar(h.materia(c), null)); // 10 + 19 = 29
-        assertEquals(29, h.carga());
+        assertNull(h.cursar(h.materia("R19"), null));                  // vale 10 pero pesa 20 en la carga
+        for (String c : new String[]{"C16", "F18", "41D"}) assertNull(h.cursar(h.materia(c), null)); // 20 + 14 = 34
+        assertTrue(h.cursar(h.materia("31D"), null).contains("carga máxima"));  // 34 + 5 > 36
+        assertEquals(34, h.carga());
     }
 
     @Test
