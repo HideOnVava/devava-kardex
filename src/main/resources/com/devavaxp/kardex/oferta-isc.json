@@ -1,4 +1,137 @@
 {
+  "11D": [
+    {
+      "letra": "A",
+      "profesor": "PEREZ MARTINEZ ENRIQUE HUMBERTO",
+      "horarios": {
+        "lunes": "12:00-13:00 (19L)",
+        "martes": "12:00-13:00 (19L)",
+        "miercoles": "12:00-13:00 (19L)",
+        "jueves": "12:00-13:00 (19L)",
+        "viernes": "12:00-13:00 (19L)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
+      "horarios": {
+        "lunes": "14:00-15:00 (19K)",
+        "martes": "14:00-15:00 (19K)",
+        "miercoles": "14:00-15:00 (19K)",
+        "jueves": "14:00-15:00 (19K)",
+        "viernes": "14:00-15:00 (19K)"
+      }
+    }
+  ],
+  "21D": [
+    {
+      "letra": "A",
+      "profesor": "MOTA ESPELETA JOSE LUIS",
+      "horarios": {
+        "lunes": "13:00-14:00 (AA6)",
+        "martes": "13:00-14:00 (AA6)",
+        "miercoles": "13:00-14:00 (AA6)",
+        "jueves": "13:00-14:00 (AA6)",
+        "viernes": "13:00-14:00 (AA6)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "18:00-19:00 (AA6)",
+        "martes": "18:00-19:00 (AA6)",
+        "miercoles": "18:00-19:00 (AA6)",
+        "jueves": "18:00-19:00 (AA6)",
+        "viernes": "18:00-19:00 (AA6)"
+      }
+    }
+  ],
+  "31D": [
+    {
+      "letra": "A",
+      "profesor": "ARIAS HERNANDEZ LINA ERNESTINA",
+      "horarios": {
+        "lunes": "11:00-12:00 (19K)",
+        "martes": "11:00-12:00 (19K)",
+        "miercoles": "11:00-12:00 (19K)",
+        "jueves": "11:00-12:00 (19K)",
+        "viernes": "11:00-12:00 (19K)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "ARIAS HERNANDEZ LINA ERNESTINA",
+      "horarios": {
+        "lunes": "17:00-18:00 (19K)",
+        "martes": "17:00-18:00 (19K)",
+        "miercoles": "17:00-18:00 (19K)",
+        "jueves": "17:00-18:00 (19K)",
+        "viernes": "17:00-18:00 (19K)"
+      }
+    }
+  ],
+  "41D": [
+    {
+      "letra": "A",
+      "profesor": "MOTA ESPELETA JOSE LUIS",
+      "horarios": {
+        "lunes": "12:00-13:00 (AA6)",
+        "martes": "12:00-13:00 (AA6)",
+        "miercoles": "12:00-13:00 (AA6)",
+        "jueves": "12:00-13:00 (AA6)",
+        "viernes": "12:00-13:00 (AA6)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MORENO ORONA ERIK ALAN",
+      "horarios": {
+        "lunes": "18:00-19:00 (AA1)",
+        "martes": "18:00-19:00 (AA1)",
+        "miercoles": "18:00-19:00 (AA1)",
+        "jueves": "18:00-19:00 (AA1)",
+        "viernes": "18:00-19:00 (AA1)"
+      }
+    }
+  ],
+  "51D": [
+    {
+      "letra": "A",
+      "profesor": "HAMDAN MEDINA LAMIA",
+      "horarios": {
+        "lunes": "08:00-09:00 (19M)",
+        "martes": "08:00-09:00 (19M)",
+        "miercoles": "08:00-09:00 (19M)",
+        "jueves": "08:00-09:00 (19M)",
+        "viernes": "08:00-09:00 (19M)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "URIBE AGUNDIS DIEGO",
+      "horarios": {
+        "lunes": "13:00-14:00 (19K)",
+        "martes": "13:00-14:00 (19K)",
+        "miercoles": "13:00-14:00 (19K)",
+        "jueves": "13:00-14:00 (19K)",
+        "viernes": "13:00-14:00 (19K)"
+      }
+    }
+  ],
+  "61D": [
+    {
+      "letra": "A",
+      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
+      "horarios": {
+        "lunes": "12:00-13:00 (19K)",
+        "martes": "12:00-13:00 (19K)",
+        "miercoles": "12:00-13:00 (19K)",
+        "jueves": "12:00-13:00 (19K)",
+        "viernes": "12:00-13:00 (19K)"
+      }
+    }
+  ],
   "A11": [
     {
       "letra": "A",
@@ -78,245 +211,6 @@
       }
     }
   ],
-  "B11": [
-    {
-      "letra": "A",
-      "profesor": "LOPEZ CISEÑA ARMANDO",
-      "horarios": {
-        "lunes": "08:00-09:00 (AA5)",
-        "martes": "08:00-09:00 (AA5)",
-        "miercoles": "08:00-09:00 (AA5)",
-        "jueves": "08:00-09:00 (AA5)",
-        "viernes": "08:00-09:00 (AA5)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "ARELLANO CASILLAS MARIA TERESA",
-      "horarios": {
-        "lunes": "14:00-15:00 (AA2)",
-        "martes": "14:00-15:00 (AA2)",
-        "miercoles": "14:00-15:00 (AA2)",
-        "jueves": "14:00-15:00 (AA2)",
-        "viernes": "14:00-15:00 (AA2)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "LOPEZ CISEÑA ARMANDO",
-      "horarios": {
-        "lunes": "09:00-10:00 (AA5)",
-        "martes": "09:00-10:00 (AA5)",
-        "miercoles": "09:00-10:00 (AA5)",
-        "jueves": "09:00-10:00 (AA5)",
-        "viernes": "09:00-10:00 (AA5)"
-      }
-    },
-    {
-      "letra": "G",
-      "profesor": "GARAY ESPINOZA ANTONIO",
-      "horarios": {
-        "lunes": "17:00-18:00 (AA5)",
-        "martes": "17:00-18:00 (AA5)",
-        "miercoles": "17:00-18:00 (AA5)",
-        "jueves": "17:00-18:00 (AA5)",
-        "viernes": "17:00-18:00 (AA5)"
-      }
-    },
-    {
-      "letra": "L",
-      "profesor": "RODRIGUEZ DE LA TORRE KARLA LUCIA",
-      "horarios": {
-        "lunes": "10:00-11:00 (AA7)",
-        "martes": "10:00-11:00 (AA7)",
-        "miercoles": "10:00-11:00 (AA7)",
-        "jueves": "10:00-11:00 (AA7)",
-        "viernes": "10:00-11:00 (AA7)"
-      }
-    }
-  ],
-  "C11": [
-    {
-      "letra": "A",
-      "profesor": "GONZALEZ RAMIREZ PASCUAL GERARDO",
-      "horarios": {
-        "lunes": "14:00-15:00 (19F)",
-        "martes": "14:00-15:00 (19F)",
-        "miercoles": "14:00-15:00 (19F)",
-        "jueves": "14:00-15:00 (19F)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "PALACIOS DURAN CARLA ROCIO",
-      "horarios": {
-        "lunes": "10:00-11:00 (19C)",
-        "martes": "10:00-11:00 (19C)",
-        "miercoles": "10:00-11:00 (19C)",
-        "jueves": "10:00-11:00 (19C)"
-      }
-    },
-    {
-      "letra": "G",
-      "profesor": "PALACIOS DURAN CARLA ROCIO",
-      "horarios": {
-        "lunes": "13:00-14:00 (19C)",
-        "martes": "13:00-14:00 (19C)",
-        "miercoles": "13:00-14:00 (19C)",
-        "jueves": "13:00-14:00 (19C)"
-      }
-    },
-    {
-      "letra": "I",
-      "profesor": "NUÑEZ SOLIS ROCIO ELENA",
-      "horarios": {
-        "lunes": "07:00-08:00 (07A)",
-        "martes": "07:00-08:00 (07A)",
-        "miercoles": "07:00-08:00 (07A)",
-        "jueves": "07:00-08:00 (07A)"
-      }
-    },
-    {
-      "letra": "L",
-      "profesor": "GONZALEZ RAMIREZ PASCUAL GERARDO",
-      "horarios": {
-        "lunes": "13:00-14:00 (19D)",
-        "martes": "13:00-14:00 (19D)",
-        "miercoles": "13:00-14:00 (19D)",
-        "jueves": "13:00-14:00 (19D)"
-      }
-    }
-  ],
-  "D11": [
-    {
-      "letra": "A",
-      "profesor": "CUAN DURON ERNESTO",
-      "horarios": {
-        "lunes": "10:00-11:00 (19F)",
-        "martes": "10:00-11:00 (19F)",
-        "miercoles": "10:00-11:00 (19F)",
-        "jueves": "10:00-11:00 (19F)",
-        "viernes": "10:00-11:00 (19F)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "PADILLA TORRES MICHELLE",
-      "horarios": {
-        "lunes": "11:00-12:00 (19C)",
-        "martes": "11:00-12:00 (19C)",
-        "miercoles": "11:00-12:00 (19C)",
-        "jueves": "11:00-12:00 (19C)",
-        "viernes": "11:00-12:00 (19C)"
-      }
-    },
-    {
-      "letra": "G",
-      "profesor": "GUARDADO GUZMAN SERGIO VICTOR",
-      "horarios": {
-        "lunes": "14:00-15:00 (19C)",
-        "martes": "14:00-15:00 (19C)",
-        "miercoles": "14:00-15:00 (19C)",
-        "jueves": "14:00-15:00 (19C)",
-        "viernes": "14:00-15:00 (19C)"
-      }
-    },
-    {
-      "letra": "L",
-      "profesor": "RUIZ ARROYO IDALIA",
-      "horarios": {
-        "lunes": "09:00-10:00 (19D)",
-        "martes": "09:00-10:00 (19D)",
-        "miercoles": "09:00-10:00 (19D)",
-        "jueves": "09:00-10:00 (19D)",
-        "viernes": "09:00-10:00 (19D)"
-      }
-    }
-  ],
-  "E11": [
-    {
-      "letra": "A",
-      "profesor": "RUIZ AYALA JOSE DOLORES",
-      "horarios": {
-        "lunes": "14:00-15:00 (19B)",
-        "martes": "14:00-15:00 (19B)",
-        "miercoles": "14:00-15:00 (19B)",
-        "jueves": "14:00-15:00 (19B)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "POR ASIGNAR",
-      "horarios": {
-        "lunes": "07:00-08:00 (19C)",
-        "martes": "07:00-08:00 (19C)",
-        "miercoles": "07:00-08:00 (19C)",
-        "jueves": "07:00-08:00 (19C)"
-      }
-    },
-    {
-      "letra": "G",
-      "profesor": "RUIZ AYALA JOSE DOLORES",
-      "horarios": {
-        "lunes": "15:00-16:00 (19C)",
-        "martes": "15:00-16:00 (19C)",
-        "miercoles": "15:00-16:00 (19C)",
-        "jueves": "15:00-16:00 (19C)"
-      }
-    },
-    {
-      "letra": "L",
-      "profesor": "MADINAVEITIA SANDOVAL LUIS FERNANDO",
-      "horarios": {
-        "lunes": "12:00-13:00 (19D)",
-        "martes": "12:00-13:00 (19D)",
-        "miercoles": "12:00-13:00 (19D)",
-        "jueves": "12:00-13:00 (19D)"
-      }
-    }
-  ],
-  "F11": [
-    {
-      "letra": "A",
-      "profesor": "ALCALA WONG DANIEL",
-      "horarios": {
-        "lunes": "09:00-10:00 (19B)",
-        "martes": "09:00-10:00 (19B)",
-        "miercoles": "09:00-10:00 (19B)",
-        "jueves": "09:00-10:00 (19B)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "AGUIRRE MEJÍA ELENA TZETZANGARY",
-      "horarios": {
-        "lunes": "12:00-13:00 (AA1)",
-        "martes": "12:00-13:00 (AA1)",
-        "jueves": "12:00-13:00 (AA2)",
-        "viernes": "12:00-13:00 (AA2)"
-      }
-    },
-    {
-      "letra": "G",
-      "profesor": "RUIZ AYALA JOSE DOLORES",
-      "horarios": {
-        "lunes": "16:00-17:00 (AA1)",
-        "martes": "16:00-17:00 (AA1)",
-        "miercoles": "16:00-17:00 (AA1)",
-        "jueves": "16:00-17:00 (AA1)"
-      }
-    },
-    {
-      "letra": "L",
-      "profesor": "FLORES BARAJAS SILVANA MARIN",
-      "horarios": {
-        "lunes": "11:00-12:00 (19D)",
-        "martes": "11:00-12:00 (19D)",
-        "miercoles": "11:00-12:00 (AA1)",
-        "jueves": "11:00-12:00 (AA1)"
-      }
-    }
-  ],
   "A12": [
     {
       "letra": "A",
@@ -360,222 +254,6 @@
         "miercoles": "16:00-17:00 (19B)",
         "jueves": "16:00-17:00 (19B)",
         "viernes": "16:00-17:00 (19B)"
-      }
-    }
-  ],
-  "B12": [
-    {
-      "letra": "A",
-      "profesor": "LOPEZ CISEÑA ARMANDO",
-      "horarios": {
-        "lunes": "10:00-11:00 (AA5)",
-        "martes": "10:00-11:00 (AA5)",
-        "miercoles": "10:00-11:00 (AA5)",
-        "jueves": "10:00-11:00 (AA5)",
-        "viernes": "10:00-11:00 (AA5)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "LOPEZ CISEÑA ARMANDO",
-      "horarios": {
-        "lunes": "13:00-14:00 (AA5)",
-        "martes": "13:00-14:00 (AA5)",
-        "miercoles": "13:00-14:00 (AA5)",
-        "jueves": "13:00-14:00 (AA5)",
-        "viernes": "13:00-14:00 (AA5)"
-      }
-    },
-    {
-      "letra": "C",
-      "profesor": "RODRIGUEZ DE LA TORRE KARLA LUCIA",
-      "horarios": {
-        "lunes": "11:00-12:00 (AA7)",
-        "martes": "11:00-12:00 (AA7)",
-        "miercoles": "11:00-12:00 (AA7)",
-        "jueves": "11:00-12:00 (AA7)",
-        "viernes": "11:00-12:00 (AA7)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "FLORES BARAJAS SILVANA MARIN",
-      "horarios": {
-        "lunes": "17:00-18:00 (AA7)",
-        "martes": "17:00-18:00 (AA7)",
-        "miercoles": "17:00-18:00 (AA7)",
-        "jueves": "17:00-18:00 (AA7)",
-        "viernes": "17:00-18:00 (AA7)"
-      }
-    }
-  ],
-  "C12": [
-    {
-      "letra": "A",
-      "profesor": "SANTIAGO BARRAGAN MAYELA DE",
-      "horarios": {
-        "lunes": "08:00-09:00 (19J)",
-        "martes": "08:00-09:00 (19J)",
-        "miercoles": "08:00-09:00 (19J)",
-        "jueves": "08:00-09:00 (19J)",
-        "viernes": "08:00-09:00 (19J)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "AGUIRRE MEJÍA ELENA TZETZANGARY",
-      "horarios": {
-        "lunes": "15:00-16:00 (19J)",
-        "martes": "15:00-16:00 (19J)",
-        "miercoles": "15:00-16:00 (19J)",
-        "jueves": "15:00-16:00 (19J)",
-        "viernes": "15:00-16:00 (19J)"
-      }
-    },
-    {
-      "letra": "C",
-      "profesor": "SANDOVAL CHAVEZ MARIA GUADALUPE",
-      "horarios": {
-        "lunes": "10:00-11:00 (AA3)",
-        "martes": "10:00-11:00 (AA3)",
-        "miercoles": "10:00-11:00 (AA3)",
-        "jueves": "10:00-11:00 (AA3)",
-        "viernes": "10:00-11:00 (AA3)"
-      }
-    }
-  ],
-  "D12": [
-    {
-      "letra": "A",
-      "profesor": "MARTINEZ PORTILLO VIVIANA JOSSELYN",
-      "horarios": {
-        "lunes": "07:00-08:00 (19I)",
-        "martes": "07:00-08:00 (LQ1)",
-        "miercoles": "07:00-08:00 (19I)",
-        "jueves": "07:00-08:00 (19I)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "SANCHEZ GARCIA ANTONIO",
-      "horarios": {
-        "lunes": "18:00-19:00 (19F)",
-        "martes": "18:00-19:00 (LQ1)",
-        "miercoles": "18:00-19:00 (19F)",
-        "jueves": "18:00-19:00 (19F)"
-      }
-    },
-    {
-      "letra": "C",
-      "profesor": "HERNANDEZ ANTUNA MARIA DE LA LUZ",
-      "horarios": {
-        "lunes": "13:00-14:00 (19H)",
-        "martes": "13:00-14:00 (LQ1)",
-        "miercoles": "13:00-14:00 (19H)",
-        "jueves": "13:00-14:00 (19H)"
-      }
-    }
-  ],
-  "E12": [
-    {
-      "letra": "A",
-      "profesor": "TELLO MIJARES JOSÉ DE JESÚS SANTIAGO",
-      "horarios": {
-        "lunes": "09:00-10:00 (CB3)",
-        "martes": "09:00-10:00 (CB3)",
-        "miercoles": "09:00-10:00 (CB3)",
-        "jueves": "09:00-10:00 (CB3)",
-        "viernes": "09:00-10:00 (CB3)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "16:00-17:00 (19C)",
-        "martes": "16:00-17:00 (19C)",
-        "miercoles": "16:00-17:00 (19C)",
-        "jueves": "16:00-17:00 (19C)",
-        "viernes": "16:00-17:00 (19C)"
-      }
-    },
-    {
-      "letra": "C",
-      "profesor": "MORALES LOPEZ JESUS ENRIQUE",
-      "horarios": {
-        "lunes": "12:00-13:00 (19B)",
-        "martes": "12:00-13:00 (19B)",
-        "miercoles": "12:00-13:00 (19B)",
-        "jueves": "12:00-13:00 (19B)",
-        "viernes": "12:00-13:00 (19B)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "14:00-15:00 (19I)",
-        "martes": "14:00-15:00 (19I)",
-        "miercoles": "14:00-15:00 (19I)",
-        "jueves": "14:00-15:00 (19I)",
-        "viernes": "14:00-15:00 (19I)"
-      }
-    }
-  ],
-  "F12": [
-    {
-      "letra": "A",
-      "profesor": "SANTIAGO BARRAGAN MAYELA DE",
-      "horarios": {
-        "lunes": "12:00-13:00 (19J)",
-        "martes": "12:00-13:00 (19J)",
-        "miercoles": "12:00-13:00 (19J)",
-        "jueves": "12:00-13:00 (19J)",
-        "viernes": "12:00-13:00 (19J)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "GUTIERREZ MENDOZA JOCEELYN ARANZA",
-      "horarios": {
-        "lunes": "14:00-15:00 (19D)",
-        "martes": "14:00-15:00 (19D)",
-        "miercoles": "14:00-15:00 (19D)",
-        "jueves": "14:00-15:00 (19D)",
-        "viernes": "14:00-15:00 (19D)"
-      }
-    },
-    {
-      "letra": "C",
-      "profesor": "ZAPATA DAVILA JOSE LUIS",
-      "horarios": {
-        "lunes": "08:00-09:00 (19H)",
-        "martes": "08:00-09:00 (19H)",
-        "miercoles": "08:00-09:00 (19H)",
-        "jueves": "08:00-09:00 (19H)",
-        "viernes": "08:00-09:00 (19H)"
-      }
-    },
-    {
-      "letra": "D",
-      "profesor": "ESPINO MARQUEZ LIZETH",
-      "horarios": {
-        "lunes": "12:00-13:00 (19H)",
-        "martes": "12:00-13:00 (19H)",
-        "miercoles": "12:00-13:00 (19H)",
-        "jueves": "12:00-13:00 (19H)",
-        "viernes": "12:00-13:00 (19H)"
-      }
-    },
-    {
-      "letra": "G",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "14:00-15:00 (08E)",
-        "martes": "14:00-15:00 (08E)",
-        "miercoles": "14:00-15:00 (08E)",
-        "jueves": "14:00-15:00 (LCA)",
-        "viernes": "14:00-15:00 (LCA)"
       }
     }
   ],
@@ -636,6 +314,244 @@
       }
     }
   ],
+  "A14": [
+    {
+      "letra": "A",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "12:00-13:00 (19F)",
+        "martes": "12:00-13:00 (19F)",
+        "miercoles": "12:00-13:00 (19F)",
+        "jueves": "12:00-13:00 (19F)",
+        "viernes": "12:00-13:00 (19F)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "17:00-18:00 (19F)",
+        "martes": "17:00-18:00 (19F)",
+        "miercoles": "17:00-18:00 (19F)",
+        "jueves": "17:00-18:00 (19F)",
+        "viernes": "17:00-18:00 (19F)"
+      }
+    }
+  ],
+  "A15": [
+    {
+      "letra": "A",
+      "profesor": "PALACIOS DURAN CARLA ROCIO",
+      "horarios": {
+        "lunes": "12:00-13:00 (19M)",
+        "martes": "12:00-13:00 (19M)",
+        "miercoles": "12:00-13:00 (19M)",
+        "jueves": "12:00-13:00 (19M)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "VILLALOBOS CHIN JORGE ALBERTO",
+      "horarios": {
+        "lunes": "19:00-20:00 (AA2)",
+        "martes": "19:00-20:00 (AA2)",
+        "miercoles": "19:00-20:00 (AA2)",
+        "jueves": "19:00-20:00 (AA2)"
+      }
+    },
+    {
+      "letra": "S",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "12:00-13:00 (38E)",
+        "martes": "12:00-13:00 (38E)",
+        "miercoles": "12:00-13:00 (38E)",
+        "jueves": "12:00-13:00 (38E)"
+      }
+    }
+  ],
+  "A16": [
+    {
+      "letra": "A",
+      "profesor": "SAUCEDO MARTINEZ PABLO",
+      "horarios": {
+        "lunes": "11:00-12:00 (AA5)",
+        "martes": "11:00-12:00 (AA5)",
+        "miercoles": "11:00-12:00 (AA5)",
+        "jueves": "11:00-12:00 (AA5)",
+        "viernes": "11:00-12:00 (AA5)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "RUIZ ARROYO ARMANDO",
+      "horarios": {
+        "lunes": "15:00-16:00 (AA5)",
+        "martes": "15:00-16:00 (AA5)",
+        "miercoles": "15:00-16:00 (AA5)",
+        "jueves": "15:00-16:00 (AA5)",
+        "viernes": "15:00-16:00 (AA5)"
+      }
+    }
+  ],
+  "A17": [
+    {
+      "letra": "A",
+      "profesor": "GIL VAZQUEZ LUIS FERNANDO",
+      "horarios": {
+        "lunes": "08:00-09:00 (AA3)",
+        "martes": "08:00-09:00 (AA3)",
+        "miercoles": "08:00-09:00 (AA3)",
+        "jueves": "08:00-09:00 (AA3)",
+        "viernes": "08:00-09:00 (AA3)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "RUIZ ARROYO IDALIA",
+      "horarios": {
+        "lunes": "15:00-16:00 (AA3)",
+        "martes": "15:00-16:00 (AA3)",
+        "miercoles": "15:00-16:00 (AA3)",
+        "jueves": "15:00-16:00 (AA3)",
+        "viernes": "15:00-16:00 (AA3)"
+      }
+    }
+  ],
+  "A18": [
+    {
+      "letra": "A",
+      "profesor": "URIBE AGUNDIS DIEGO",
+      "horarios": {
+        "lunes": "11:00-12:00 (19J)",
+        "martes": "11:00-12:00 (19J)",
+        "miercoles": "11:00-12:00 (19J)",
+        "jueves": "11:00-12:00 (19J)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "GARCIA MUÑOZ LUIS HECTOR",
+      "horarios": {
+        "lunes": "16:00-17:00 (19L)",
+        "martes": "16:00-17:00 (19L)",
+        "miercoles": "16:00-17:00 (19L)",
+        "jueves": "16:00-17:00 (19L)"
+      }
+    }
+  ],
+  "A1C": [
+    {
+      "letra": "A",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "viernes": "11:00-12:00 (AA3)"
+      }
+    }
+  ],
+  "B11": [
+    {
+      "letra": "A",
+      "profesor": "LOPEZ CISEÑA ARMANDO",
+      "horarios": {
+        "lunes": "08:00-09:00 (AA5)",
+        "martes": "08:00-09:00 (AA5)",
+        "miercoles": "08:00-09:00 (AA5)",
+        "jueves": "08:00-09:00 (AA5)",
+        "viernes": "08:00-09:00 (AA5)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "ARELLANO CASILLAS MARIA TERESA",
+      "horarios": {
+        "lunes": "14:00-15:00 (AA2)",
+        "martes": "14:00-15:00 (AA2)",
+        "miercoles": "14:00-15:00 (AA2)",
+        "jueves": "14:00-15:00 (AA2)",
+        "viernes": "14:00-15:00 (AA2)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "LOPEZ CISEÑA ARMANDO",
+      "horarios": {
+        "lunes": "09:00-10:00 (AA5)",
+        "martes": "09:00-10:00 (AA5)",
+        "miercoles": "09:00-10:00 (AA5)",
+        "jueves": "09:00-10:00 (AA5)",
+        "viernes": "09:00-10:00 (AA5)"
+      }
+    },
+    {
+      "letra": "G",
+      "profesor": "GARAY ESPINOZA ANTONIO",
+      "horarios": {
+        "lunes": "17:00-18:00 (AA5)",
+        "martes": "17:00-18:00 (AA5)",
+        "miercoles": "17:00-18:00 (AA5)",
+        "jueves": "17:00-18:00 (AA5)",
+        "viernes": "17:00-18:00 (AA5)"
+      }
+    },
+    {
+      "letra": "L",
+      "profesor": "RODRIGUEZ DE LA TORRE KARLA LUCIA",
+      "horarios": {
+        "lunes": "10:00-11:00 (AA7)",
+        "martes": "10:00-11:00 (AA7)",
+        "miercoles": "10:00-11:00 (AA7)",
+        "jueves": "10:00-11:00 (AA7)",
+        "viernes": "10:00-11:00 (AA7)"
+      }
+    }
+  ],
+  "B12": [
+    {
+      "letra": "A",
+      "profesor": "LOPEZ CISEÑA ARMANDO",
+      "horarios": {
+        "lunes": "10:00-11:00 (AA5)",
+        "martes": "10:00-11:00 (AA5)",
+        "miercoles": "10:00-11:00 (AA5)",
+        "jueves": "10:00-11:00 (AA5)",
+        "viernes": "10:00-11:00 (AA5)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "LOPEZ CISEÑA ARMANDO",
+      "horarios": {
+        "lunes": "13:00-14:00 (AA5)",
+        "martes": "13:00-14:00 (AA5)",
+        "miercoles": "13:00-14:00 (AA5)",
+        "jueves": "13:00-14:00 (AA5)",
+        "viernes": "13:00-14:00 (AA5)"
+      }
+    },
+    {
+      "letra": "C",
+      "profesor": "RODRIGUEZ DE LA TORRE KARLA LUCIA",
+      "horarios": {
+        "lunes": "11:00-12:00 (AA7)",
+        "martes": "11:00-12:00 (AA7)",
+        "miercoles": "11:00-12:00 (AA7)",
+        "jueves": "11:00-12:00 (AA7)",
+        "viernes": "11:00-12:00 (AA7)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "FLORES BARAJAS SILVANA MARIN",
+      "horarios": {
+        "lunes": "17:00-18:00 (AA7)",
+        "martes": "17:00-18:00 (AA7)",
+        "miercoles": "17:00-18:00 (AA7)",
+        "jueves": "17:00-18:00 (AA7)",
+        "viernes": "17:00-18:00 (AA7)"
+      }
+    }
+  ],
   "B13": [
     {
       "letra": "A",
@@ -668,6 +584,209 @@
         "miercoles": "12:00-13:00 (AA7)",
         "jueves": "12:00-13:00 (AA7)",
         "viernes": "12:00-13:00 (AA7)"
+      }
+    }
+  ],
+  "B14": [
+    {
+      "letra": "A",
+      "profesor": "SAUCEDO MARTINEZ PABLO",
+      "horarios": {
+        "lunes": "09:00-10:00 (AA6)",
+        "martes": "09:00-10:00 (AA6)",
+        "miercoles": "09:00-10:00 (AA6)",
+        "jueves": "09:00-10:00 (AA6)",
+        "viernes": "09:00-10:00 (AA6)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MOTA ESPELETA JOSE LUIS",
+      "horarios": {
+        "lunes": "15:00-16:00 (19M)",
+        "martes": "15:00-16:00 (19M)",
+        "miercoles": "15:00-16:00 (19M)",
+        "jueves": "15:00-16:00 (19M)",
+        "viernes": "15:00-16:00 (19M)"
+      }
+    }
+  ],
+  "B15": [
+    {
+      "letra": "A",
+      "profesor": "PALACIOS DURAN CARLA ROCIO",
+      "horarios": {
+        "lunes": "08:00-09:00 (19F)",
+        "martes": "08:00-09:00 (19F)",
+        "miercoles": "08:00-09:00 (19F)",
+        "jueves": "08:00-09:00 (19F)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "PADILLA TORRES MICHELLE",
+      "horarios": {
+        "lunes": "14:00-15:00 (AA6)",
+        "martes": "14:00-15:00 (AA6)",
+        "miercoles": "14:00-15:00 (AA6)",
+        "jueves": "14:00-15:00 (AA6)"
+      }
+    }
+  ],
+  "B16": [
+    {
+      "letra": "A",
+      "profesor": "PADILLA TORRES MICHELLE",
+      "horarios": {
+        "lunes": "13:00-14:00 (AA2)",
+        "martes": "13:00-14:00 (AA2)",
+        "miercoles": "13:00-14:00 (AA2)",
+        "jueves": "13:00-14:00 (AA2)",
+        "viernes": "13:00-14:00 (AA2)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "FLORES ALARCON MA. SUSANA",
+      "horarios": {
+        "lunes": "18:00-19:00 (AA7)",
+        "martes": "18:00-19:00 (AA7)",
+        "miercoles": "18:00-19:00 (AA7)",
+        "jueves": "18:00-19:00 (AA7)",
+        "viernes": "18:00-19:00 (AA7)"
+      }
+    }
+  ],
+  "B17": [
+    {
+      "letra": "A",
+      "profesor": "HAMDAN MEDINA LAMIA",
+      "horarios": {
+        "lunes": "10:00-11:00 (19M)",
+        "martes": "10:00-11:00 (19M)",
+        "miercoles": "10:00-11:00 (19M)",
+        "jueves": "10:00-11:00 (19M)",
+        "viernes": "10:00-11:00 (19M10:00-12:00)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "FLORES ALARCON MA. SUSANA",
+      "horarios": {
+        "lunes": "17:00-18:00 (AA6)",
+        "martes": "17:00-18:00 (AA6)",
+        "miercoles": "17:00-18:00 (AA6)",
+        "jueves": "17:00-18:00 (AA6)",
+        "viernes": "17:00-18:00 (AA616:00-18:00)"
+      }
+    }
+  ],
+  "B18": [
+    {
+      "letra": "A",
+      "profesor": "HAMDAN MEDINA LAMIA",
+      "horarios": {
+        "lunes": "09:00-10:00 (19M)",
+        "martes": "09:00-10:00 (19M)",
+        "miercoles": "09:00-10:00 (19M)",
+        "jueves": "09:00-10:00 (19M)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "19:00-20:00 (19L)",
+        "martes": "19:00-20:00 (19L)",
+        "miercoles": "19:00-20:00 (19L)",
+        "jueves": "19:00-20:00 (19L)"
+      }
+    }
+  ],
+  "C11": [
+    {
+      "letra": "A",
+      "profesor": "GONZALEZ RAMIREZ PASCUAL GERARDO",
+      "horarios": {
+        "lunes": "14:00-15:00 (19F)",
+        "martes": "14:00-15:00 (19F)",
+        "miercoles": "14:00-15:00 (19F)",
+        "jueves": "14:00-15:00 (19F)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "PALACIOS DURAN CARLA ROCIO",
+      "horarios": {
+        "lunes": "10:00-11:00 (19C)",
+        "martes": "10:00-11:00 (19C)",
+        "miercoles": "10:00-11:00 (19C)",
+        "jueves": "10:00-11:00 (19C)"
+      }
+    },
+    {
+      "letra": "G",
+      "profesor": "PALACIOS DURAN CARLA ROCIO",
+      "horarios": {
+        "lunes": "13:00-14:00 (19C)",
+        "martes": "13:00-14:00 (19C)",
+        "miercoles": "13:00-14:00 (19C)",
+        "jueves": "13:00-14:00 (19C)"
+      }
+    },
+    {
+      "letra": "I",
+      "profesor": "NUÑEZ SOLIS ROCIO ELENA",
+      "horarios": {
+        "lunes": "07:00-08:00 (07A)",
+        "martes": "07:00-08:00 (07A)",
+        "miercoles": "07:00-08:00 (07A)",
+        "jueves": "07:00-08:00 (07A)"
+      }
+    },
+    {
+      "letra": "L",
+      "profesor": "GONZALEZ RAMIREZ PASCUAL GERARDO",
+      "horarios": {
+        "lunes": "13:00-14:00 (19D)",
+        "martes": "13:00-14:00 (19D)",
+        "miercoles": "13:00-14:00 (19D)",
+        "jueves": "13:00-14:00 (19D)"
+      }
+    }
+  ],
+  "C12": [
+    {
+      "letra": "A",
+      "profesor": "SANTIAGO BARRAGAN MAYELA DE",
+      "horarios": {
+        "lunes": "08:00-09:00 (19J)",
+        "martes": "08:00-09:00 (19J)",
+        "miercoles": "08:00-09:00 (19J)",
+        "jueves": "08:00-09:00 (19J)",
+        "viernes": "08:00-09:00 (19J)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "AGUIRRE MEJÍA ELENA TZETZANGARY",
+      "horarios": {
+        "lunes": "15:00-16:00 (19J)",
+        "martes": "15:00-16:00 (19J)",
+        "miercoles": "15:00-16:00 (19J)",
+        "jueves": "15:00-16:00 (19J)",
+        "viernes": "15:00-16:00 (19J)"
+      }
+    },
+    {
+      "letra": "C",
+      "profesor": "SANDOVAL CHAVEZ MARIA GUADALUPE",
+      "horarios": {
+        "lunes": "10:00-11:00 (AA3)",
+        "martes": "10:00-11:00 (AA3)",
+        "miercoles": "10:00-11:00 (AA3)",
+        "jueves": "10:00-11:00 (AA3)",
+        "viernes": "10:00-11:00 (AA3)"
       }
     }
   ],
@@ -738,6 +857,174 @@
       }
     }
   ],
+  "C15": [
+    {
+      "letra": "A",
+      "profesor": "RUIZ AYALA JOSE DOLORES",
+      "horarios": {
+        "lunes": "11:00-12:00 (AA3)",
+        "martes": "11:00-12:00 (AA3)",
+        "miercoles": "11:00-12:00 (AA3)",
+        "jueves": "11:00-12:00 (AA3)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
+      "horarios": {
+        "lunes": "16:00-17:00 (19K)",
+        "martes": "16:00-17:00 (19K)",
+        "miercoles": "16:00-17:00 (19K)",
+        "jueves": "16:00-17:00 (19K)"
+      }
+    }
+  ],
+  "C16": [
+    {
+      "letra": "A",
+      "profesor": "ZAPATA DAVILA JOSE LUIS",
+      "horarios": {
+        "lunes": "10:00-11:00 (19L)",
+        "martes": "10:00-11:00 (19L)",
+        "miercoles": "10:00-11:00 (19J)",
+        "jueves": "10:00-11:00 (19J)",
+        "viernes": "10:00-11:00 (19L)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
+      "horarios": {
+        "lunes": "15:00-16:00 (19K)",
+        "martes": "15:00-16:00 (19K)",
+        "miercoles": "15:00-16:00 (19K)",
+        "jueves": "15:00-16:00 (19K)",
+        "viernes": "15:00-16:00 (19K)"
+      }
+    }
+  ],
+  "C17": [
+    {
+      "letra": "A",
+      "profesor": "GARCIA ROSAS FRANCISCO JAVIER",
+      "horarios": {
+        "lunes": "10:00-11:00 (19K)",
+        "martes": "10:00-11:00 (19K)",
+        "miercoles": "10:00-11:00 (19K)",
+        "jueves": "10:00-11:00 (19K)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "GARCIA MUÑOZ LUIS HECTOR",
+      "horarios": {
+        "lunes": "17:00-18:00 (19L)",
+        "martes": "17:00-18:00 (19L)",
+        "miercoles": "17:00-18:00 (19L)",
+        "jueves": "17:00-18:00 (19L)"
+      }
+    }
+  ],
+  "C18": [
+    {
+      "letra": "A",
+      "profesor": "PALACIOS DURAN CARLA ROCIO",
+      "horarios": {
+        "lunes": "07:00-08:00 (19J)",
+        "martes": "07:00-08:00 (19J)",
+        "miercoles": "07:00-08:00 (19J)",
+        "jueves": "07:00-08:00 (19J)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "HERNANDEZ GAYTAN MIREYA",
+      "horarios": {
+        "lunes": "13:00-14:00 (19J)",
+        "martes": "13:00-14:00 (19J)",
+        "miercoles": "13:00-14:00 (19J)",
+        "jueves": "13:00-14:00 (19J)"
+      }
+    }
+  ],
+  "D11": [
+    {
+      "letra": "A",
+      "profesor": "CUAN DURON ERNESTO",
+      "horarios": {
+        "lunes": "10:00-11:00 (19F)",
+        "martes": "10:00-11:00 (19F)",
+        "miercoles": "10:00-11:00 (19F)",
+        "jueves": "10:00-11:00 (19F)",
+        "viernes": "10:00-11:00 (19F)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "PADILLA TORRES MICHELLE",
+      "horarios": {
+        "lunes": "11:00-12:00 (19C)",
+        "martes": "11:00-12:00 (19C)",
+        "miercoles": "11:00-12:00 (19C)",
+        "jueves": "11:00-12:00 (19C)",
+        "viernes": "11:00-12:00 (19C)"
+      }
+    },
+    {
+      "letra": "G",
+      "profesor": "GUARDADO GUZMAN SERGIO VICTOR",
+      "horarios": {
+        "lunes": "14:00-15:00 (19C)",
+        "martes": "14:00-15:00 (19C)",
+        "miercoles": "14:00-15:00 (19C)",
+        "jueves": "14:00-15:00 (19C)",
+        "viernes": "14:00-15:00 (19C)"
+      }
+    },
+    {
+      "letra": "L",
+      "profesor": "RUIZ ARROYO IDALIA",
+      "horarios": {
+        "lunes": "09:00-10:00 (19D)",
+        "martes": "09:00-10:00 (19D)",
+        "miercoles": "09:00-10:00 (19D)",
+        "jueves": "09:00-10:00 (19D)",
+        "viernes": "09:00-10:00 (19D)"
+      }
+    }
+  ],
+  "D12": [
+    {
+      "letra": "A",
+      "profesor": "MARTINEZ PORTILLO VIVIANA JOSSELYN",
+      "horarios": {
+        "lunes": "07:00-08:00 (19I)",
+        "martes": "07:00-08:00 (LQ1)",
+        "miercoles": "07:00-08:00 (19I)",
+        "jueves": "07:00-08:00 (19I)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "SANCHEZ GARCIA ANTONIO",
+      "horarios": {
+        "lunes": "18:00-19:00 (19F)",
+        "martes": "18:00-19:00 (LQ1)",
+        "miercoles": "18:00-19:00 (19F)",
+        "jueves": "18:00-19:00 (19F)"
+      }
+    },
+    {
+      "letra": "C",
+      "profesor": "HERNANDEZ ANTUNA MARIA DE LA LUZ",
+      "horarios": {
+        "lunes": "13:00-14:00 (19H)",
+        "martes": "13:00-14:00 (LQ1)",
+        "miercoles": "13:00-14:00 (19H)",
+        "jueves": "13:00-14:00 (19H)"
+      }
+    }
+  ],
   "D13": [
     {
       "letra": "A",
@@ -767,6 +1054,374 @@
         "martes": "09:00-10:00 (19J)",
         "miercoles": "09:00-10:00 (19J)",
         "jueves": "09:00-10:00 (19J)"
+      }
+    }
+  ],
+  "D16": [
+    {
+      "letra": "A",
+      "profesor": "SANTIAGO BARRAGAN MAYELA DE",
+      "horarios": {
+        "lunes": "10:00-11:00 (19J)",
+        "martes": "10:00-11:00 (19J)",
+        "miercoles": "10:00-11:00 (19L)",
+        "jueves": "10:00-11:00 (19L)",
+        "viernes": "10:00-11:00 (19J)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "CUAN DURON ERNESTO",
+      "horarios": {
+        "lunes": "18:00-19:00 (AA3)",
+        "martes": "18:00-19:00 (AA3)",
+        "miercoles": "18:00-19:00 (AA3)",
+        "jueves": "18:00-19:00 (AA3)",
+        "viernes": "18:00-19:00 (AA3)"
+      }
+    }
+  ],
+  "E11": [
+    {
+      "letra": "A",
+      "profesor": "RUIZ AYALA JOSE DOLORES",
+      "horarios": {
+        "lunes": "14:00-15:00 (19B)",
+        "martes": "14:00-15:00 (19B)",
+        "miercoles": "14:00-15:00 (19B)",
+        "jueves": "14:00-15:00 (19B)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "RINCON ESCOBEDO MA. MARTHA",
+      "horarios": {
+        "lunes": "07:00-08:00 (19C)",
+        "martes": "07:00-08:00 (19C)",
+        "miercoles": "07:00-08:00 (19C)",
+        "jueves": "07:00-08:00 (19C)"
+      }
+    },
+    {
+      "letra": "G",
+      "profesor": "RUIZ AYALA JOSE DOLORES",
+      "horarios": {
+        "lunes": "15:00-16:00 (19C)",
+        "martes": "15:00-16:00 (19C)",
+        "miercoles": "15:00-16:00 (19C)",
+        "jueves": "15:00-16:00 (19C)"
+      }
+    },
+    {
+      "letra": "L",
+      "profesor": "MADINAVEITIA SANDOVAL LUIS FERNANDO",
+      "horarios": {
+        "lunes": "12:00-13:00 (19D)",
+        "martes": "12:00-13:00 (19D)",
+        "miercoles": "12:00-13:00 (19D)",
+        "jueves": "12:00-13:00 (19D)"
+      }
+    }
+  ],
+  "E12": [
+    {
+      "letra": "A",
+      "profesor": "TELLO MIJARES JOSÉ DE JESÚS SANTIAGO",
+      "horarios": {
+        "lunes": "09:00-10:00 (CB3)",
+        "martes": "09:00-10:00 (CB3)",
+        "miercoles": "09:00-10:00 (CB3)",
+        "jueves": "09:00-10:00 (CB3)",
+        "viernes": "09:00-10:00 (CB3)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "16:00-17:00 (19C)",
+        "martes": "16:00-17:00 (19C)",
+        "miercoles": "16:00-17:00 (19C)",
+        "jueves": "16:00-17:00 (19C)",
+        "viernes": "16:00-17:00 (19C)"
+      }
+    },
+    {
+      "letra": "C",
+      "profesor": "MORALES LOPEZ JESUS ENRIQUE",
+      "horarios": {
+        "lunes": "12:00-13:00 (19B)",
+        "martes": "12:00-13:00 (19B)",
+        "miercoles": "12:00-13:00 (19B)",
+        "jueves": "12:00-13:00 (19B)",
+        "viernes": "12:00-13:00 (19B)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "14:00-15:00 (19I)",
+        "martes": "14:00-15:00 (19I)",
+        "miercoles": "14:00-15:00 (19I)",
+        "jueves": "14:00-15:00 (19I)",
+        "viernes": "14:00-15:00 (19I)"
+      }
+    }
+  ],
+  "E13": [
+    {
+      "letra": "A",
+      "profesor": "PEREZ MARTINEZ ENRIQUE HUMBERTO",
+      "horarios": {
+        "lunes": "11:00-12:00 (19L)",
+        "martes": "11:00-12:00 (19L)",
+        "miercoles": "11:00-12:00 (19L)",
+        "jueves": "11:00-12:00 (19L)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "GARAY ESPINOZA ANTONIO",
+      "horarios": {
+        "lunes": "18:00-19:00 (AA5)",
+        "martes": "18:00-19:00 (AA5)",
+        "miercoles": "18:00-19:00 (AA5)",
+        "jueves": "18:00-19:00 (AA5)"
+      }
+    }
+  ],
+  "E14": [
+    {
+      "letra": "A",
+      "profesor": "VELA ALVAREZ GEORGINA ELIZABETH",
+      "horarios": {
+        "lunes": "09:00-10:00 (19L)",
+        "martes": "09:00-10:00 (19L)",
+        "miercoles": "09:00-10:00 (19L)",
+        "jueves": "09:00-10:00 (19L)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "ESPARZA IBARRA JESUS ROBERTO",
+      "horarios": {
+        "lunes": "16:00-17:00 (AA3)",
+        "martes": "16:00-17:00 (AA3)",
+        "miercoles": "16:00-17:00 (AA3)",
+        "jueves": "16:00-17:00 (AA3)"
+      }
+    }
+  ],
+  "E15": [
+    {
+      "letra": "A",
+      "profesor": "DE AVILA SANCHEZ RICARDO",
+      "horarios": {
+        "lunes": "08:00-09:00 (AA1)",
+        "martes": "08:00-09:00 (AA1)",
+        "miercoles": "08:00-09:00 (AA1)",
+        "jueves": "08:00-09:00 (AA1)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MORALES LOPEZ JESUS ENRIQUE",
+      "horarios": {
+        "lunes": "15:00-16:00 (AA7)",
+        "martes": "15:00-16:00 (AA7)",
+        "miercoles": "15:00-16:00 (AA7)",
+        "jueves": "15:00-16:00 (AA7)"
+      }
+    }
+  ],
+  "E16": [
+    {
+      "letra": "A",
+      "profesor": "DE AVILA SANCHEZ RICARDO",
+      "horarios": {
+        "lunes": "10:00-11:00 (AA1)",
+        "martes": "10:00-11:00 (AA1)",
+        "miercoles": "10:00-11:00 (AA1)",
+        "jueves": "10:00-11:00 (AA1)",
+        "viernes": "10:00-11:00 (AA1)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "SANTIAGO BARRAGAN ANTONIO DE",
+      "horarios": {
+        "lunes": "17:00-18:00 (AA3)",
+        "martes": "17:00-18:00 (AA3)",
+        "miercoles": "17:00-18:00 (AA3)",
+        "jueves": "17:00-18:00 (AA3)",
+        "viernes": "17:00-18:00 (AA3)"
+      }
+    }
+  ],
+  "E17": [
+    {
+      "letra": "A",
+      "profesor": "DE AVILA SANCHEZ RICARDO",
+      "horarios": {
+        "lunes": "09:00-10:00 (AA1)",
+        "martes": "09:00-10:00 (AA1)",
+        "miercoles": "09:00-10:00 (AA1)",
+        "jueves": "09:00-10:00 (AA1)",
+        "viernes": "09:00-10:00 (AA1)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "ENRIQUEZ FLORES ARMANDO",
+      "horarios": {
+        "lunes": "13:00-14:00 (AA1)",
+        "martes": "13:00-14:00 (AA1)",
+        "miercoles": "13:00-14:00 (AA1)",
+        "jueves": "13:00-14:00 (AA1)",
+        "viernes": "13:00-14:00 (AA1)"
+      }
+    },
+    {
+      "letra": "C",
+      "profesor": "SANTIAGO BARRAGAN ANTONIO DE",
+      "horarios": {
+        "lunes": "13:00-14:00 (19I)",
+        "martes": "13:00-14:00 (19I)",
+        "miercoles": "13:00-14:00 (19I)",
+        "jueves": "13:00-14:00 (19I)",
+        "viernes": "13:00-14:00 (MYR)"
+      }
+    }
+  ],
+  "E18": [
+    {
+      "letra": "A",
+      "profesor": "DE AVILA SANCHEZ RICARDO",
+      "horarios": {
+        "lunes": "13:00-14:00 (AA3)",
+        "martes": "13:00-14:00 (AA3)",
+        "miercoles": "13:00-14:00 (AA3)",
+        "jueves": "13:00-14:00 (AA3)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MORALES LOPEZ JESUS ENRIQUE",
+      "horarios": {
+        "lunes": "16:00-17:00 (AA7)",
+        "martes": "16:00-17:00 (AA7)",
+        "miercoles": "16:00-17:00 (AA7)",
+        "jueves": "16:00-17:00 (AA7)"
+      }
+    }
+  ],
+  "F11": [
+    {
+      "letra": "A",
+      "profesor": "ALCALA WONG DANIEL",
+      "horarios": {
+        "lunes": "09:00-10:00 (19B)",
+        "martes": "09:00-10:00 (19B)",
+        "miercoles": "09:00-10:00 (19B)",
+        "jueves": "09:00-10:00 (19B)"
+      }
+    },
+    {
+      "letra": "C",
+      "profesor": "SANTIAGO BARRAGAN ANTONIO DE",
+      "horarios": {
+        "martes": "14:00-15:00 (06B)",
+        "miercoles": "14:00-15:00 (06B)",
+        "jueves": "14:00-15:00 (06B)",
+        "viernes": "14:00-15:00 (06B)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "AGUIRRE MEJÍA ELENA TZETZANGARY",
+      "horarios": {
+        "lunes": "12:00-13:00 (AA1)",
+        "martes": "12:00-13:00 (AA1)",
+        "jueves": "12:00-13:00 (AA2)",
+        "viernes": "12:00-13:00 (AA2)"
+      }
+    },
+    {
+      "letra": "G",
+      "profesor": "RUIZ AYALA JOSE DOLORES",
+      "horarios": {
+        "lunes": "16:00-17:00 (AA1)",
+        "martes": "16:00-17:00 (AA1)",
+        "miercoles": "16:00-17:00 (AA1)",
+        "jueves": "16:00-17:00 (AA1)"
+      }
+    },
+    {
+      "letra": "L",
+      "profesor": "FLORES BARAJAS SILVANA MARIN",
+      "horarios": {
+        "lunes": "11:00-12:00 (19D)",
+        "martes": "11:00-12:00 (19D)",
+        "miercoles": "11:00-12:00 (AA1)",
+        "jueves": "11:00-12:00 (AA1)"
+      }
+    }
+  ],
+  "F12": [
+    {
+      "letra": "A",
+      "profesor": "SANTIAGO BARRAGAN MAYELA DE",
+      "horarios": {
+        "lunes": "12:00-13:00 (19J)",
+        "martes": "12:00-13:00 (19J)",
+        "miercoles": "12:00-13:00 (19J)",
+        "jueves": "12:00-13:00 (19J)",
+        "viernes": "12:00-13:00 (19J)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "GUTIERREZ MENDOZA JOCEELYN ARANZA",
+      "horarios": {
+        "lunes": "14:00-15:00 (19D)",
+        "martes": "14:00-15:00 (19D)",
+        "miercoles": "14:00-15:00 (19D)",
+        "jueves": "14:00-15:00 (19D)",
+        "viernes": "14:00-15:00 (19D)"
+      }
+    },
+    {
+      "letra": "C",
+      "profesor": "ZAPATA DAVILA JOSE LUIS",
+      "horarios": {
+        "lunes": "08:00-09:00 (19H)",
+        "martes": "08:00-09:00 (19H)",
+        "miercoles": "08:00-09:00 (19H)",
+        "jueves": "08:00-09:00 (19H)",
+        "viernes": "08:00-09:00 (19H)"
+      }
+    },
+    {
+      "letra": "D",
+      "profesor": "ESPINO MARQUEZ LIZETH",
+      "horarios": {
+        "lunes": "12:00-13:00 (19H)",
+        "martes": "12:00-13:00 (19H)",
+        "miercoles": "12:00-13:00 (19H)",
+        "jueves": "12:00-13:00 (19H)",
+        "viernes": "12:00-13:00 (19H)"
+      }
+    },
+    {
+      "letra": "G",
+      "profesor": "MAESTRO POR ASIGNAR",
+      "horarios": {
+        "lunes": "14:00-15:00 (08E)",
+        "martes": "14:00-15:00 (08E)",
+        "miercoles": "14:00-15:00 (08E)",
+        "jueves": "14:00-15:00 (LCA)",
+        "viernes": "14:00-15:00 (LCA)"
       }
     }
   ],
@@ -816,122 +1471,6 @@
       }
     }
   ],
-  "A14": [
-    {
-      "letra": "A",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "12:00-13:00 (19F)",
-        "martes": "12:00-13:00 (19F)",
-        "miercoles": "12:00-13:00 (19F)",
-        "jueves": "12:00-13:00 (19F)",
-        "viernes": "12:00-13:00 (19F)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "17:00-18:00 (19F)",
-        "martes": "17:00-18:00 (19F)",
-        "miercoles": "17:00-18:00 (19F)",
-        "jueves": "17:00-18:00 (19F)",
-        "viernes": "17:00-18:00 (19F)"
-      }
-    }
-  ],
-  "B14": [
-    {
-      "letra": "A",
-      "profesor": "SAUCEDO MARTINEZ PABLO",
-      "horarios": {
-        "lunes": "09:00-10:00 (AA6)",
-        "martes": "09:00-10:00 (AA6)",
-        "miercoles": "09:00-10:00 (AA6)",
-        "jueves": "09:00-10:00 (AA6)",
-        "viernes": "09:00-10:00 (AA6)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MOTA ESPELETA JOSE LUIS",
-      "horarios": {
-        "lunes": "15:00-16:00 (19M)",
-        "martes": "15:00-16:00 (19M)",
-        "miercoles": "15:00-16:00 (19M)",
-        "jueves": "15:00-16:00 (19M)",
-        "viernes": "15:00-16:00 (19M)"
-      }
-    }
-  ],
-  "B15": [
-    {
-      "letra": "A",
-      "profesor": "PALACIOS DURAN CARLA ROCIO",
-      "horarios": {
-        "lunes": "08:00-09:00 (19F)",
-        "martes": "08:00-09:00 (19F)",
-        "miercoles": "08:00-09:00 (19F)",
-        "jueves": "08:00-09:00 (19F)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "PADILLA TORRES MICHELLE",
-      "horarios": {
-        "lunes": "14:00-15:00 (AA6)",
-        "martes": "14:00-15:00 (AA6)",
-        "miercoles": "14:00-15:00 (AA6)",
-        "jueves": "14:00-15:00 (AA6)"
-      }
-    }
-  ],
-  "C15": [
-    {
-      "letra": "A",
-      "profesor": "RUIZ AYALA JOSE DOLORES",
-      "horarios": {
-        "lunes": "11:00-12:00 (AA3)",
-        "martes": "11:00-12:00 (AA3)",
-        "miercoles": "11:00-12:00 (AA3)",
-        "jueves": "11:00-12:00 (AA3)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
-      "horarios": {
-        "lunes": "16:00-17:00 (19K)",
-        "martes": "16:00-17:00 (19K)",
-        "miercoles": "16:00-17:00 (19K)",
-        "jueves": "16:00-17:00 (19K)"
-      }
-    }
-  ],
-  "D16": [
-    {
-      "letra": "A",
-      "profesor": "SANTIAGO BARRAGAN MAYELA DE",
-      "horarios": {
-        "lunes": "10:00-11:00 (19J)",
-        "martes": "10:00-11:00 (19J)",
-        "miercoles": "10:00-11:00 (19L)",
-        "jueves": "10:00-11:00 (19L)",
-        "viernes": "10:00-11:00 (19J)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "CUAN DURON ERNESTO",
-      "horarios": {
-        "lunes": "18:00-19:00 (AA3)",
-        "martes": "18:00-19:00 (AA3)",
-        "miercoles": "18:00-19:00 (AA3)",
-        "jueves": "18:00-19:00 (AA3)",
-        "viernes": "18:00-19:00 (AA3)"
-      }
-    }
-  ],
   "F14": [
     {
       "letra": "A",
@@ -964,128 +1503,6 @@
         "miercoles": "11:00-12:00 (19H)",
         "jueves": "11:00-12:00 (19H)",
         "viernes": "11:00-12:00 (AA4)"
-      }
-    }
-  ],
-  "A15": [
-    {
-      "letra": "A",
-      "profesor": "PALACIOS DURAN CARLA ROCIO",
-      "horarios": {
-        "lunes": "12:00-13:00 (19M)",
-        "martes": "12:00-13:00 (19M)",
-        "miercoles": "12:00-13:00 (19M)",
-        "jueves": "12:00-13:00 (19M)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "VILLALOBOS CHIN JORGE ALBERTO",
-      "horarios": {
-        "lunes": "19:00-20:00 (AA2)",
-        "martes": "19:00-20:00 (AA2)",
-        "miercoles": "19:00-20:00 (AA2)",
-        "jueves": "19:00-20:00 (AA2)"
-      }
-    },
-    {
-      "letra": "S",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "12:00-13:00 (38E)",
-        "martes": "12:00-13:00 (38E)",
-        "miercoles": "12:00-13:00 (38E)",
-        "jueves": "12:00-13:00 (38E)"
-      }
-    }
-  ],
-  "E13": [
-    {
-      "letra": "A",
-      "profesor": "PEREZ MARTINEZ ENRIQUE HUMBERTO",
-      "horarios": {
-        "lunes": "11:00-12:00 (19L)",
-        "martes": "11:00-12:00 (19L)",
-        "miercoles": "11:00-12:00 (19L)",
-        "jueves": "11:00-12:00 (19L)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "GARAY ESPINOZA ANTONIO",
-      "horarios": {
-        "lunes": "18:00-19:00 (AA5)",
-        "martes": "18:00-19:00 (AA5)",
-        "miercoles": "18:00-19:00 (AA5)",
-        "jueves": "18:00-19:00 (AA5)"
-      }
-    }
-  ],
-  "C17": [
-    {
-      "letra": "A",
-      "profesor": "GARCIA ROSAS FRANCISCO JAVIER",
-      "horarios": {
-        "lunes": "10:00-11:00 (19K)",
-        "martes": "10:00-11:00 (19K)",
-        "miercoles": "10:00-11:00 (19K)",
-        "jueves": "10:00-11:00 (19K)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "GARCIA MUÑOZ LUIS HECTOR",
-      "horarios": {
-        "lunes": "17:00-18:00 (19L)",
-        "martes": "17:00-18:00 (19L)",
-        "miercoles": "17:00-18:00 (19L)",
-        "jueves": "17:00-18:00 (19L)"
-      }
-    }
-  ],
-  "F17": [
-    {
-      "letra": "A",
-      "profesor": "ESPARZA IBARRA JESUS ROBERTO",
-      "horarios": {
-        "lunes": "07:00-08:00 (AA6)",
-        "martes": "07:00-08:00 (AA6)",
-        "miercoles": "07:00-08:00 (AA6)",
-        "jueves": "07:00-08:00 (AA6)",
-        "viernes": "07:00-08:00 (AA6)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "URBINA AMADOR ANA LILIA",
-      "horarios": {
-        "lunes": "13:00-14:00 (19L)",
-        "martes": "13:00-14:00 (19L)",
-        "miercoles": "13:00-14:00 (19L)",
-        "jueves": "13:00-14:00 (19L)",
-        "viernes": "13:00-14:00 (19L)"
-      }
-    }
-  ],
-  "E15": [
-    {
-      "letra": "A",
-      "profesor": "DE AVILA SANCHEZ RICARDO",
-      "horarios": {
-        "lunes": "08:00-09:00 (AA1)",
-        "martes": "08:00-09:00 (AA1)",
-        "miercoles": "08:00-09:00 (AA1)",
-        "jueves": "08:00-09:00 (AA1)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MORALES LOPEZ JESUS ENRIQUE",
-      "horarios": {
-        "lunes": "15:00-16:00 (AA7)",
-        "martes": "15:00-16:00 (AA7)",
-        "miercoles": "15:00-16:00 (AA7)",
-        "jueves": "15:00-16:00 (AA7)"
       }
     }
   ],
@@ -1124,6 +1541,74 @@
       }
     }
   ],
+  "F16": [
+    {
+      "letra": "A",
+      "profesor": "RUIZ ARROYO ARMANDO",
+      "horarios": {
+        "lunes": "08:00-09:00 (AA7)",
+        "martes": "08:00-09:00 (AA7)",
+        "miercoles": "08:00-09:00 (AA7)",
+        "jueves": "08:00-09:00 (AA7)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "RUIZ ARROYO IDALIA",
+      "horarios": {
+        "lunes": "14:00-15:00 (AA5)",
+        "martes": "14:00-15:00 (AA5)",
+        "miercoles": "14:00-15:00 (AA5)",
+        "jueves": "14:00-15:00 (AA5)"
+      }
+    }
+  ],
+  "F17": [
+    {
+      "letra": "A",
+      "profesor": "ESPARZA IBARRA JESUS ROBERTO",
+      "horarios": {
+        "lunes": "07:00-08:00 (AA6)",
+        "martes": "07:00-08:00 (AA6)",
+        "miercoles": "07:00-08:00 (AA6)",
+        "jueves": "07:00-08:00 (AA6)",
+        "viernes": "07:00-08:00 (AA6)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "URBINA AMADOR ANA LILIA",
+      "horarios": {
+        "lunes": "13:00-14:00 (19L)",
+        "martes": "13:00-14:00 (19L)",
+        "miercoles": "13:00-14:00 (19L)",
+        "jueves": "13:00-14:00 (19L)",
+        "viernes": "13:00-14:00 (19L)"
+      }
+    }
+  ],
+  "F18": [
+    {
+      "letra": "A",
+      "profesor": "HAMDAN MEDINA LAMIA",
+      "horarios": {
+        "lunes": "07:00-08:00 (19M)",
+        "martes": "07:00-08:00 (19M)",
+        "miercoles": "07:00-08:00 (19M)",
+        "jueves": "07:00-08:00 (19M)"
+      }
+    },
+    {
+      "letra": "B",
+      "profesor": "MOTA ESPELETA JOSE LUIS",
+      "horarios": {
+        "lunes": "14:00-15:00 (19M)",
+        "martes": "14:00-15:00 (19M)",
+        "miercoles": "14:00-15:00 (19M)",
+        "jueves": "14:00-15:00 (19M)"
+      }
+    }
+  ],
   "G15": [
     {
       "letra": "A",
@@ -1144,143 +1629,15 @@
         "miercoles": "16:00-17:00 (19J)",
         "jueves": "16:00-17:00 (19J)"
       }
-    }
-  ],
-  "A16": [
-    {
-      "letra": "A",
-      "profesor": "SAUCEDO MARTINEZ PABLO",
-      "horarios": {
-        "lunes": "11:00-12:00 (AA5)",
-        "martes": "11:00-12:00 (AA5)",
-        "miercoles": "11:00-12:00 (AA5)",
-        "jueves": "11:00-12:00 (AA5)",
-        "viernes": "11:00-12:00 (AA5)"
-      }
     },
     {
-      "letra": "B",
-      "profesor": "RUIZ ARROYO ARMANDO",
+      "letra": "W",
+      "profesor": "CUAN DURON ENRIQUE",
       "horarios": {
-        "lunes": "15:00-16:00 (AA5)",
-        "martes": "15:00-16:00 (AA5)",
-        "miercoles": "15:00-16:00 (AA5)",
-        "jueves": "15:00-16:00 (AA5)",
-        "viernes": "15:00-16:00 (AA5)"
-      }
-    }
-  ],
-  "E14": [
-    {
-      "letra": "A",
-      "profesor": "VELA ALVAREZ GEORGINA ELIZABETH",
-      "horarios": {
-        "lunes": "09:00-10:00 (19L)",
-        "martes": "09:00-10:00 (19L)",
-        "miercoles": "09:00-10:00 (19L)",
-        "jueves": "09:00-10:00 (19L)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "ESPARZA IBARRA JESUS ROBERTO",
-      "horarios": {
-        "lunes": "16:00-17:00 (AA3)",
-        "martes": "16:00-17:00 (AA3)",
-        "miercoles": "16:00-17:00 (AA3)",
-        "jueves": "16:00-17:00 (AA3)"
-      }
-    }
-  ],
-  "B16": [
-    {
-      "letra": "A",
-      "profesor": "PADILLA TORRES MICHELLE",
-      "horarios": {
-        "lunes": "13:00-14:00 (AA2)",
-        "martes": "13:00-14:00 (AA2)",
-        "miercoles": "13:00-14:00 (AA2)",
-        "jueves": "13:00-14:00 (AA2)",
-        "viernes": "13:00-14:00 (AA2)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "POR ASIGNAR",
-      "horarios": {
-        "lunes": "18:00-19:00 (AA7)",
-        "martes": "18:00-19:00 (AA7)",
-        "miercoles": "18:00-19:00 (AA7)",
-        "jueves": "18:00-19:00 (AA7)",
-        "viernes": "18:00-19:00 (AA7)"
-      }
-    }
-  ],
-  "C18": [
-    {
-      "letra": "A",
-      "profesor": "PALACIOS DURAN CARLA ROCIO",
-      "horarios": {
-        "lunes": "07:00-08:00 (19J)",
-        "martes": "07:00-08:00 (19J)",
-        "miercoles": "07:00-08:00 (19J)",
-        "jueves": "07:00-08:00 (19J)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "HERNANDEZ GAYTAN MIREYA",
-      "horarios": {
-        "lunes": "13:00-14:00 (19J)",
-        "martes": "13:00-14:00 (19J)",
-        "miercoles": "13:00-14:00 (19J)",
-        "jueves": "13:00-14:00 (19J)"
-      }
-    }
-  ],
-  "E16": [
-    {
-      "letra": "A",
-      "profesor": "DE AVILA SANCHEZ RICARDO",
-      "horarios": {
-        "lunes": "10:00-11:00 (AA1)",
-        "martes": "10:00-11:00 (AA1)",
-        "miercoles": "10:00-11:00 (AA1)",
-        "jueves": "10:00-11:00 (AA1)",
-        "viernes": "10:00-11:00 (AA1)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "SANTIAGO BARRAGAN ANTONIO DE",
-      "horarios": {
-        "lunes": "17:00-18:00 (AA3)",
-        "martes": "17:00-18:00 (AA3)",
-        "miercoles": "17:00-18:00 (AA3)",
-        "jueves": "17:00-18:00 (AA3)",
-        "viernes": "17:00-18:00 (AA3)"
-      }
-    }
-  ],
-  "F16": [
-    {
-      "letra": "A",
-      "profesor": "RUIZ ARROYO ARMANDO",
-      "horarios": {
-        "lunes": "08:00-09:00 (AA7)",
-        "martes": "08:00-09:00 (AA7)",
-        "miercoles": "08:00-09:00 (AA7)",
-        "jueves": "08:00-09:00 (AA7)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "RUIZ ARROYO IDALIA",
-      "horarios": {
-        "lunes": "14:00-15:00 (AA5)",
-        "martes": "14:00-15:00 (AA5)",
-        "miercoles": "14:00-15:00 (AA5)",
-        "jueves": "14:00-15:00 (AA5)"
+        "lunes": "12:00-13:00 (34D)",
+        "martes": "12:00-13:00 (36A)",
+        "miercoles": "12:00-13:00 (36A)",
+        "jueves": "12:00-13:00 (ALE)"
       }
     }
   ],
@@ -1307,7 +1664,7 @@
     },
     {
       "letra": "C",
-      "profesor": "POR ASIGNAR",
+      "profesor": "FLORES ALARCON MA. SUSANA",
       "horarios": {
         "lunes": "15:00-16:00 (19H)",
         "martes": "15:00-16:00 (19H)",
@@ -1316,339 +1673,11 @@
       }
     }
   ],
-  "A17": [
-    {
-      "letra": "A",
-      "profesor": "GIL VAZQUEZ LUIS FERNANDO",
-      "horarios": {
-        "lunes": "08:00-09:00 (AA3)",
-        "martes": "08:00-09:00 (AA3)",
-        "miercoles": "08:00-09:00 (AA3)",
-        "jueves": "08:00-09:00 (AA3)",
-        "viernes": "08:00-09:00 (AA3)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "RUIZ ARROYO IDALIA",
-      "horarios": {
-        "lunes": "15:00-16:00 (AA3)",
-        "martes": "15:00-16:00 (AA3)",
-        "miercoles": "15:00-16:00 (AA3)",
-        "jueves": "15:00-16:00 (AA3)",
-        "viernes": "15:00-16:00 (AA3)"
-      }
-    }
-  ],
-  "A18": [
-    {
-      "letra": "A",
-      "profesor": "URIBE AGUNDIS DIEGO",
-      "horarios": {
-        "lunes": "11:00-12:00 (19J)",
-        "martes": "11:00-12:00 (19J)",
-        "miercoles": "11:00-12:00 (19J)",
-        "jueves": "11:00-12:00 (19J)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "GARCIA MUÑOZ LUIS HECTOR",
-      "horarios": {
-        "lunes": "16:00-17:00 (19L)",
-        "martes": "16:00-17:00 (19L)",
-        "miercoles": "16:00-17:00 (19L)",
-        "jueves": "16:00-17:00 (19L)"
-      }
-    }
-  ],
-  "B17": [
-    {
-      "letra": "A",
-      "profesor": "HAMDAN MEDINA LAMIA",
-      "horarios": {
-        "lunes": "10:00-11:00 (19M)",
-        "martes": "10:00-11:00 (19M)",
-        "miercoles": "10:00-11:00 (19M)",
-        "jueves": "10:00-11:00 (19M)",
-        "viernes": "10:00-11:00 (19M10:00-12:00)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "POR ASIGNAR",
-      "horarios": {
-        "lunes": "17:00-18:00 (AA6)",
-        "martes": "17:00-18:00 (AA6)",
-        "miercoles": "17:00-18:00 (AA6)",
-        "jueves": "17:00-18:00 (AA6)",
-        "viernes": "17:00-18:00 (AA616:00-18:00)"
-      }
-    }
-  ],
-  "11D": [
-    {
-      "letra": "A",
-      "profesor": "PEREZ MARTINEZ ENRIQUE HUMBERTO",
-      "horarios": {
-        "lunes": "12:00-13:00 (19L)",
-        "martes": "12:00-13:00 (19L)",
-        "miercoles": "12:00-13:00 (19L)",
-        "jueves": "12:00-13:00 (19L)",
-        "viernes": "12:00-13:00 (19L)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
-      "horarios": {
-        "lunes": "14:00-15:00 (19K)",
-        "martes": "14:00-15:00 (19K)",
-        "miercoles": "14:00-15:00 (19K)",
-        "jueves": "14:00-15:00 (19K)",
-        "viernes": "14:00-15:00 (19K)"
-      }
-    }
-  ],
-  "E17": [
-    {
-      "letra": "A",
-      "profesor": "DE AVILA SANCHEZ RICARDO",
-      "horarios": {
-        "lunes": "09:00-10:00 (AA1)",
-        "martes": "09:00-10:00 (AA1)",
-        "miercoles": "09:00-10:00 (AA1)",
-        "jueves": "09:00-10:00 (AA1)",
-        "viernes": "09:00-10:00 (AA1)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "ENRIQUEZ FLORES ARMANDO",
-      "horarios": {
-        "lunes": "13:00-14:00 (AA1)",
-        "martes": "13:00-14:00 (AA1)",
-        "miercoles": "13:00-14:00 (AA1)",
-        "jueves": "13:00-14:00 (AA1)",
-        "viernes": "13:00-14:00 (AA1)"
-      }
-    },
-    {
-      "letra": "C",
-      "profesor": "SANTIAGO BARRAGAN ANTONIO DE",
-      "horarios": {
-        "lunes": "13:00-14:00 (19I)",
-        "martes": "13:00-14:00 (19I)",
-        "miercoles": "13:00-14:00 (19I)",
-        "jueves": "13:00-14:00 (19I)",
-        "viernes": "13:00-14:00 (MYR)"
-      }
-    }
-  ],
-  "21D": [
-    {
-      "letra": "A",
-      "profesor": "MOTA ESPELETA JOSE LUIS",
-      "horarios": {
-        "lunes": "13:00-14:00 (AA6)",
-        "martes": "13:00-14:00 (AA6)",
-        "miercoles": "13:00-14:00 (AA6)",
-        "jueves": "13:00-14:00 (AA6)",
-        "viernes": "13:00-14:00 (AA6)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "18:00-19:00 (AA6)",
-        "martes": "18:00-19:00 (AA6)",
-        "miercoles": "18:00-19:00 (AA6)",
-        "jueves": "18:00-19:00 (AA6)",
-        "viernes": "18:00-19:00 (AA6)"
-      }
-    }
-  ],
-  "31D": [
-    {
-      "letra": "A",
-      "profesor": "ARIAS HERNANDEZ LINA ERNESTINA",
-      "horarios": {
-        "lunes": "11:00-12:00 (19K)",
-        "martes": "11:00-12:00 (19K)",
-        "miercoles": "11:00-12:00 (19K)",
-        "jueves": "11:00-12:00 (19K)",
-        "viernes": "11:00-12:00 (19K)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "ARIAS HERNANDEZ LINA ERNESTINA",
-      "horarios": {
-        "lunes": "17:00-18:00 (19K)",
-        "martes": "17:00-18:00 (19K)",
-        "miercoles": "17:00-18:00 (19K)",
-        "jueves": "17:00-18:00 (19K)",
-        "viernes": "17:00-18:00 (19K)"
-      }
-    }
-  ],
-  "B18": [
-    {
-      "letra": "A",
-      "profesor": "HAMDAN MEDINA LAMIA",
-      "horarios": {
-        "lunes": "09:00-10:00 (19M)",
-        "martes": "09:00-10:00 (19M)",
-        "miercoles": "09:00-10:00 (19M)",
-        "jueves": "09:00-10:00 (19M)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MAESTRO POR ASIGNAR",
-      "horarios": {
-        "lunes": "19:00-20:00 (19L)",
-        "martes": "19:00-20:00 (19L)",
-        "miercoles": "19:00-20:00 (19L)",
-        "jueves": "19:00-20:00 (19L)"
-      }
-    }
-  ],
-  "C16": [
-    {
-      "letra": "A",
-      "profesor": "ZAPATA DAVILA JOSE LUIS",
-      "horarios": {
-        "lunes": "10:00-11:00 (19L)",
-        "martes": "10:00-11:00 (19L)",
-        "miercoles": "10:00-11:00 (19J)",
-        "jueves": "10:00-11:00 (19J)",
-        "viernes": "10:00-11:00 (19L)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
-      "horarios": {
-        "lunes": "15:00-16:00 (19K)",
-        "martes": "15:00-16:00 (19K)",
-        "miercoles": "15:00-16:00 (19K)",
-        "jueves": "15:00-16:00 (19K)",
-        "viernes": "15:00-16:00 (19K)"
-      }
-    }
-  ],
-  "41D": [
-    {
-      "letra": "A",
-      "profesor": "MOTA ESPELETA JOSE LUIS",
-      "horarios": {
-        "lunes": "12:00-13:00 (AA6)",
-        "martes": "12:00-13:00 (AA6)",
-        "miercoles": "12:00-13:00 (AA6)",
-        "jueves": "12:00-13:00 (AA6)",
-        "viernes": "12:00-13:00 (AA6)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MORENO ORONA ERIK ALAN",
-      "horarios": {
-        "lunes": "18:00-19:00 (AA1)",
-        "martes": "18:00-19:00 (AA1)",
-        "miercoles": "18:00-19:00 (AA1)",
-        "jueves": "18:00-19:00 (AA1)",
-        "viernes": "18:00-19:00 (AA1)"
-      }
-    }
-  ],
-  "E18": [
-    {
-      "letra": "A",
-      "profesor": "DE AVILA SANCHEZ RICARDO",
-      "horarios": {
-        "lunes": "13:00-14:00 (AA3)",
-        "martes": "13:00-14:00 (AA3)",
-        "miercoles": "13:00-14:00 (AA3)",
-        "jueves": "13:00-14:00 (AA3)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MORALES LOPEZ JESUS ENRIQUE",
-      "horarios": {
-        "lunes": "16:00-17:00 (AA7)",
-        "martes": "16:00-17:00 (AA7)",
-        "miercoles": "16:00-17:00 (AA7)",
-        "jueves": "16:00-17:00 (AA7)"
-      }
-    }
-  ],
-  "F18": [
-    {
-      "letra": "A",
-      "profesor": "HAMDAN MEDINA LAMIA",
-      "horarios": {
-        "lunes": "07:00-08:00 (19M)",
-        "martes": "07:00-08:00 (19M)",
-        "miercoles": "07:00-08:00 (19M)",
-        "jueves": "07:00-08:00 (19M)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "MOTA ESPELETA JOSE LUIS",
-      "horarios": {
-        "lunes": "14:00-15:00 (19M)",
-        "martes": "14:00-15:00 (19M)",
-        "miercoles": "14:00-15:00 (19M)",
-        "jueves": "14:00-15:00 (19M)"
-      }
-    }
-  ],
-  "51D": [
-    {
-      "letra": "A",
-      "profesor": "HAMDAN MEDINA LAMIA",
-      "horarios": {
-        "lunes": "08:00-09:00 (19M)",
-        "martes": "08:00-09:00 (19M)",
-        "miercoles": "08:00-09:00 (19M)",
-        "jueves": "08:00-09:00 (19M)",
-        "viernes": "08:00-09:00 (19M)"
-      }
-    },
-    {
-      "letra": "B",
-      "profesor": "URIBE AGUNDIS DIEGO",
-      "horarios": {
-        "lunes": "13:00-14:00 (19K)",
-        "martes": "13:00-14:00 (19K)",
-        "miercoles": "13:00-14:00 (19K)",
-        "jueves": "13:00-14:00 (19K)",
-        "viernes": "13:00-14:00 (19K)"
-      }
-    }
-  ],
   "R19": [
     {
       "letra": "A",
       "profesor": "MAESTRO POR ASIGNAR",
       "horarios": {}
-    }
-  ],
-  "61D": [
-    {
-      "letra": "A",
-      "profesor": "RODRIGUEZ ULLOA JUAN CARLOS",
-      "horarios": {
-        "lunes": "12:00-13:00 (19K)",
-        "martes": "12:00-13:00 (19K)",
-        "miercoles": "12:00-13:00 (19K)",
-        "jueves": "12:00-13:00 (19K)",
-        "viernes": "12:00-13:00 (19K)"
-      }
     }
   ]
 }

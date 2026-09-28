@@ -64,8 +64,8 @@ final class SyncITL {
         return oferta;
     }
 
-    /** La página rellena las celdas vacías con puntos. */
+    /** La página rellena las celdas vacías con puntos (pero hay nombres como "MA. SUSANA"). */
     private static boolean hayDato(String celda) {
-        return !celda.isEmpty() && !celda.equals("-") && !celda.contains(".") && !celda.contains("·");
+        return !celda.replaceAll("[.·\\s-]", "").isEmpty();
     }
 }

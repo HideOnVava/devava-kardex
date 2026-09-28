@@ -198,14 +198,14 @@ class KardexTest {
         String html = """
                 <table>
                 <tr><th>Clave</th><th>Grupo</th><th>Materia</th><th>Hora</th><th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>Catedrático</th></tr>
-                <tr><td>A11</td><td>A</td><td>CALCULO</td><td>07:00-08:00</td><td>19A</td><td>·····</td><td>19A</td><td></td><td>19M09:00-11:00</td><td>ZAPATA DAVILA JOSE LUIS</td></tr>
+                <tr><td>A11</td><td>A</td><td>CALCULO</td><td>07:00-08:00</td><td>19A</td><td>·····</td><td>19A</td><td></td><td>19M09:00-11:00</td><td>FLORES ALARCON MA. SUSANA</td></tr>
                 <tr><td>XYZ</td><td>A</td><td>OTRA</td><td>07:00-08:00</td><td>19A</td><td>19A</td><td>19A</td><td>19A</td><td>19A</td><td>ALGUIEN</td></tr>
                 <tr><td>B11</td><td>B</td><td>PROG</td><td>09:00-10:00</td><td>AA1</td><td>AA1</td><td>AA1</td><td>AA1</td><td>AA1</td><td>·······</td></tr>
                 </table>""";
         Map<String, List<Kardex.Grupo>> oferta = SyncITL.leer(Jsoup.parse(html), Set.of("A11", "B11"));
         assertEquals(Set.of("A11", "B11"), oferta.keySet());
         Kardex.Grupo a = oferta.get("A11").get(0);
-        assertEquals("ZAPATA DAVILA JOSE LUIS", a.profesor());
+        assertEquals("FLORES ALARCON MA. SUSANA", a.profesor()); // el punto no la vuelve celda vacía
         assertEquals(List.of("lunes", "miercoles", "viernes"), List.copyOf(a.horarios().keySet()));
         assertEquals(List.of(0, 2, 4), Kardex.clases(a).stream().map(Kardex.Clase::dia).toList());
         assertEquals(new Kardex.Clase(0, 7, 8, "19A"), Kardex.clases(a).get(0));
