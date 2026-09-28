@@ -90,13 +90,33 @@ final class Almacen {
         Path p = carpeta.resolve(archivo);
         if (!Files.exists(p)) return null;
         try {
-            return GSON.fromJson(Files.readString(p), Kardex.Datos.class);
+            Kardex.Datos d = GSON.fromJson(Files.readString(p), Kardex.Datos.class);
+            if (d != null) {
+                renombrar(d.aprobadas);
+                renombrar(d.reprobadas);
+                renombrar(d.ruta);
+                d.horarios.values().forEach(Almacen::renombrar);
+            }
+            return d;
         } catch (JsonParseException e) {
             Path copia = carpeta.resolve(archivo.replace(".json", "") + "-danado-" + System.currentTimeMillis() + ".json");
             Files.move(p, copia);
             aviso = "El archivo " + archivo + " estaba dañado. Lo guardé como " + copia.getFileName() + " y empecé uno nuevo.";
             return null;
         }
+    }
+
+    /** Claves que cambiaron: la beta llamaba "COMP" a las complementarias; en la retícula oficial son A1C. */
+    private static final Map<String, String> CLAVES_VIEJAS = Map.of("COMP", "A1C");
+
+    private static String clave(String c) {
+        return CLAVES_VIEJAS.getOrDefault(c, c);
+    }
+
+    private static <V> void renombrar(Map<String, V> mapa) {
+        CLAVES_VIEJAS.forEach((vieja, nueva) -> {
+            if (mapa.containsKey(vieja)) mapa.put(nueva, mapa.remove(vieja));
+        });
     }
 
     /** La beta guardaba el semestre actual en las preferencias de Java (en Windows, el registro). */
@@ -160,7 +180,7 @@ final class Almacen {
 
         for (JsonElement e : JsonParser.parseString(Files.readString(beta.resolve("reticula.json"))).getAsJsonArray()) {
             JsonObject m = e.getAsJsonObject();
-            String clave = texto(m, "clave");
+            String clave = clave(texto(m, "clave"));
             if (!claves.contains(clave)) continue;
             int veces = entero(m, "vecesReprobada");
             switch (texto(m, "estado")) {
@@ -206,7 +226,7 @@ final class Almacen {
                 JsonObject seleccion = layout.has("materiasSeleccionadas") && layout.get("materiasSeleccionadas").isJsonObject()
                         ? layout.getAsJsonObject("materiasSeleccionadas") : new JsonObject();
                 for (Map.Entry<String, JsonElement> e : seleccion.entrySet()) {
-                    String clave = e.getKey();
+                    String clave = clave(e.getKey());
                     if (!claves.contains(clave) || datos.aprobadas.containsKey(clave)) continue;
                     JsonObject detalle = e.getValue().getAsJsonObject();
                     horario.put(clave, letraBeta(gruposBeta.get(clave), texto(detalle, "profesor"), texto(detalle, "hora")));

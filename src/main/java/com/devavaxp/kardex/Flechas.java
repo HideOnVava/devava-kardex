@@ -93,7 +93,8 @@ final class Flechas {
         for (Kardex.Materia t : plan) {
             for (String requisito : t.requisitos()) {
                 Kardex.Materia s = porClave.get(requisito);
-                if (s == null) continue;
+                // Como en la retícula oficial: servicio social y complementarias van como nota, sin flecha.
+                if (s == null || s.seAcredita()) continue;
                 int cs = s.semestre() + s.ancho() - 1, ct = t.semestre();
                 if (ct <= cs) continue; // requisito en el mismo semestre o después: no se dibuja
                 double xs = x(s.semestre()) + ancho(s.ancho()), ys = y(s.fila()) + H / 2;
@@ -107,15 +108,15 @@ final class Flechas {
                     Ruta r = new Ruta(s.clave(), t.clave(), xs, ys, xt, yt + (ys < yt ? -DESFASE : DESFASE));
                     r.tramos.add(new Tramo(r, true, pasillo(cs), ys, r.ye));
                     rutas.add(r);
+                } else if (s.fila() == t.fila()) {
+                    // Misma fila con tarjetas en medio: por la calle de arriba o la de abajo, la que
+                    // menos se encime con las flechas ya trazadas.
+                    Ruta arriba = porCalle(s, t, cs, ct, xs, ys, xt, yt, calle(t.fila()));
+                    Ruta abajo = porCalle(s, t, cs, ct, xs, ys, xt, yt, calle(t.fila() + 1));
+                    rutas.add(choques(abajo, rutas) < choques(arriba, rutas) ? abajo : arriba);
                 } else {
-                    // Más lejos: por el pasillo de salida hasta la calle junto a la fila destino,
-                    // por esa calle hasta el pasillo de llegada y de ahí a la tarjeta.
-                    double calle = t.fila() < s.fila() ? calle(t.fila() + 1) : calle(t.fila());
-                    Ruta r = new Ruta(s.clave(), t.clave(), xs, ys, xt, yt + (calle < yt ? -DESFASE : DESFASE));
-                    r.tramos.add(new Tramo(r, true, pasillo(cs), ys, calle));
-                    r.tramos.add(new Tramo(r, false, calle, pasillo(cs), pasillo(ct - 1)));
-                    r.tramos.add(new Tramo(r, true, pasillo(ct - 1), calle, r.ye));
-                    rutas.add(r);
+                    // Más lejos: por la calle junto a la fila destino, del lado de donde viene.
+                    rutas.add(porCalle(s, t, cs, ct, xs, ys, xt, yt, t.fila() < s.fila() ? calle(t.fila() + 1) : calle(t.fila())));
                 }
             }
         }
@@ -142,6 +143,28 @@ final class Flechas {
             flechas.add(new Flecha(r.desde, r.hacia, p));
         }
         return flechas;
+    }
+
+    /** Por el pasillo de salida hasta la calle, por la calle hasta el pasillo de llegada y de ahí a la tarjeta. */
+    private static Ruta porCalle(Kardex.Materia s, Kardex.Materia t, int cs, int ct,
+                                 double xs, double ys, double xt, double yt, double calle) {
+        Ruta r = new Ruta(s.clave(), t.clave(), xs, ys, xt, yt + (calle < yt ? -DESFASE : DESFASE));
+        r.tramos.add(new Tramo(r, true, pasillo(cs), ys, calle));
+        r.tramos.add(new Tramo(r, false, calle, pasillo(cs), pasillo(ct - 1)));
+        r.tramos.add(new Tramo(r, true, pasillo(ct - 1), calle, r.ye));
+        return r;
+    }
+
+    /** Cuántos tramos de otras flechas (ni del mismo origen ni al mismo destino) caen en el mismo pasillo. */
+    private static int choques(Ruta r, List<Ruta> trazadas) {
+        int n = 0;
+        for (Ruta o : trazadas) {
+            if (o.desde.equals(r.desde) || o.hacia.equals(r.hacia)) continue;
+            for (Tramo a : r.tramos)
+                for (Tramo b : o.tramos)
+                    if (a.vertical == b.vertical && a.canal == b.canal && a.lo < b.hi + HOLGURA && b.lo < a.hi + HOLGURA) n++;
+        }
+        return n;
     }
 
     /** Carriles 0, +1, -1, +2… dentro de cada pasillo, para que dos flechas distintas no se encimen. */

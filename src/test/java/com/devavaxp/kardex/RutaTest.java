@@ -105,13 +105,13 @@ class RutaTest {
     @Test
     void servicioSocialYComplementariasNoSeCursanNiVanEnLaRuta() throws IOException {
         Kardex k = almacen().cargar();
-        assertTrue(k.cursar(k.materia("COMP"), null).contains("no se cursa"));
+        assertTrue(k.cursar(k.materia("A1C"), null).contains("no se cursa"));
         assertTrue(k.horario().isEmpty());
 
         k.planear(k.materia("S1S"), 3); // aunque estén en una ruta guardada, no cuentan
         Ruta.armar(k, 0);
         assertFalse(k.datos.ruta.containsKey("S1S"));
-        assertFalse(k.datos.ruta.containsKey("COMP"));
+        assertFalse(k.datos.ruta.containsKey("A1C"));
         Ruta.Resultado r = Ruta.evaluar(k);
         assertEquals(0, r.faltan());
         assertTrue(r.errores().isEmpty(), r.errores().toString()); // residencia no las espera

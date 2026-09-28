@@ -46,7 +46,9 @@ class KardexTest {
     void lasFlechasNoCruzanTarjetasNiSeEnciman() throws IOException {
         Kardex k = nuevo();
         List<Flechas.Flecha> flechas = Flechas.trazar(k.plan);
-        assertEquals(k.plan.stream().mapToInt(m -> m.requisitos().size()).sum(), flechas.size());
+        // Una flecha por requisito, salvo los de servicio social y complementarias (van como nota).
+        assertEquals(k.plan.stream().flatMap(m -> m.requisitos().stream())
+                .filter(r -> !k.materia(r).seAcredita()).count(), flechas.size());
         for (Flechas.Flecha f : flechas) {
             List<double[]> p = f.puntos();
             for (int i = 1; i < p.size(); i++) {
@@ -153,7 +155,7 @@ class KardexTest {
         Almacen almacen = new Almacen(tmp.resolve("datos"), beta);
         Kardex k = almacen.cargar();
 
-        assertEquals(Map.of("A11", 95, "COMP", 0), k.datos.aprobadas);
+        assertEquals(Map.of("A11", 95, "A1C", 0), k.datos.aprobadas); // "COMP" de la beta es A1C
         assertEquals(Map.of("B11", 1, "C11", 2), k.datos.reprobadas);
         assertEquals("Mi_Plan", k.activo());
         assertEquals(Map.of("B11", "B", "D11", ""), k.horario());
@@ -170,6 +172,13 @@ class KardexTest {
         Almacen otra = new Almacen(tmp.resolve("datos"), beta);
         assertEquals(80, otra.cargar().calificacion(k.materia("D11")));
         assertNull(otra.aviso);
+
+        // Un archivo guardado con la clave vieja de complementarias se lee como A1C.
+        Path vieja = Files.createDirectories(tmp.resolve("vieja"));
+        Files.writeString(vieja.resolve("kardex.json"), "{\"aprobadas\":{\"COMP\":0},\"ruta\":{\"COMP\":3}}");
+        Kardex v = new Almacen(vieja, tmp.resolve("no-hay-beta")).cargar();
+        assertEquals(Kardex.Estado.APROBADA, v.estado(v.materia("A1C")));
+        assertFalse(v.datos.aprobadas.containsKey("COMP"));
     }
 
     private static Map<Path, String> contenido(Path carpeta) throws IOException {

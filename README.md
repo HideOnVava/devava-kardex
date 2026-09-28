@@ -61,7 +61,7 @@ esa carpeta no se modifica.
 El plan de estudios está en
 [`plan-isc.json`](src/main/resources/com/devavaxp/kardex/plan-isc.json): por materia, su
 semestre, créditos, `requisitos`, `porcentaje` de créditos requerido, y `fila` (el renglón donde
-se dibuja, elegido para que ninguna flecha cruce una tarjeta).
+se dibuja, el mismo de la retícula oficial ISIC-2010-224 del ITL).
 
 ## Compilar y ejecutar
 
