@@ -298,6 +298,9 @@ public final class KardexApp extends Application {
                 dato(cargaNombre, carga), dato("SEMESTRE", semestre), der, aviso, menu);
         barra.getStyleClass().add("barra");
         barra.setAlignment(Pos.CENTER_LEFT);
+        // En ventanas angostas (1024 px) los datos se juntan para que ningún texto se recorte.
+        barra.spacingProperty().bind(Bindings.when(barra.widthProperty().lessThan(1200)).then(14.0).otherwise(28.0));
+        aviso.managedProperty().bind(aviso.textProperty().isNotEmpty());
         return barra;
     }
 

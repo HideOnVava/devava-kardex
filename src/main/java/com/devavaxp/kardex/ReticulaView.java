@@ -18,6 +18,9 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 
@@ -95,11 +98,16 @@ final class ReticulaView extends Region {
         leyenda();
     }
 
+    /** Tamaño de los nombres en styles.css (.materia .nombre). */
+    private static final double NOMBRE = 11.5;
+    private static double tamanoMedido;
+
     private void tarjeta(Kardex.Materia m) {
         Kardex.Estado estado = kardex.estado(m);
-        // "Autómatas I", "en iOS": la palabra corta final no se queda sola en otra línea.
-        Label nombre = new Label(m.nombre().replaceAll(" (\\S{1,3})$", " $1"));
+        Label nombre = new Label(nombre(m));
         nombre.getStyleClass().add("nombre");
+        double tamano = tamanoNombre(kardex.plan);
+        if (tamano < NOMBRE) nombre.setStyle("-fx-font-size: " + tamano + "px;");
         nombre.setWrapText(true);
         Label clave = new Label(m.clave());
         Label dato = new Label(dato(m, estado));
@@ -215,6 +223,42 @@ final class ReticulaView extends Region {
     private static double[] direccion(double[] a, double[] b) {
         double d = distancia(a, b);
         return d == 0 ? new double[]{0, 0} : new double[]{(b[0] - a[0]) / d, (b[1] - a[1]) / d};
+    }
+
+    /** "Autómatas I", "en iOS": la palabra corta final no se queda sola en otra línea. */
+    private static String nombre(Kardex.Materia m) {
+        return m.nombre().replaceAll(" (\\S{1,3})$", " $1");
+    }
+
+    /**
+     * Tamaño de letra de los nombres: el de la hoja de estilos, o menos si con la fuente del
+     * sistema alguna palabra no cabe a lo ancho o algún nombre pasa de tres renglones (pasa con
+     * fuentes anchas, como la de muchos Linux). Se calcula una vez.
+     */
+    private static double tamanoNombre(List<Kardex.Materia> plan) {
+        if (tamanoMedido == 0) {
+            Text medida = new Text();
+            double tamano = NOMBRE;
+            while (tamano > 9 && !caben(plan, medida, tamano)) tamano -= 0.5;
+            tamanoMedido = tamano;
+        }
+        return tamanoMedido;
+    }
+
+    private static boolean caben(List<Kardex.Materia> plan, Text medida, double tamano) {
+        medida.setFont(Font.font("System", FontWeight.BOLD, tamano));
+        for (Kardex.Materia m : plan) {
+            double ancho = Flechas.ancho(m.ancho()) - 21;   // sin el relleno ni el borde de la tarjeta
+            medida.setWrappingWidth(0);
+            for (String palabra : nombre(m).split(" ")) {
+                medida.setText(palabra);
+                if (medida.getLayoutBounds().getWidth() > ancho) return false;
+            }
+            medida.setText(nombre(m));
+            medida.setWrappingWidth(ancho);
+            if (medida.getLayoutBounds().getHeight() > Flechas.H - 29) return false;   // arriba del renglón de la clave
+        }
+        return true;
     }
 
     private void colocar(Region n, double x, double y, double w, double h) {
